@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-export default function Home(){
-    return (
-        <div>
-            <h1>Home</h1>
-        </div>
-    );
-}
-=======
 import Link from "next/link"
 import Image from "next/image"
 import vacation from '../../public/images/vacation.png'
@@ -73,7 +64,3 @@ export default async function Component() {
   )
 }
 
-
-
-
->>>>>>> HomePage
