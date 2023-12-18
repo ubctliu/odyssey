@@ -19,6 +19,15 @@ export default async function Component() {
         </div>
         
         <div className="flex justify-center items-center">
+          <Link
+            className="text-black hover:text-white hover:bg-black p-2 rounded-lg border border-black"
+            href="/new-itinerary"
+          >
+            + Create a New Itinerary
+          </Link>
+        </div>
+
+        <div className="flex justify-center items-center">
           {userId ? (
             <Link
               className="text-black hover:text-white hover:bg-black p-2 rounded-lg border border-black"
