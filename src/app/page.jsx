@@ -23,7 +23,7 @@ export default async function Component() {
             className="text-black hover:text-white hover:bg-black p-2 rounded-lg border border-black"
             href="/new-itinerary"
           >
-            Create a New Itinerary
+            + Create a New Itinerary
           </Link>
         </div>
 
