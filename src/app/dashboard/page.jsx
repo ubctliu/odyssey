@@ -6,7 +6,7 @@ import Image from "next/image"
 import { redirect } from "next/navigation";
 
 
-export default async function Component() {
+export default async function (Component) {
   const { userId } = auth();
   if (!userId){
     return redirect("/sign-in")
