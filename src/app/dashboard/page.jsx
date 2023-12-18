@@ -1,9 +1,8 @@
 import { auth } from "@clerk/nextjs";
-import PlaneIcon from "../../../public/Icons/PlaneIcon"
-import { UserButton } from "@clerk/nextjs";
 import vacationimg from "../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
+import TopNavBar from "../components/TopNavBar";
 
 
 export default async function (Component) {
@@ -14,15 +13,7 @@ export default async function (Component) {
 
   return (
     <div className="h-5/6">
-      <nav className="flex justify-between items-center p-6 bg-white shadow-md border-b-black border-solid w-screen">
-        <div className="flex items-center">
-          <PlaneIcon className="w-6 h-6 mr-2 hover:animate-spin" />
-          <p className="font-semibold text-lg">Odyssey</p>
-        </div>
-        <div>
-          <UserButton afterSignOutUrl="/" />
-        </div>
-      </nav>
+    <TopNavBar />
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-4xl font-bold text-white mb-4">Welcome to Odyssey</h1>
