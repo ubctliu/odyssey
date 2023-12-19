@@ -19,12 +19,14 @@ export default async function (Component) {
         <div className="flex flex-col justify-center items-center">
           <h1 className="text-4xl font-bold text-white mb-4">Where are you going?</h1>
           <form>
+          <label htmlFor="countries" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Location</label>
             <input className="bg-white text-black p-2 rounded-lg border border-black" name="query" placeholder="Country or city"/>
-            <button type="submit"> Enter Location</button>
+            {/* <button type="submit"> Enter Location</button> */}
           </form>      
           <form>
+          <label htmlFor="countries" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Date</label>
             <input className="bg-white text-black p-2 rounded-lg border border-black" name="query" placeholder="Date Range"/>
-            <button type="submit"> Enter Date Range</button>
+            {/* <button type="submit"> Enter Date Range</button> */}
           </form>     
           <a href="/" className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white">Plan My Trip!</a>
         </div>
