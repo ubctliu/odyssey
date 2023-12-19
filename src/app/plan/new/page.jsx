@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs";
-import vacationimg from "../../../public/images/vacationimg.png"
+import vacationimg from "../../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
-import TopNavBar from "../components/TopNavBar";
+import TopNavBar from "../../components/TopNavBar";
 import { form } from 'react'
 
 
