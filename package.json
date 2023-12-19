@@ -9,10 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "babel": "^6.23.0",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
+=======
+    "@clerk/nextjs": "^4.28.1",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "typewriter-effect": "^2.21.0"
+>>>>>>> 429a878830091bb72a3a5e6c13c5be88bfbefdd3
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.3",
