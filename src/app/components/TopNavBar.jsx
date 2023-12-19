@@ -7,6 +7,7 @@ import { auth } from "@clerk/nextjs";
 
 export default async function TopNavBar() {
   const { userId } = await auth();
+  
   return (
     <div className="h-5/6">
       <nav className="flex justify-between items-center p-6 bg-white shadow-md border-b-black border-solid w-screen">
