@@ -12,15 +12,9 @@ export default function Component() {
         <div className="mt-8 flex justify-center space-x-4">
           <Link
             className="border p-2 border-gray-600 rounded-lg bg-sky-400 text-white hover:bg-sky-500 w-32 flex justify-center items-center"
-            href="/dashboard"
-          >
-            Dashboard
-          </Link>
-          <Link
-            className="border p-2 border-gray-600 rounded-lg bg-sky-400 text-white hover:bg-sky-500 w-32 flex justify-center items-center"
             href="/"
           >
-            Home
+            Return Home
           </Link>
         </div>
       </div>

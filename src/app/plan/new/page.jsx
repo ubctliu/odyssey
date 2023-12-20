@@ -14,7 +14,6 @@ export default async function (Component) {
 
   return (
     <div className="h-5/6">
-    <TopNavBar />
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center space-y-3">
           <h1 className="text-4xl font-bold text-white mb-4">Where are you going?</h1>
