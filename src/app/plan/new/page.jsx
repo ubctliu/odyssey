@@ -1,13 +1,13 @@
-import { auth } from "@clerk/nextjs";
+import { auth  } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
-import TopNavBar from "../../components/TopNavBar";
 import { form } from 'react'
 
 
 export default async function (Component) {
   const { userId } = auth();
+
   if (!userId){
     return redirect("/sign-in")
   }
