@@ -1,13 +1,7 @@
 import { auth } from "@clerk/nextjs";
-import vacationimg from "../../../public/images/vacationimg.png";
-import Image from "next/image";
-import { redirect } from "next/navigation";
-import TopNavBar from "../components/TopNavBar";
-import { form } from "react";
 import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import TopNavBar from "../../components/TopNavBar";
 import { form } from "react";
 
 export default async function (Component) {
@@ -18,7 +12,6 @@ export default async function (Component) {
 
   return (
     <div className="h-5/6">
-      <TopNavBar />
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center space-y-3">
           <h1 className="text-4xl font-bold text-white mb-4">
@@ -53,7 +46,7 @@ export default async function (Component) {
             {/* <button type="submit"> Enter Date Range</button> */}
           </form>
           <a
-            href="/"
+            href="/plan"
             className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
           >
             Plan My Trip!

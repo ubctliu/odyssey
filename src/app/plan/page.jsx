@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs";
 import vacationimg from "../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import TopNavBar from "../components/TopNavBar";
 
 export default async function (Component) {
   const { userId } = auth();
@@ -12,7 +11,6 @@ export default async function (Component) {
 
   return (
     <div className="h-5/6">
-      <TopNavBar />
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
           <h3 className="text-4xl font-bold text-white mb-4">
@@ -68,7 +66,6 @@ export default async function (Component) {
               placeholder="Please specify details for food or activites"
             ></input>
           </form>
-
           <a
             href="/"
             className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
