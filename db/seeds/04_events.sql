@@ -6,5 +6,7 @@ CREATE TABLE events (
   location VARCHAR(255),
   time_start timestamp,
   time_end timestamp,
-  notes TEXT
+  notes TEXT,
+  CREATED_AT TIMESTAMP,
+  UPDATED_AT TIMESTAMP
 );

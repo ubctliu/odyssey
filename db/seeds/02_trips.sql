@@ -6,5 +6,7 @@ CREATE TABLE trips (
   location VARCHAR(255),
   start_date DATE,
   end_date DATE,
-  notes TEXT
+  notes TEXT,
+  CREATED_AT TIMESTAMP,
+  UPDATED_AT TIMESTAMP
 );
