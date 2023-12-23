@@ -1,11 +1,20 @@
 import { auth } from "@clerk/nextjs";
+<<<<<<< HEAD
 import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { form } from "react";
+=======
+import { currentUser } from "@clerk/nextjs";
+import vacationimg from "../../../../public/images/vacationimg.png"
+import Image from "next/image"
+import { redirect } from "next/navigation";
+import { form } from 'react';
+>>>>>>> 93b7f404f604ab52541443d08b40bd21141ea28e
 
 export default async function (Component) {
   const { userId } = auth();
+  // const currentUser1 = await currentUser();
 
   if (!userId) {
     return redirect("/sign-in");

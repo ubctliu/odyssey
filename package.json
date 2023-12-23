@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.28.1",
+<<<<<<< HEAD
     "babel": "^6.23.0",
+=======
+    "@vercel/postgres": "^0.5.1",
+>>>>>>> 93b7f404f604ab52541443d08b40bd21141ea28e
     "next": "14.0.4",
     "node": "^21.2.0",
     "react": "^18",

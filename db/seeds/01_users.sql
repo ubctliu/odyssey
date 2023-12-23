@@ -4,5 +4,7 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY NOT NULL,
   clerkId VARCHAR(255) NOT NULL,
   email VARCHAR(255),
-  phone_number TEXT
+  phone_number TEXT,
+  CREATED_AT TIMESTAMP,
+  UPDATED_AT TIMESTAMP
 );
