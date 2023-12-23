@@ -6,6 +6,7 @@ import { form } from "react";
 
 export default async function (Component) {
   const { userId } = auth();
+
   if (!userId) {
     return redirect("/sign-in");
   }

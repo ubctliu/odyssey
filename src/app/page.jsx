@@ -2,7 +2,6 @@ import Link from "next/link"
 import Image from "next/image"
 import vacation from '../../public/images/vacation.png'
 import TitleTypeWriter from "./components/TitleTypeWriter"
-import TopNavBar from "./components/TopNavBar"
 
 export default async function Component() {
 
@@ -16,13 +15,15 @@ export default async function Component() {
           </span>
           <div className="flex justify-center items-center">
           <Link
-            className="text-white bg-emerald-400 hover:text-white hover:bg-emerald-500 p-2 rounded-lg border"
+            className="text-white bg-orange-400 hover:text-white hover:bg-orange-500 p-5 rounded-lg border"
             href="/plan/new"
           >
-            + Create a New Itinerary
+            Get Started
           </Link>
         </div>
-          <Image src={vacation} className="mx-auto" />
+        <div className="bg-fixed">
+          <Image src={vacation} alt="Vacation Image" className="mx-auto" width="768" height="768" />
+        </div>
         </section>
       </main>
      
