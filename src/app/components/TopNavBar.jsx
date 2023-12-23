@@ -5,8 +5,8 @@ import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import { auth } from "@clerk/nextjs";
 
-export default async function TopNavBar() {
-  const { userId } = await auth();
+export default function TopNavBar() {
+  const { userId } = auth();
   
   return (
     <div className="h-5/6">
