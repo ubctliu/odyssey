@@ -20,7 +20,6 @@
 .DS_Store
 *.pem
 .env
-package-lock.json
 
 
 # debug
