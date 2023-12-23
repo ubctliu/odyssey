@@ -5,7 +5,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchBar from './SearchBar';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { updateDayEvents, updateDayNotes, deleteEvent } from "@/lib/api"
+import { updateDayEvents, updateDayNotes, deleteEvent } from "@/lib/api";
 import TimePickerComponent from '@/app/components/TimePickerComponent';
 import DatePicker from './DatePicker';
 
@@ -136,7 +136,7 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                 <div key={index} className="text-gray-600 py-2">
                   <div className="flex justify-between items-center">
                     <span>
-                      <TimePickerComponent 
+                    <TimePickerComponent 
                         value={event.timeStart}
                         dayEvent={{ day, event }}
                         tripData={tripData}
@@ -152,8 +152,6 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                         visibleEvents={visibleEvents}
                         timeStartOrEnd={"timeEnd"}
                         />
-                      {/* {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
-                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} */}
                     </span>
                     <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (

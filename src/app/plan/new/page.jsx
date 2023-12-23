@@ -1,6 +1,5 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { APIProvider } from "@vis.gl/react-google-maps";
@@ -16,6 +15,7 @@ export default function (Component) {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
   const guestId = "womdon231j2mklmksA";
+  const vacationimg = "/public/images/vacationimg.png";
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
@@ -132,6 +132,8 @@ export default function (Component) {
           </div>
           <Image
             src={vacationimg}
+            width={50}
+            height={50}
             alt="vacation"
             className="w-1/2 border-solid border-x-orange-300 border-4"
           />
