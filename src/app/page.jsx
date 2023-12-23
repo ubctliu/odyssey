@@ -10,7 +10,7 @@ export default function Component() {
   const [showModal, setShowModal] = useState(false);
 
   const handleButtonClick = () => {
-    setShowModal(!showModal);
+    setShowModal(true);
   };
 
   return (
