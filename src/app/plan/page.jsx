@@ -10,13 +10,13 @@ export default async function (Component) {
   }
 
   return (
-    <div className="h-5/6">
+    <div className="h-5/6 flex justify-center">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
           <h3 className="text-4xl font-bold text-white mb-4">
             Where are you staying?
           </h3>
-          <form>
+          <form className="space-x-2">
             <label htmlFor="lodging">Lodging Options: </label>
             <select
               className="bg-white text-black p-2 rounded-lg border border-black"
@@ -47,7 +47,7 @@ export default async function (Component) {
           <h3 className="text-4xl font-bold text-white mb-4">
             Please describe your activities for each day during the week:
           </h3>
-          <form>
+          <form className="space-x-2">
             <select
               className="bg-white text-black p-2 rounded-lg border border-black"
               name="hotel_airbnbs"

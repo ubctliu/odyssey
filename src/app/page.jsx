@@ -29,10 +29,10 @@ export default function Component() {
           </span>
           <div className="flex justify-center items-center">
             <button
-              className="text-white bg-emerald-400 hover:bg-emerald-500 p-2 rounded-lg border"
+              className="text-white bg-orange-400 p-4 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-50"
               onClick={openModal}
             >
-              + Create a New Itinerary
+              Get Started
             </button>
           </div>
           <Image src={vacation} className="mx-auto" />
