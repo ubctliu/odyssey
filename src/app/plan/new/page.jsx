@@ -1,5 +1,5 @@
 "use client";
-import { currentUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
@@ -8,19 +8,19 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "../../components/SearchBar";
 
 export default function (Component) {
-  // const { userId } = auth();
-  // const currentUser1 = await currentUser();
+  const currentUser = useUser();
 
-  // if (!userId){
-  //   return redirect("/sign-in")
-  // }
+  if (!currentUser.isSignedIn){
+    return redirect("/sign-in")
+  }
 
+console.log(currentUser);
   return (
     <div className="h-5/6">
        <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center space-y-3">
-          <h1 className="text-4xl font-bold text-white mb-4">Where are you going?</h1>
+          <h1 className="text-4xl font-bold text-white mb-4"> {currentUser.isSignedIn ? `Hello, ${currentUser.user.firstName}.` : ""} Where are you going?</h1>
           <form>
           <label htmlFor="countries" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Location</label>
           <SearchBar className={"bg-white text-black p-2 rounded-lg border border-black"} />
