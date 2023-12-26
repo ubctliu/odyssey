@@ -15,10 +15,6 @@ export default function NewItineraryModal({ onClose }) {
 
   // Add any other form fields or functions as needed
 
-  const handleLocationChange = (data) => {
-    setLocation(data);
-  }
-
   const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
 
   return (
@@ -34,20 +30,20 @@ export default function NewItineraryModal({ onClose }) {
                 className="border p-2 w-full"
                 id="title"
                 name="title"
-                placeholder="Title (Optional)"
+                placeholder="Title (optional)"
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="mb-4">
-              <SearchBar onLocationData={handleLocationChange} className={"border p-2 w-full"}/>
+              <SearchBar onLocationData={setLocation} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
               <input
                 className="border p-2 w-full"
                 id="date"
                 name="date"
-                placeholder="Date (Required)"
+                placeholder="Date (required)"
                 type="text"
                 onChange={(e) => setDate(e.target.value)}
               />
@@ -57,7 +53,7 @@ export default function NewItineraryModal({ onClose }) {
                 className="border p-2 w-full"
                 id="description"
                 name="description"
-                placeholder="Description (Optional)"
+                placeholder="Description (optional)"
                 rows="4"
                 onChange={(e) => setDescription(e.target.value)}
               />

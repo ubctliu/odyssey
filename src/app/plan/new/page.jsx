@@ -13,6 +13,8 @@ export default function (Component) {
   const currentUser = useUser();
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
   if (!currentUser.isSignedIn){
     return redirect("/sign-in")
@@ -20,10 +22,6 @@ export default function (Component) {
   
   const handleDateChange = (e) => {
     setDate(e.target.value);
-  }
-
-  const handleLocationChange = (data) => {
-    setLocation(data);
   }
 
   const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
@@ -34,15 +32,22 @@ export default function (Component) {
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center space-y-3">
           <h1 className="text-4xl font-bold text-white mb-4"> {currentUser.isSignedIn ? `Hello, ${currentUser.user.firstName}.` : ""} Where are you going?</h1>
-          <form>
-          <label htmlFor="countries" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Location</label>
-          <SearchBar onLocationData={handleLocationChange} className={"bg-white text-black p-2 rounded-lg border border-black"} />
-            {/* <button type="submit"> Enter Location</button> */}
-          </form>      
-          <form>
-          <label htmlFor="countries" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Date</label>
-            <input className="bg-white text-black p-2 rounded-lg border border-black" name="query" placeholder="Date Range" value={date} onChange={handleDateChange}/>
-            {/* <button type="submit"> Enter Date Range</button> */}
+          <form className="space-y-2">
+          <label htmlFor="title" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Title</label>
+          <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Title (optional)" value={title} onChange={e => setTitle(e.target.value)}/> 
+          <label htmlFor="location" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Location</label>
+          <SearchBar onLocationData={setLocation} className={"bg-white text-black p-2 rounded-lg border border-black"} />
+          <label htmlFor="date" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Date</label>
+          <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Date Range (required)" value={date} onChange={e => setDate(e.target.value)}/>
+          <label htmlFor="description" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Description</label>
+          <textarea
+                className="bg-white text-black p-4 rounded-lg border border-black"
+                id="description"
+                name="description"
+                placeholder="Description (optional)"
+                rows="4"
+                onChange={(e) => setDescription(e.target.value)}
+              />
           </form>     
           <Link
           href={`/plan/${customUrl}`} 
