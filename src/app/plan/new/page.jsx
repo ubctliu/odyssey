@@ -6,6 +6,7 @@ import { redirect, useRouter, usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "../../components/SearchBar";
+import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
 
 export default function (Component) {
   const currentUser = useUser();
@@ -28,6 +29,8 @@ export default function (Component) {
   }
 
   useEffect(() => {
+    const customURL = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
+    
     const timeoutId = setTimeout(() => {
       router.replace(`${pathname}?${location}&${date}`);
     }, 300);
@@ -36,16 +39,6 @@ export default function (Component) {
       clearTimeout(timeoutId);
     };
   }, [date, location, router]);
-  
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     router.replace(`${pathname}?${inputValue}`);
-  //   }, 300);
-
-  //   return () => {
-  //     clearTimeout(timeoutId);
-  //   };
-  // }, [inputValue, router]);
   
   return (
     <div className="h-5/6">
