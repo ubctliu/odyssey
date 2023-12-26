@@ -1,10 +1,23 @@
 "use client"
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
 
-const SearchBar = (props) => {
+const SearchBar = ({ className, onLocationData }) => {
   const inputRef = useRef(null);
+  const router = useRouter();
   const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onLocationData(inputValue)
+    }, 300);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [inputValue, router]);
+  
 
   const onPlaceChanged = place => {
     if (place) {
@@ -25,7 +38,7 @@ const SearchBar = (props) => {
   };
 
   return (
-    <input className={props.className} ref={inputRef} value={inputValue} onChange={handleInputChange} />
+    <input className={className} ref={inputRef} value={inputValue} onChange={handleInputChange} />
   );
 };
 
