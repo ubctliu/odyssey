@@ -5,10 +5,15 @@ import SearchBar from "./SearchBar";
 
 export default function NewItineraryModal({ onClose }) {
   const [title, setTitle] = useState("");
+  const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
 
   // Add any other form fields or functions as needed
+
+  const handleLocationChange = (data) => {
+    setLocation(data);
+  }
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -29,7 +34,7 @@ export default function NewItineraryModal({ onClose }) {
               />
             </div>
             <div className="mb-4">
-              <SearchBar className={"border p-2 w-full"}/>
+              <SearchBar onLocationData={handleLocationChange} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
               <input

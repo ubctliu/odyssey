@@ -2,19 +2,17 @@
 import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png"
 import Image from "next/image"
-import { redirect, useRouter, usePathname } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import { redirect } from "next/navigation";
+import React, { useState } from "react";
 import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "../../components/SearchBar";
+import Link from "next/link";
 import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
 
 export default function (Component) {
   const currentUser = useUser();
-  const pathname = usePathname();
-  const router = useRouter();
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-
 
   if (!currentUser.isSignedIn){
     return redirect("/sign-in")
@@ -28,18 +26,8 @@ export default function (Component) {
     setLocation(data);
   }
 
-  useEffect(() => {
-    const customURL = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
-    
-    const timeoutId = setTimeout(() => {
-      router.replace(`${pathname}?${location}&${date}`);
-    }, 300);
+  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
 
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [date, location, router]);
-  
   return (
     <div className="h-5/6">
        <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -56,7 +44,19 @@ export default function (Component) {
             <input className="bg-white text-black p-2 rounded-lg border border-black" name="query" placeholder="Date Range" value={date} onChange={handleDateChange}/>
             {/* <button type="submit"> Enter Date Range</button> */}
           </form>     
-          <a href="/" className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white">Plan My Trip!</a>
+          <Link
+          href={{
+            pathname: `/plan/${customUrl}`,
+            state: { // TODO: Add more data to be passed down
+              userId: currentUser.user.id,
+              customUrl,
+              location,
+              date
+            }}} 
+          className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
+          >
+          Plan My Trip!
+          </Link>
         </div>
         <Image src={vacationimg} alt="vacation" className="w-1/2 border-solid border-x-orange-300 border-4" />
       </main>
