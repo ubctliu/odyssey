@@ -1,17 +1,22 @@
-import { auth } from "@clerk/nextjs";
+"use client";
+import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
 
-export default async function (Component) {
-  const { userId } = auth();
-  if (!userId) {
+export default function (props) {
+  const currentUser = useUser();
+  if (!currentUser.isSignedIn) {
     return redirect("/sign-in");
   }
+
+  console.log(base64ToString(props.params.encodedUrl).split("&"));
 
   return (
     <div className="h-5/6 flex justify-center">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
+        <div></div>
         <div className="flex flex-col justify-center items-center">
           <h3 className="text-4xl font-bold text-white mb-4">
             Where are you staying?

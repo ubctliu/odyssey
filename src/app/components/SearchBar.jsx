@@ -38,7 +38,7 @@ const SearchBar = ({ className, onLocationData }) => {
   };
 
   return (
-    <input className={className} ref={inputRef} value={inputValue} onChange={handleInputChange} />
+    <input placeholder={"Location (required)"}className={className} ref={inputRef} value={inputValue} onChange={handleInputChange} />
   );
 };
 

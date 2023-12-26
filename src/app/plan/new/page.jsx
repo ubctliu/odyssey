@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "../../components/SearchBar";
 import Link from "next/link";
-import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
+import { stringToBase64 } from "@/lib/base64Utils";
 
 export default function (Component) {
   const currentUser = useUser();
@@ -45,14 +45,7 @@ export default function (Component) {
             {/* <button type="submit"> Enter Date Range</button> */}
           </form>     
           <Link
-          href={{
-            pathname: `/plan/${customUrl}`,
-            state: { // TODO: Add more data to be passed down
-              userId: currentUser.user.id,
-              customUrl,
-              location,
-              date
-            }}} 
+          href={`/plan/${customUrl}`} 
           className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
           >
           Plan My Trip!

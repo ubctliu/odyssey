@@ -1,11 +1,11 @@
-import { auth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-export default async function (Component) {
-  const { userId } = auth();
-  if (!userId) {
+export default function (Component) {
+  const { currentUser } = useUser();
+  if (!currentUser.isSignedIn) {
     return redirect("/sign-in");
   }
 

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useUser } from '@clerk/nextjs';
 import { FaTimes } from 'react-icons/fa';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "./SearchBar";
+import { stringToBase64 } from '@/lib/base64Utils';
+import Link from 'next/link';
 
 export default function NewItineraryModal({ onClose }) {
+  const currentUser = useUser();
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
@@ -14,6 +18,8 @@ export default function NewItineraryModal({ onClose }) {
   const handleLocationChange = (data) => {
     setLocation(data);
   }
+
+  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -28,7 +34,7 @@ export default function NewItineraryModal({ onClose }) {
                 className="border p-2 w-full"
                 id="title"
                 name="title"
-                placeholder="Title"
+                placeholder="Title (Optional)"
                 type="text"
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -41,7 +47,7 @@ export default function NewItineraryModal({ onClose }) {
                 className="border p-2 w-full"
                 id="date"
                 name="date"
-                placeholder="Date"
+                placeholder="Date (Required)"
                 type="text"
                 onChange={(e) => setDate(e.target.value)}
               />
@@ -51,14 +57,16 @@ export default function NewItineraryModal({ onClose }) {
                 className="border p-2 w-full"
                 id="description"
                 name="description"
-                placeholder="Description"
+                placeholder="Description (Optional)"
                 rows="4"
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            <Link 
+            href={`/plan/${customUrl}`}
+            className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
-            </button>
+            </Link>
           </form>
         </div>
       </div>
