@@ -12,7 +12,7 @@ export default function (props) {
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  
+
   const setTripState = (encodedUrl) => {
     const decodedUrlData = base64ToString(encodedUrl).split("&");
     const location = decodedUrlData[1]
@@ -37,6 +37,11 @@ export default function (props) {
 
     setTripState(props.params.encodedUrl);
   }, [])
+
+  // another useEffect for updating state for changes
+  // useEffect(() => {
+
+  // });
 
   return (
     <div className="h-5/6 flex justify-center">
