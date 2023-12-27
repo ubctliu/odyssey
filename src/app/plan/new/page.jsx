@@ -18,6 +18,11 @@ export default function (Component) {
   const [isLocationSet, setIsLocationSet] = useState(false);
   const [isDateSet, setIsDateSet] = useState(false);
 
+  // Don't proceed until user data is loaded
+  if (!currentUser.isLoaded) {
+    return <div>Loading...</div>
+  }
+  
   if (!currentUser.isSignedIn){
     return redirect("/sign-in")
   }

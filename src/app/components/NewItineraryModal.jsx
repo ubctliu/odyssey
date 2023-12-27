@@ -17,6 +17,11 @@ export default function NewItineraryModal({ onClose }) {
 
   // Add any other form fields or functions as needed
 
+  // Don't proceed until user data is loaded
+  if (!currentUser.isLoaded) {
+    return <div>Loading...</div>
+  }
+  
   const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`);
 
   return (

@@ -13,10 +13,6 @@ export default function (props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  // if (!currentUser.isSignedIn) {
-  //   return redirect("/sign-in");
-  // }
-
   const setTripState = (encodedUrl) => {
     const decodedUrlData = base64ToString(encodedUrl).split("&");
     const location = decodedUrlData[1]
@@ -26,10 +22,19 @@ export default function (props) {
     setLocation(location);
     setDate(date);
     title ? setTitle(title) : setTitle(`Trip to ${location}`);
-    description ? setDescription(description) : "";
+    description ? setDescription(description) : setDescription("");
   }
 
   useEffect(() => {
+    // Don't proceed until user data is loaded
+    if (!currentUser.isLoaded) {
+      return;
+    }
+
+    if (!currentUser.isSignedIn) {
+      return redirect("/sign-in");
+    }
+
     setTripState(props.params.encodedUrl);
   }, [])
 

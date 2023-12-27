@@ -7,8 +7,9 @@ import Link from "next/link";
 
 export default async function (Component) {
   const { userId } = auth();
+
   if (!userId){
-    return redirect("/sign-in")
+    return redirect("/sign-in");
   }
 
   return (

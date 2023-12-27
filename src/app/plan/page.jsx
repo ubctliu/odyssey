@@ -5,9 +5,18 @@ import { redirect } from "next/navigation";
 
 export default function (Component) {
   const { currentUser } = useUser();
-  if (!currentUser.isSignedIn) {
-    return redirect("/sign-in");
-  }
+
+  useEffect(() => {
+    // Don't proceed until user data is loaded
+    if (!currentUser.isLoaded) {
+      return;
+    }
+
+    if (!currentUser.isSignedIn) {
+      return redirect("/sign-in");
+    }
+    
+  }, [])
 
   return (
     <div className="h-5/6 flex justify-center">
