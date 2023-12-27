@@ -3,14 +3,15 @@ import React, {useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
 
-const SearchBar = ({ className, onLocationData }) => {
+const SearchBar = ({ className, onLocationData, setIsLocationSet }) => {
   const inputRef = useRef(null);
   const router = useRouter();
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      onLocationData(inputValue)
+      onLocationData(inputValue);
+      setIsLocationSet(inputValue !== "");
     }, 300);
 
     return () => {
@@ -38,7 +39,7 @@ const SearchBar = ({ className, onLocationData }) => {
   };
 
   return (
-    <input placeholder={"Location (required)"}className={className} ref={inputRef} value={inputValue} onChange={handleInputChange} />
+    <input required placeholder={"Location (required)"}className={className} ref={inputRef} value={inputValue} onChange={handleInputChange} />
   );
 };
 

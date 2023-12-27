@@ -15,16 +15,14 @@ export default function (Component) {
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isLocationSet, setIsLocationSet] = useState(false);
+  const [isDateSet, setIsDateSet] = useState(false);
 
   if (!currentUser.isSignedIn){
     return redirect("/sign-in")
   }
-  
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  }
 
-  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
+  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`);
 
   return (
     <div className="h-5/6">
@@ -36,9 +34,14 @@ export default function (Component) {
           <label htmlFor="title" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Title</label>
           <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Title (optional)" value={title} onChange={e => setTitle(e.target.value)}/> 
           <label htmlFor="location" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Location</label>
-          <SearchBar onLocationData={setLocation} className={"bg-white text-black p-2 rounded-lg border border-black"} />
+          <SearchBar onLocationData={setLocation} setIsLocationSet={setIsLocationSet} className={"bg-white text-black p-2 rounded-lg border border-black"} />
           <label htmlFor="date" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Date</label>
-          <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Date Range (required)" value={date} onChange={e => setDate(e.target.value)}/>
+          <input required className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Date Range (required)" value={date} onChange={e => 
+            {
+              setDate(e.target.value);
+              setIsDateSet(date !== "");
+            }
+          }/>
           <label htmlFor="description" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Description</label>
           <textarea
                 className="bg-white text-black p-4 rounded-lg border border-black"
@@ -49,12 +52,20 @@ export default function (Component) {
                 onChange={(e) => setDescription(e.target.value)}
               />
           </form>     
-          <Link
+          { (isDateSet && isLocationSet) ?
+            <Link
           href={`/plan/${customUrl}`} 
           className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
           >
           Plan My Trip!
+          </Link> :
+          <Link
+          href={""}
+          className="bg-gray-400 text-white p-2 rounded-lg border border-black hover:text-white"
+          >
+          Missing required fields!
           </Link>
+          }
         </div>
         <Image src={vacationimg} alt="vacation" className="w-1/2 border-solid border-x-orange-300 border-4" />
       </main>

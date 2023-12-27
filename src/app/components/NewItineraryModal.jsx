@@ -12,10 +12,12 @@ export default function NewItineraryModal({ onClose }) {
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+  const [isLocationSet, setIsLocationSet] = useState(false);
+  const [isDateSet, setIsDateSet] = useState(false);
 
   // Add any other form fields or functions as needed
 
-  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}`);
+  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`);
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -36,16 +38,19 @@ export default function NewItineraryModal({ onClose }) {
               />
             </div>
             <div className="mb-4">
-              <SearchBar onLocationData={setLocation} className={"border p-2 w-full"}/>
+              <SearchBar onLocationData={setLocation} setIsLocationSet={setIsLocationSet} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              <input
+              <input required
                 className="border p-2 w-full"
                 id="date"
                 name="date"
                 placeholder="Date (required)"
                 type="text"
-                onChange={(e) => setDate(e.target.value)}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                  setIsDateSet(date !== "");
+                }}
               />
             </div>
             <div className="mb-4">
@@ -58,11 +63,20 @@ export default function NewItineraryModal({ onClose }) {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            <Link 
+            {
+              (isDateSet && isLocationSet) ?
+              <Link 
             href={`/plan/${customUrl}`}
             className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
+            </Link> :
+            <Link 
+            href={""}
+            className="bg-gray-400 text-white px-4 py-2 rounded">
+              Missing required fields!
             </Link>
+            }
+            
           </form>
         </div>
       </div>
