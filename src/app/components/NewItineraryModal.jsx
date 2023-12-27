@@ -14,6 +14,7 @@ export default function NewItineraryModal({ onClose }) {
   const [description, setDescription] = useState("");
   const [isLocationSet, setIsLocationSet] = useState(false);
   const [isDateSet, setIsDateSet] = useState(false);
+  const guestId = "womdon231j2mklmksA"; // just random characters for now - should add logic to randomize later
 
   // Add any other form fields or functions as needed
 
@@ -22,7 +23,7 @@ export default function NewItineraryModal({ onClose }) {
     return <div>Loading...</div>
   }
   
-  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`);
+  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`) : stringToBase64(`${guestId}&${location}&${date}&${title}&${description}`);
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -70,11 +71,17 @@ export default function NewItineraryModal({ onClose }) {
             </div>
             {
               (isDateSet && isLocationSet) ?
+              currentUser.isSignedIn ?
               <Link 
             href={`/plan/${customUrl}`}
             className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
-            </Link> :
+            </Link> : 
+            <Link 
+            href={`/plan/${customUrl}`}
+            className="bg-orange-400 text-white px-4 py-2 rounded">
+              Continue as Guest
+            </Link>:
             <Link 
             href={""}
             className="bg-gray-400 text-white px-4 py-2 rounded">

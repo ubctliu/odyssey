@@ -17,24 +17,25 @@ export default function (Component) {
   const [description, setDescription] = useState("");
   const [isLocationSet, setIsLocationSet] = useState(false);
   const [isDateSet, setIsDateSet] = useState(false);
+  const guestId = "womdon231j2mklmksA";
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
     return <div>Loading...</div>
   }
   
-  if (!currentUser.isSignedIn){
-    return redirect("/sign-in")
-  }
+  // if (!currentUser.isSignedIn){
+  //   return redirect("/sign-in")
+  // }
 
-  const customUrl = stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`);
+  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`) : stringToBase64(`${guestId}&${location}&${date}&${title}&${description}`);
 
   return (
     <div className="h-5/6">
        <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center space-y-3">
-          <h1 className="text-4xl font-bold text-white mb-4"> {currentUser.isSignedIn ? `Hello, ${currentUser.user.firstName}.` : ""} Where are you going?</h1>
+          <h1 className="text-4xl font-bold text-white mb-4"> {currentUser.isSignedIn ? `Hello, ${currentUser.user.firstName}.` : "Hello, Guest"} Where are you going?</h1>
           <form className="space-y-2">
           <label htmlFor="title" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Title</label>
           <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Title (optional)" value={title} onChange={e => setTitle(e.target.value)}/> 
