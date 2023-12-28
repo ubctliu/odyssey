@@ -13,6 +13,8 @@ export default function (props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  // TODO: rewrite to use useReducer & consider storing in state object
+
   const setTripState = (encodedUrl) => {
     const decodedUrlData = base64ToString(encodedUrl).split("&");
     const location = decodedUrlData[1]

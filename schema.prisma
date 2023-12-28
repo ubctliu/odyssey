@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+// Data Models 
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String?  @db.VarChar(255)
+  phoneNumber String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  trips       Trip[]   
+}
+
+model Trip {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @db.Integer
+  location  String   @db.VarChar(255)
+  startDate DateTime @db.Date
+  endDate   DateTime @db.Date
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  days      Day[]    
+}
+
+model Day {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @db.Date
+  tripId    Int      @db.Integer
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  trip      Trip     @relation(fields: [tripId], references: [id])
+  events    Event[]  
+}
+
+model Event {
+  id        Int      @id @default(autoincrement())
+  dayId     Int      @db.Integer
+  location  String   @db.VarChar(255)
+  timeStart DateTime @db.Timestamp
+  timeEnd   DateTime @db.Timestamp
+  notes     String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  day       Day      @relation(fields: [dayId], references: [id])
+}
