@@ -48,20 +48,23 @@ export default function NewItineraryModal({ onClose }) {
               <SearchBar onLocationData={setLocation} setIsLocationSet={setIsLocationSet} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              <input required
+              {/* <input required
                 className="border p-2 w-full"
                 id="date"
                 name="date"
-                placeholder="Date (required)"
+                placeholder="Date Range (required)"
                 type="text"
                 onChange={(e) => {
                   setDate(e.target.value);
                   setIsDateSet(date !== "");
                 }}
+              /> */}
+              <DateRangeCalendar 
+                dateRange={setDate}
               />
             </div>
             <div>
-              <DateRangeCalendar />
+              
             </div>
             <div className="mb-4">
               <textarea

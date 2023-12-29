@@ -2,20 +2,21 @@
 import React from 'react';
 import { DateRange } from 'react-date-range';
 import { useState } from 'react';
+import { format } from 'date-fns';
 
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-const DateRangeCalendar = (props) => {
+const DateRangeCalendar = (  ) => {
   const [openDate, setOpenDate] = useState(false)
-  const [date, setDate] = useState({
+  const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: 'selection',
   })
 
   const handleChange = (ranges) => {
-    setDate(ranges.selection)
+    setSelectedDateRange(ranges.selection)
   }
 
   const handleClick = () => {
@@ -24,11 +25,24 @@ const DateRangeCalendar = (props) => {
 
   return (
     <div className='calendar'>
-      <span onClick={handleClick}>
-        Select a Date Range
-      </span>
+      <input required
+        className="border p-2 w-full"
+        onClick={handleClick}
+        id="date"
+        name="date"
+        placeholder={
+          selectedDateRange.endDate === new Date() ? 'Date Range (Required)' :
+          `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
+        }
+        type="text"
+        onChange={(e) => {
+          setDate(ranges.selection);
+          setIsDateSet(date !== "");
+          }
+        }
+      />
       {openDate && <DateRange
-        ranges={[date]}
+        ranges={[selectedDateRange]}
         onChange={handleChange}
         minDate={new Date()}
         />
