@@ -60,7 +60,7 @@ export default function NewItineraryModal({ onClose }) {
                 }}
               /> */}
               <DateRangeCalendar 
-                dateRange={setDate}
+                // userSelectDateRange={setDate}
               />
             </div>
             <div>

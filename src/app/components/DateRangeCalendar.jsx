@@ -31,7 +31,7 @@ const DateRangeCalendar = (  ) => {
         id="date"
         name="date"
         placeholder={
-          selectedDateRange.endDate === new Date() ? 'Date Range (Required)' :
+          selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (Required)' :
           `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
         }
         type="text"
