@@ -59,9 +59,7 @@ export default function NewItineraryModal({ onClose }) {
                   setIsDateSet(date !== "");
                 }}
               /> */}
-              <DateRangeCalendar 
-                // userSelectDateRange={setDate}
-              />
+              <DateRangeCalendar />
             </div>
             <div>
               

@@ -1,7 +1,6 @@
 'use client'
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { DateRange } from 'react-date-range';
-import { useState } from 'react';
 import { format } from 'date-fns';
 
 import 'react-date-range/dist/styles.css'; // main style file
@@ -34,12 +33,13 @@ const DateRangeCalendar = (  ) => {
           selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (Required)' :
           `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
         }
-        type="text"
-        onChange={(e) => {
-          setDate(ranges.selection);
-          setIsDateSet(date !== "");
-          }
-        }
+        // type="text"
+        // onChange={(e) => {
+        //   setDate(ranges.selection);
+        //   setIsDateSet(date !== "");
+        //   }
+        // }
+        // value={selectedDateRange}
       />
       {openDate && <DateRange
         ranges={[selectedDateRange]}
