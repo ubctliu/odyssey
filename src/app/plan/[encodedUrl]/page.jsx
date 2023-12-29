@@ -8,23 +8,33 @@ import { useEffect, useState } from "react";
 
 export default function (props) {
   const currentUser = useUser();
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [tripData, setTripData] = useState({
+    location: "",
+    startDate: "",
+    endDate: "",
+    title: "",
+    description: "",
+  });
+
 
   // TODO: rewrite to use useReducer & consider storing in state object
 
   const setTripState = (encodedUrl) => {
+    const presetTripData = {};
+
+
+    // Crude method of splitting atm - refactor later?
     const decodedUrlData = base64ToString(encodedUrl).split("&");
-    const location = decodedUrlData[1]
-    const date = decodedUrlData[2]
-    const title = decodedUrlData[3];
-    const description = decodedUrlData[4];
-    setLocation(location);
-    setDate(date);
-    title ? setTitle(title) : setTitle(`Trip to ${location}`);
-    description ? setDescription(description) : setDescription("");
+    presetTripData["location"] = decodedUrlData[1];
+    presetTripData["startDate"] = decodedUrlData[2];
+    presetTripData["endDate"] = decodedUrlData[3];
+    presetTripData["title"] = decodedUrlData[4] ? decodedUrlData[4] : `Trip to ${decodedUrlData[1]}`;
+    presetTripData["description"] = decodedUrlData[5] ? decodedUrlData[5] : "";
+
+    setTripData((prevTripData) => ({
+      ...prevTripData,
+      ...presetTripData
+    }));
   }
 
   useEffect(() => {

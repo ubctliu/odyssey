@@ -11,12 +11,15 @@ import { stringToBase64 } from "@/lib/base64Utils";
 
 export default function (Component) {
   const currentUser = useUser();
-  const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [isLocationSet, setIsLocationSet] = useState(false);
-  const [isDateSet, setIsDateSet] = useState(false);
+  const [tripData, setTripData] = useState({
+    location: "",
+    startDate: "",
+    endDate: "",
+    title: "",
+    description: "",
+    isLocationSet: false,
+    isDateSet: false
+  });
   const guestId = "womdon231j2mklmksA";
 
   // Don't proceed until user data is loaded
@@ -28,7 +31,7 @@ export default function (Component) {
   //   return redirect("/sign-in")
   // }
 
-  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`) : stringToBase64(`${guestId}&${location}&${date}&${title}&${description}`);
+  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`) : stringToBase64(`${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`);
 
   return (
     <div className="h-5/6">
@@ -38,14 +41,21 @@ export default function (Component) {
           <h1 className="text-4xl font-bold text-white mb-4"> {currentUser.isSignedIn ? `Hello, ${currentUser.user.firstName}.` : "Hello, Guest"} Where are you going?</h1>
           <form className="space-y-2">
           <label htmlFor="title" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Title</label>
-          <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Title (optional)" value={title} onChange={e => setTitle(e.target.value)}/> 
+          <input className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Title (optional)" value={tripData.title} onChange={e => setTripData((prev) => ({
+            ...prev,
+            title: e.target.value
+          }))}/> 
           <label htmlFor="location" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Location</label>
-          <SearchBar onLocationData={setLocation} setIsLocationSet={setIsLocationSet} className={"bg-white text-black p-2 rounded-lg border border-black"} />
+          <SearchBar setLocationData={setTripData} className={"bg-white text-black p-2 rounded-lg border border-black"} />
           <label htmlFor="date" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Date</label>
-          <input required className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Date Range (required)" value={date} onChange={e => 
+          <input required className="bg-white text-black p-2 rounded-lg border border-black" placeholder="Date Range (required)" value={tripData.date} onChange={e => 
             {
-              setDate(e.target.value);
-              setIsDateSet(date !== "");
+              setTripData((prev) => ({
+                ...prev,
+                startDate: e.target.value,
+                endDate: e.target.value,
+                isDateSet: e.target.value !== "" && prev.endDate !== ""
+              }));
             }
           }/>
           <label htmlFor="description" className="block mb-2 text-medium font-medium text-gray-900 dark:text-white">Description</label>
@@ -55,10 +65,13 @@ export default function (Component) {
                 name="description"
                 placeholder="Description (optional)"
                 rows="4"
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={e => (prev) => ({
+                  ...prev,
+                  description: e.target.value
+                })}
               />
           </form>     
-          { (isDateSet && isLocationSet) ?
+          { (tripData.isDateSet && tripData.isLocationSet) ?
             <Link
           href={`/plan/${customUrl}`} 
           className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
