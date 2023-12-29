@@ -3,7 +3,6 @@ import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
 import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "../../components/SearchBar";
 import Link from "next/link";

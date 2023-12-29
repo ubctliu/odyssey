@@ -1,5 +1,5 @@
 "use client"
-import React, {useRef, useState, useEffect } from 'react';
+import {useRef, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
 

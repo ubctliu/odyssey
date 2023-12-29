@@ -3,7 +3,6 @@ import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
 import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
 

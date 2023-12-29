@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import TitleTypeWriter from "./components/TitleTypeWriter";
 import NewItineraryModal from "./components/NewItineraryModal"; // Assuming NewItineraryModal is a separate component

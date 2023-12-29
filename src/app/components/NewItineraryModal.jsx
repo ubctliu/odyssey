@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { FaTimes } from 'react-icons/fa';
 import { APIProvider } from '@vis.gl/react-google-maps';
