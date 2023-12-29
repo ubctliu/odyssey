@@ -7,19 +7,12 @@ import React, { useState } from "react";
 import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "../../components/SearchBar";
 import Link from "next/link";
+import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
 
 export default function (Component) {
   const currentUser = useUser();
-  const [tripData, setTripData] = useState({
-    location: "",
-    startDate: "",
-    endDate: "",
-    title: "",
-    description: "",
-    isLocationSet: false,
-    isDateSet: false
-  });
+  const { tripData, setTripData } = useTripData();
   const guestId = "womdon231j2mklmksA";
 
   // Don't proceed until user data is loaded

@@ -5,18 +5,11 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "./SearchBar";
 import { stringToBase64 } from '@/lib/base64Utils';
 import Link from 'next/link';
+import { useTripData } from '../context/TripDataContext';
 
 export default function NewItineraryModal({ onClose }) {
   const currentUser = useUser();
-  const [tripData, setTripData] = useState({
-    location: "",
-    startDate: "",
-    endDate: "",
-    title: "",
-    description: "",
-    isLocationSet: false,
-    isDateSet: false
-  });
+ const { tripData, setTripData } = useTripData();
   const guestId = "womdon231j2mklmksA"; // just random characters for now - should add logic to randomize later
 
   // Add any other form fields or functions as needed
@@ -98,7 +91,6 @@ export default function NewItineraryModal({ onClose }) {
             href={""}
             className="bg-gray-400 text-white px-4 py-2 rounded">
               Missing required fields!
-              {console.log(tripData)}
             </Link>
             }
             

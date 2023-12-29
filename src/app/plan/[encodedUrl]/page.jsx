@@ -5,37 +5,11 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
 import { useEffect, useState } from "react";
+import { useTripData } from "@/app/context/TripDataContext";
 
 export default function (props) {
   const currentUser = useUser();
-  const [tripData, setTripData] = useState({
-    location: "",
-    startDate: "",
-    endDate: "",
-    title: "",
-    description: "",
-  });
-
-
-  // TODO: rewrite to use useReducer & consider storing in state object
-
-  const setTripState = (encodedUrl) => {
-    const presetTripData = {};
-
-
-    // Crude method of splitting atm - refactor later?
-    const decodedUrlData = base64ToString(encodedUrl).split("&");
-    presetTripData["location"] = decodedUrlData[1];
-    presetTripData["startDate"] = decodedUrlData[2];
-    presetTripData["endDate"] = decodedUrlData[3];
-    presetTripData["title"] = decodedUrlData[4] ? decodedUrlData[4] : `Trip to ${decodedUrlData[1]}`;
-    presetTripData["description"] = decodedUrlData[5] ? decodedUrlData[5] : "";
-
-    setTripData((prevTripData) => ({
-      ...prevTripData,
-      ...presetTripData
-    }));
-  }
+  const { tripData, setTripData } = useTripData();
 
   useEffect(() => {
     // Don't proceed until user data is loaded
@@ -46,8 +20,8 @@ export default function (props) {
     if (!currentUser.isSignedIn) {
       return redirect("/sign-in");
     }
-
-    setTripState(props.params.encodedUrl);
+    console.log(tripData);
+    // setTripState(props.params.encodedUrl);
   }, [])
 
   // another useEffect for updating state for changes
