@@ -30,6 +30,7 @@ const DateRangeCalendar = (props) => {
       {openDate && <DateRange
         ranges={[date]}
         onChange={handleChange}
+        minDate={new Date()}
         />
       }
     </div>
