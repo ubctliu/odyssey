@@ -5,6 +5,7 @@ import { APIProvider } from '@vis.gl/react-google-maps';
 import SearchBar from "./SearchBar";
 import { stringToBase64 } from '@/lib/base64Utils';
 import Link from 'next/link';
+import DateRangeCalendar from './DateRangeCalendar';
 
 export default function NewItineraryModal({ onClose }) {
   const currentUser = useUser();
@@ -58,6 +59,9 @@ export default function NewItineraryModal({ onClose }) {
                   setIsDateSet(date !== "");
                 }}
               />
+            </div>
+            <div>
+              <DateRangeCalendar />
             </div>
             <div className="mb-4">
               <textarea

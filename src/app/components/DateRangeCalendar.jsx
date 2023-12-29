@@ -18,8 +18,15 @@ const DateRangeCalendar = (props) => {
     setDate(ranges.selection)
   }
 
+  const handleClick = () => {
+    setOpenDate((prev) => !prev)
+  }
+
   return (
-    <div>
+    <div className='calendar'>
+      <span onClick={handleClick}>
+        Select a Date Range
+      </span>
       {openDate && <DateRange
         ranges={[date]}
         onChange={handleChange}
