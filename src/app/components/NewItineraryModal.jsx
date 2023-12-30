@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import { stringToBase64 } from '@/lib/base64Utils';
 import Link from 'next/link';
 import DateRangeCalendar from './DateRangeCalendar';
+import DatePickerCalendar from './DatePickerCalendar';
 
 export default function NewItineraryModal({ onClose }) {
   const currentUser = useUser();
@@ -59,7 +60,10 @@ export default function NewItineraryModal({ onClose }) {
                   setIsDateSet(date !== "");
                 }}
               /> */}
-              <DateRangeCalendar />
+              <DateRangeCalendar
+                dateRangeData={setDate}
+                setDateRangeData={setIsDateSet}
+              />
             </div>
             <div>
               

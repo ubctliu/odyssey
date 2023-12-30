@@ -1,26 +1,29 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import { format } from 'date-fns';
 
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-const DateRangeCalendar = (  ) => {
-  const [openDate, setOpenDate] = useState(false)
+const DateRangeCalendar = ( { dateRangeData, setDateRangeData } ) => {
+  const [openCalendar, setOpenCalendar] = useState(false);
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: 'selection',
-  })
+  });
 
   const handleChange = (ranges) => {
     setSelectedDateRange(ranges.selection)
+    setDateRangeData("true")
   }
 
   const handleClick = () => {
-    setOpenDate((prev) => !prev)
+    setOpenCalendar((prev) => !prev)
   }
+
+  dateRangeData = selectedDateRange
 
   return (
     <div className='calendar'>
@@ -29,22 +32,25 @@ const DateRangeCalendar = (  ) => {
         onClick={handleClick}
         id="date"
         name="date"
-        placeholder={
+        // placeholder={
+        //   selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (required)' :
+        //   `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
+        // }
+        // type="text"
+        // onChange={(e) => {
+        //   setSelectedDateRange(e.target.value);
+        //   setIsDateSet(date !== "");
+        //   console.log("onchange happening")
+        // }}
+        value={
           selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (Required)' :
           `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
         }
-        // type="text"
-        // onChange={(e) => {
-        //   setDate(ranges.selection);
-        //   setIsDateSet(date !== "");
-        //   }
-        // }
-        // value={selectedDateRange}
       />
-      {openDate && <DateRange
+      {openCalendar && <DateRange
         ranges={[selectedDateRange]}
         onChange={handleChange}
-        minDate={new Date()}
+        minDate={new Date()} // does not let the user pick dates that have passed.
         />
       }
     </div>
