@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import { FaTimes } from 'react-icons/fa';
 import { APIProvider } from '@vis.gl/react-google-maps';
@@ -6,15 +5,11 @@ import SearchBar from "./SearchBar";
 import { stringToBase64 } from '@/lib/base64Utils';
 import Link from 'next/link';
 import DateRangeCalendar from './DateRangeCalendar';
+import { useTripData } from '../context/TripDataContext';
 
 export default function NewItineraryModal({ onClose }) {
   const currentUser = useUser();
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [isLocationSet, setIsLocationSet] = useState(false);
-  const [isDateSet, setIsDateSet] = useState(false);
+ const { tripData, setTripData } = useTripData();
   const guestId = "womdon231j2mklmksA"; // just random characters for now - should add logic to randomize later
 
   // Add any other form fields or functions as needed
@@ -24,7 +19,7 @@ export default function NewItineraryModal({ onClose }) {
     return <div>Loading...</div>
   }
   
-  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${location}&${date}&${title}&${description}`) : stringToBase64(`${guestId}&${location}&${date}&${title}&${description}`);
+  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`) : stringToBase64(`${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`);
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
@@ -41,16 +36,32 @@ export default function NewItineraryModal({ onClose }) {
                 name="title"
                 placeholder="Title (optional)"
                 type="text"
-                onChange={(e) => setTitle(e.target.value)}
-              />
+                onChange={e => setTripData((prev) => ({
+                  ...prev,
+                  title: e.target.value
+                }))}/>
             </div>
             <div className="mb-4">
-              <SearchBar onLocationData={setLocation} setIsLocationSet={setIsLocationSet} className={"border p-2 w-full"}/>
+              <SearchBar setLocationData={setTripData} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
               <DateRangeCalendar
                 dateRangeData={setDate}
                 setDateRangeData={setIsDateSet}
+//               <input required
+//                 className="border p-2 w-full"
+//                 id="date"
+//                 name="date"
+//                 placeholder="Date (required)"
+//                 type="text"
+//                 onChange={(e) => {
+//                   setTripData((prev) => ({
+//                     ...prev,
+//                     startDate: e.target.value,
+//                     endDate: e.target.value,
+//                     isDateSet: tripData.startDate !== "" && tripData.endDate !== ""
+//                   }));
+//                 }}
               />
             </div>
             <div>
@@ -63,11 +74,14 @@ export default function NewItineraryModal({ onClose }) {
                 name="description"
                 placeholder="Description (optional)"
                 rows="4"
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={e => (prev) => ({
+                  ...prev,
+                  description: e.target.value
+                })}
               />
             </div>
             {
-              (isDateSet && isLocationSet) ?
+              (tripData.isDateSet && tripData.isLocationSet) ?
               currentUser.isSignedIn ?
               <Link 
             href={`/plan/${customUrl}`}

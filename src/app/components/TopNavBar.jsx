@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PlaneIcon from '../../../public/Icons/PlaneIcon';
 import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
