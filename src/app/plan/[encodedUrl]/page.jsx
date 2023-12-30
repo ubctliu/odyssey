@@ -3,27 +3,12 @@ import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { base64ToString, stringToBase64 } from "@/lib/base64Utils";
 import { useEffect, useState } from "react";
+import { useTripData } from "@/app/context/TripDataContext";
 
 export default function (props) {
   const currentUser = useUser();
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  const setTripState = (encodedUrl) => {
-    const decodedUrlData = base64ToString(encodedUrl).split("&");
-    const location = decodedUrlData[1];
-    const date = decodedUrlData[2];
-    const title = decodedUrlData[3];
-    const description = decodedUrlData[4];
-    setLocation(location);
-    setDate(date);
-    title ? setTitle(title) : setTitle(`Trip to ${location}`);
-    description ? setDescription(description) : setDescription("");
-  };
+  const { tripData, setTripData } = useTripData();
 
   useEffect(() => {
     // Don't proceed until user data is loaded
@@ -34,9 +19,9 @@ export default function (props) {
     if (!currentUser.isSignedIn) {
       return redirect("/sign-in");
     }
-
-    setTripState(props.params.encodedUrl);
-  }, []);
+    console.log(tripData);
+    // setTripState(props.params.encodedUrl);
+  }, [])
 
   // another useEffect for updating state for changes
   // useEffect(() => {
