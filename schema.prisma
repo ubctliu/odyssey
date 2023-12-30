@@ -11,6 +11,7 @@ datasource db {
 // Data Models 
 model User {
   id          Int      @id @default(autoincrement())
+  clerkId     String   @db.VarChar(255)
   email       String?  @db.VarChar(255)
   phoneNumber String?  @db.Text
   createdAt   DateTime @default(now())
