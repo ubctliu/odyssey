@@ -45,24 +45,7 @@ export default function NewItineraryModal({ onClose }) {
               <SearchBar setLocationData={setTripData} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              <DateRangeCalendar
-                dateRangeData={setDate}
-                setDateRangeData={setIsDateSet}
-//               <input required
-//                 className="border p-2 w-full"
-//                 id="date"
-//                 name="date"
-//                 placeholder="Date (required)"
-//                 type="text"
-//                 onChange={(e) => {
-//                   setTripData((prev) => ({
-//                     ...prev,
-//                     startDate: e.target.value,
-//                     endDate: e.target.value,
-//                     isDateSet: tripData.startDate !== "" && tripData.endDate !== ""
-//                   }));
-//                 }}
-              />
+              <DateRangeCalendar />
             </div>
             <div>
               

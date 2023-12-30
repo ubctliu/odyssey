@@ -34,7 +34,7 @@ export default function Component() {
               Get Started
             </button>
           </div>
-          <Image src={vacation} className="mx-auto" />
+          <Image src={vacation} alt="vacation photo" className="mx-auto" />
         </section>
       </main>
      
