@@ -6,7 +6,6 @@ import SearchBar from "./SearchBar";
 import { stringToBase64 } from '@/lib/base64Utils';
 import Link from 'next/link';
 import DateRangeCalendar from './DateRangeCalendar';
-import DatePickerCalendar from './DatePickerCalendar';
 
 export default function NewItineraryModal({ onClose }) {
   const currentUser = useUser();
@@ -49,17 +48,6 @@ export default function NewItineraryModal({ onClose }) {
               <SearchBar onLocationData={setLocation} setIsLocationSet={setIsLocationSet} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              {/* <input required
-                className="border p-2 w-full"
-                id="date"
-                name="date"
-                placeholder="Date Range (required)"
-                type="text"
-                onChange={(e) => {
-                  setDate(e.target.value);
-                  setIsDateSet(date !== "");
-                }}
-              /> */}
               <DateRangeCalendar
                 dateRangeData={setDate}
                 setDateRangeData={setIsDateSet}

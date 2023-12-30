@@ -32,16 +32,6 @@ const DateRangeCalendar = ( { dateRangeData, setDateRangeData } ) => {
         onClick={handleClick}
         id="date"
         name="date"
-        // placeholder={
-        //   selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (required)' :
-        //   `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
-        // }
-        // type="text"
-        // onChange={(e) => {
-        //   setSelectedDateRange(e.target.value);
-        //   setIsDateSet(date !== "");
-        //   console.log("onchange happening")
-        // }}
         value={
           selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (Required)' :
           `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
