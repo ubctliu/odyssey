@@ -6,12 +6,13 @@ const TripDataContext = createContext();
 export const TripDataProvider = ({ children }) => {
   const [tripData, setTripData] = useState({
     location: "",
-    startDate: "",
-    endDate: "",
+    startDate: new Date(),
+    endDate: new Date(),
     title: "",
     description: "",
     isLocationSet: false,
-    isDateSet: false
+    isDateSet: false,
+    key: 'selection'
   });
 
   return (

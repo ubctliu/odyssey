@@ -1,44 +1,42 @@
 'use client'
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import { format } from 'date-fns';
+import { useTripData } from '../context/TripDataContext';
 
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-const DateRangeCalendar = ( { dateRangeData, setDateRangeData } ) => {
+const DateRangeCalendar = () => {
+  const { tripData, setTripData } = useTripData();
   const [openCalendar, setOpenCalendar] = useState(false);
-  const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection',
-  });
 
   const handleChange = (ranges) => {
-    setSelectedDateRange(ranges.selection)
-    setDateRangeData("true")
+    setTripData(prev => ({
+      ...prev,
+      ...ranges.selection,
+      isDateSet: true
+    }))
   }
 
   const handleClick = () => {
     setOpenCalendar((prev) => !prev)
   }
 
-  dateRangeData = selectedDateRange
-
   return (
     <div className='calendar'>
-      <input required
+      <input readOnly required
         className="border p-2 w-full"
         onClick={handleClick}
         id="date"
         name="date"
         value={
-          selectedDateRange.endDate.getDate() == new Date().getDate() ? 'Date Range (Required)' :
-          `${format(selectedDateRange.startDate, 'MMM/dd/yyyy')} to ${format(selectedDateRange.endDate, 'MMM/dd/yyy')}`
+          tripData.endDate.getDate() == new Date().getDate() ? 'Date Range (required)' :
+          `${format(tripData.startDate, 'MM/dd/yyyy')} - ${format(tripData.endDate, 'MM/dd/yyy')}`
         }
       />
       {openCalendar && <DateRange
-        ranges={[selectedDateRange]}
+        ranges={[tripData]}
         onChange={handleChange}
         minDate={new Date()} // does not let the user pick dates that have passed.
         />

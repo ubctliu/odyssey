@@ -46,8 +46,8 @@ export default function NewItineraryModal({ onClose }) {
             </div>
             <div className="mb-4">
               <DateRangeCalendar
-                dateRangeData={setDate}
-                setDateRangeData={setIsDateSet}
+                // dateRangeData={setDate}
+                // setDateRangeData={setIsDateSet}
 //               <input required
 //                 className="border p-2 w-full"
 //                 id="date"
