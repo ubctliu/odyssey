@@ -7,12 +7,16 @@ import { createUser } from "../../lib/api";
 
 export default async function (Component) {
   let hasRun = false;
-  // const { userId } = auth();
+  const { userId } = auth();
 
-  // if (!userId){
-  //   return redirect("/sign-in");
-  // }
+  if (!userId){
+    return redirect("/sign-in");
+  }
 
+ /* 
+ TODO: need to fix the email/phone number results coming from user object & add pathways for 
+ updating existing users + look into better ways of implementing this
+ */
   try {
     if (!hasRun) {
     const user = await currentUser();
@@ -21,7 +25,6 @@ export default async function (Component) {
       console.error("No signed-in user found.");
       return;
     }
-    console.log(user);
 
     const newUser = await createUser(user);
     hasRun = true;

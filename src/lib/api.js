@@ -13,7 +13,6 @@ export async function createUser(user) {
   }
 
   const newUser = await response.json();
-  console.log("User created:", newUser);
 } catch (error) {
   console.error("Error creating user:", error);
 }
