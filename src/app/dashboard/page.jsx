@@ -17,6 +17,7 @@ export default async function (Component) {
  TODO: need to fix the email/phone number results coming from user object & add pathways for 
  updating existing users + look into better ways of implementing this
  */
+
   try {
     if (!hasRun) {
     const user = await currentUser();

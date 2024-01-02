@@ -19,7 +19,8 @@ export default async function createUser(user) {
     const newUser = await prisma.user.create({
       data: {
         clerkId: user.id,
-        email:  user.primaryEmailAddress,
+        // checks if primary email address is set, if not - use the first email address on file else null
+        email:  user.primaryEmailAddress ? user.emailAddresses[0]?.emailAddress : null,
         phoneNumber:  user.primaryPhoneNumber,
       }
     });
