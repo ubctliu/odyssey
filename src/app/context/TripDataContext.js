@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from 'react';
 
 const TripDataContext = createContext();
 
+// TODO: need to reset trip data context between trip creations
 export const TripDataProvider = ({ children }) => {
   const [tripData, setTripData] = useState({
     location: "",

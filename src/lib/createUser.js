@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 
-async function createUser(user) {
+export default async function createUser(user) {
   const prisma = new PrismaClient();
 
   try {
     const existingUser = await prisma.user.findUnique({
       where: {
-        clerkId: user.clerkId
+        clerkId: user.id
       }
     });
 
@@ -17,10 +17,9 @@ async function createUser(user) {
 
     const newUser = await prisma.user.create({
       data: {
-        clerkId: user.clerkId,
-        email: user.primaryEmailAddress,
-        phoneNumber: primaryPhoneNumber,
-        trips: []
+        clerkId: user.id,
+        email:  user.primaryEmailAddress,
+        phoneNumber:  user.primaryPhoneNumber,
       }
     });
 
@@ -33,5 +32,3 @@ async function createUser(user) {
     await prisma.$disconnect();
   }
 }
-
-module.exports = createUser;
