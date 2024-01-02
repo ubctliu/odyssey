@@ -1,15 +1,15 @@
-import createUser from '@/lib/db/createUser';
+import createTrip from '@/lib/db/createTrip';
 import { NextResponse } from 'next/server';
 
-// POST /api/users/new
-// Required fields in body: Clerk user object
+// POST /api/trips/new
+// Required fields in body: { Trip object, User object }  - subject to change
 export async function POST(req) {
   if (req.method === "POST") {
-    const { user } = await req.json();
+    const { trip, user } = await req.json();
     try {
-      const newUser = await createUser(user);
+      const newTrip = await createTrip(user);
 
-      return NextResponse.json({ status: 201 }, { data: newUser });
+      return NextResponse.json({ status: 201 }, { data: newTrip });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }
