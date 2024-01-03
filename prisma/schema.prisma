@@ -22,6 +22,7 @@ model User {
 model Trip {
   id        Int      @id @default(autoincrement())
   userId    Int      @db.Integer
+  url       String   @db.VarChar(255) @unique
   location  String   @db.VarChar(255)
   startDate DateTime @db.Date
   endDate   DateTime @db.Date
