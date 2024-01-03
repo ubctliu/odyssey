@@ -1,15 +1,37 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import vacationimg from "../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
 import Link from "next/link";
-
+import { createUser } from "../../lib/api";
 
 export default async function (Component) {
+  let hasRun = false;
   const { userId } = auth();
 
   if (!userId){
     return redirect("/sign-in");
+  }
+
+ /* 
+ TODO: need to fix the email/phone number results coming from user object & add pathways for 
+ updating existing users + look into better ways of implementing this
+ */
+
+  try {
+    if (!hasRun) {
+    const user = await currentUser();
+  
+    if (!user) {
+      console.error("No signed-in user found.");
+      return;
+    }
+
+    const newUser = await createUser(user);
+    hasRun = true;
+  }
+  } catch (error) {
+    console.error("An error occurred:", error);
   }
 
   return (

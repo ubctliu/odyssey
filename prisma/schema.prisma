@@ -11,7 +11,7 @@ datasource db {
 // Data Models 
 model User {
   id          Int      @id @default(autoincrement())
-  clerkId     String   @db.VarChar(255)
+  clerkId     String   @db.VarChar(255) @unique
   email       String?  @db.VarChar(255)
   phoneNumber String?  @db.Text
   createdAt   DateTime @default(now())
@@ -22,6 +22,7 @@ model User {
 model Trip {
   id        Int      @id @default(autoincrement())
   userId    Int      @db.Integer
+  url       String   @db.VarChar(255) @unique
   location  String   @db.VarChar(255)
   startDate DateTime @db.Date
   endDate   DateTime @db.Date
