@@ -27,11 +27,12 @@ const DateRangeCalendar = () => {
     <div className='calendar'>
       <input readOnly required
         className="border p-2 w-full"
+        placeholder='Date Range (required)'
         onClick={handleClick}
         id="date"
         name="date"
         value={
-          tripData.endDate.getDate() == new Date().getDate() ? 'Date Range (required)' :
+          tripData.endDate.getDate() == new Date().getDate() ? '' :
           `${format(tripData.startDate, 'MM/dd/yyyy')} - ${format(tripData.endDate, 'MM/dd/yyy')}`
         }
       />
