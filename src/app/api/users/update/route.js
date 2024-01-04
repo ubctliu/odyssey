@@ -1,10 +1,10 @@
 import updateUser from '@/lib/db/updateUser';
 import { NextResponse } from 'next/server';
 
-// POST /api/users/update
+// PUT /api/users/update
 // Required fields in body: Clerk user object
-export async function POST(req) {
-  if (req.method === "POST") {
+export async function PUT(req) {
+  if (req.method === "PUT") {
     const { user } = await req.json();
     try {
       const updatedUser = await updateUser(user);

@@ -26,10 +26,10 @@ export default function (Component) {
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
     ? stringToBase64(
-        `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`
+        `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}`
       )
     : stringToBase64(
-        `${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`
+        `${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}`
       );
 
   return (

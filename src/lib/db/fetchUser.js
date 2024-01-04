@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-// Check if user already exists in the database before creating a new user
+// Fetches user from DB else return
 export default async function fetchUser(userId) {
   const prisma = new PrismaClient();
 
@@ -12,7 +12,8 @@ export default async function fetchUser(userId) {
     });
 
     if (!existingUser) {
-      console.log("User doesn't exist yet");
+      console.log("User doesn't exist");
+      return;
     }
 
     console.log("User fetched:", existingUser);
