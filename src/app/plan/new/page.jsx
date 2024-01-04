@@ -23,6 +23,7 @@ export default function (Component) {
   //   return redirect("/sign-in")
   // }
 
+  // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
     ? stringToBase64(
         `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`

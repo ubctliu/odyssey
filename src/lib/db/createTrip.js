@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-// Trip doesn't need to check if another identical trip already exists
+// Trip doesn't need to check if another identical trip already exists - may need to handle duplicate trip urls (maybe with current timestamp in custom url?)
 export default async function createTrip({ trip, user }) {
   const prisma = new PrismaClient();
 
@@ -13,6 +13,7 @@ export default async function createTrip({ trip, user }) {
         startDate: trip.startDate,
         endDate: trip.endDate,
         notes: trip.notes,
+        url: trip.customUrl,
         user
       }
     });
