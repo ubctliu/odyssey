@@ -25,7 +25,7 @@ export default function (props) {
     // set clerkId in tripData
     setTripData((prev) => ({
       ...prev,
-      clerkId: currentUser.user.id
+      clerkId: currentUser.user.id,
     }))
     console.log(tripData);
     // setTripState(props.params.encodedUrl);

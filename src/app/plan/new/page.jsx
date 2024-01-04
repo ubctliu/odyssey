@@ -29,7 +29,7 @@ export default function (Component) {
 
   useEffect(() => {
     resetTripData(tripData, setTripData);
-  }, [currentUser.isLoaded])
+  }, [])
 
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
@@ -112,6 +112,10 @@ export default function (Component) {
             {tripData.isDateSet && tripData.isLocationSet ? (
               <Link
                 href={`/plan/${customUrl}`}
+                onClick={() => setTripData((prev) => ({
+                  ...prev,
+                  url: customUrl
+                }))}
                 className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
               >
                 Plan My Trip!

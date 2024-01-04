@@ -13,7 +13,7 @@ export default function NewItineraryModal({ onClose }) {
   const guestId = "womdon231j2mklmksA"; // just random characters for now - should add logic to randomize later
 
   // Add any other form fields or functions as needed
-  
+
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
     return <div>Loading...</div>
@@ -69,11 +69,19 @@ export default function NewItineraryModal({ onClose }) {
               currentUser.isSignedIn ?
               <Link 
             href={`/plan/${customUrl}`}
+            onClick={() => setTripData((prev) => ({
+              ...prev,
+              url: customUrl
+            }))}
             className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
             </Link> : 
             <Link 
             href={`/plan/${customUrl}`}
+            onClick={() => setTripData((prev) => ({
+              ...prev,
+              url: customUrl
+            }))}
             className="bg-orange-400 text-white px-4 py-2 rounded">
               Continue as Guest
             </Link>:

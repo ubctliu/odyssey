@@ -8,7 +8,8 @@ export const resetTripData = (tripData, setTripData) => {
     isLocationSet: false,
     isDateSet: false,
     key: 'selection',
-    clerkId: ""
+    clerkId: "",
+    url: ""
   };
 
   // reset the base variables
