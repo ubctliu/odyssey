@@ -72,12 +72,5 @@ return (
 
   </main>
 </div>
-  // <section className="flex flex-col items-center justify-center">
-  //   <h1 className="text-3xl antialiased">Account Settings</h1>
-  //   <form>
-  //     <input>
-  //     </input>
-  //   </form>
-  // </section>
 );
 }
