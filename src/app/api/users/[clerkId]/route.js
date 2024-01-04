@@ -1,14 +1,15 @@
-import updateUser from '@/lib/db/updateUser';
+import fetchUser from '@/lib/db/fetchUser';
 import { NextResponse } from 'next/server';
 
-// PUT /api/users/update
+
+// GET /api/users/[clerkId]
 // Required fields in body: Clerk user object
-export async function PUT(req) {
-  if (req.method === "PUT") {
-    const { user } = await req.json();
+export async function GET(req) {
+  const userId = req.nextUrl.pathname.split("/api/users/")[1];
+  if (req.method === "GET") {
     try {
-      const updatedUser = await updateUser(user);
-      return NextResponse.json({ status: 201 }, { data: updatedUser });
+      const fetchedUser = await fetchUser(userId);
+      return NextResponse.json({ status: 201, data: fetchedUser });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }
