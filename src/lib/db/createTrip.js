@@ -14,7 +14,6 @@ export default async function createTrip({ trip, user }) {
         endDate: trip.endDate,
         notes: trip.notes,
         url: trip.customUrl,
-        user
       }
     });
 

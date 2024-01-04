@@ -1,7 +1,7 @@
 //TODO: these fetch paths need to be updated to support more dynamic url pathing - right now only works locally
 export async function createUser(user) {
   try {
-  const res = await fetch('http://localhost:3000/api/users/new', {
+  const res = await fetch('/api/users/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,6 +14,7 @@ export async function createUser(user) {
   }
 
   const newUser = await res.json();
+  return newUser;
 } catch (error) {
   console.error("Error creating user:", error);
 }
@@ -21,7 +22,7 @@ export async function createUser(user) {
 
 export async function fetchUser(userId) {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+    const res = await fetch(`/api/users/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +41,7 @@ export async function fetchUser(userId) {
 
 export async function updateUser(user) {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/update`, {
+    const res = await fetch(`/api/users/update`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
