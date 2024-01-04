@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createUser } from "../../lib/api";
 import { useEffect } from "react";
+import { useTripData } from "../context/TripDataContext";
+import { resetTripData } from "@/lib/resetTripData";
 
 const userExists = async (user) => {
   try {
@@ -17,6 +19,7 @@ const userExists = async (user) => {
   
 export default function (Component) {
   const currentUser = useUser();
+  const { tripData, setTripData } = useTripData();
 
   useEffect(() => {
     if (currentUser.isLoaded && currentUser.user) {
@@ -33,6 +36,7 @@ export default function (Component) {
           <Link
             className="text-white bg-emerald-400 hover:text-white hover:bg-emerald-500 p-2 rounded-lg border"
             href="/plan/new"
+            onClick={() => resetTripData(tripData, setTripData)}
           >
             + Create a New Itinerary
           </Link>

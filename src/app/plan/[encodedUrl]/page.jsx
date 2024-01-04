@@ -46,7 +46,7 @@ export default function (props) {
             ...prev,
             title: e.target.value
           }))}/>
-          <DateRangeCalendar />
+          <DateRangeCalendar className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100"}/>
           </form>
             {/* This will be the section to display trip information*/}
           </section>

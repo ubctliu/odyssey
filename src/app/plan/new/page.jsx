@@ -9,6 +9,8 @@ import Link from "next/link";
 import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
+import { useEffect } from "react";
+import { resetTripData } from "@/lib/resetTripData";
 
 export default function (Component) {
   const currentUser = useUser();
@@ -20,9 +22,14 @@ export default function (Component) {
     return <div>Loading...</div>;
   }
 
+
   // if (!currentUser.isSignedIn){
   //   return redirect("/sign-in")
   // }
+
+  useEffect(() => {
+    resetTripData(tripData, setTripData);
+  }, [currentUser.isLoaded])
 
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn

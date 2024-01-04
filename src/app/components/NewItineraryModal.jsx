@@ -13,7 +13,7 @@ export default function NewItineraryModal({ onClose }) {
   const guestId = "womdon231j2mklmksA"; // just random characters for now - should add logic to randomize later
 
   // Add any other form fields or functions as needed
-
+  
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
     return <div>Loading...</div>
