@@ -1,39 +1,32 @@
-import { auth, currentUser } from "@clerk/nextjs";
+"use client"
+import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../public/images/vacationimg.png"
 import Image from "next/image"
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createUser } from "../../lib/api";
+import { useEffect } from "react";
+import { useTripData } from "../context/TripDataContext";
+import { resetTripData } from "@/lib/resetTripData";
 
-export default async function (Component) {
-  let hasRun = false;
-  const { userId } = auth();
-
-  if (!userId){
-    return redirect("/sign-in");
-  }
-
- /* 
- TODO: need to fix the email/phone number results coming from user object & add pathways for 
- updating existing users + look into better ways of implementing this
- */
-
+const userExists = async (user) => {
   try {
-    if (!hasRun) {
-    const user = await currentUser();
-  
-    if (!user) {
-      console.error("No signed-in user found.");
-      return;
-    }
-
     const newUser = await createUser(user);
-    hasRun = true;
-  }
   } catch (error) {
     console.error("An error occurred:", error);
   }
+};
+  
+export default function (Component) {
+  const currentUser = useUser();
+  const { tripData, setTripData } = useTripData();
 
+  useEffect(() => {
+    if (currentUser.isLoaded && currentUser.user) {
+      userExists(currentUser.user);
+    }
+  }, [currentUser.isLoaded]);
+  
   return (
     <div className="h-5/6">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
@@ -43,6 +36,7 @@ export default async function (Component) {
           <Link
             className="text-white bg-emerald-400 hover:text-white hover:bg-emerald-500 p-2 rounded-lg border"
             href="/plan/new"
+            onClick={() => resetTripData(tripData, setTripData)}
           >
             + Create a New Itinerary
           </Link>

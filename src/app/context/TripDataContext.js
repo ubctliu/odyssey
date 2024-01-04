@@ -13,7 +13,10 @@ export const TripDataProvider = ({ children }) => {
     description: "",
     isLocationSet: false,
     isDateSet: false,
-    key: 'selection'
+    key: 'selection',
+    clerkId: "",
+    url: "",
+    notes: ""
   });
 
   return (

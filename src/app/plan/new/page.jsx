@@ -8,6 +8,9 @@ import SearchBar from "../../components/SearchBar";
 import Link from "next/link";
 import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
+import DateRangeCalendar from "@/app/components/DateRangeCalendar";
+import { useEffect } from "react";
+import { resetTripData } from "@/lib/resetTripData";
 
 export default function (Component) {
   const currentUser = useUser();
@@ -19,9 +22,14 @@ export default function (Component) {
     return <div>Loading...</div>;
   }
 
+
   // if (!currentUser.isSignedIn){
   //   return redirect("/sign-in")
   // }
+
+  useEffect(() => {
+    resetTripData(tripData, setTripData);
+  }, [])
 
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
@@ -80,23 +88,9 @@ export default function (Component) {
               <label
                 htmlFor="date"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
-              >
-                Date
-              </label>
-              <input
-                required
-                className="bg-white text-black p-2 rounded-lg border border-black"
-                placeholder="Date Range (required)"
-                value={tripData.date}
-                onChange={(e) => {
-                  setTripData((prev) => ({
-                    ...prev,
-                    startDate: e.target.value,
-                    endDate: e.target.value,
-                    isDateSet: e.target.value !== "" && prev.endDate !== "",
-                  }));
-                }}
               />
+                Date
+              <DateRangeCalendar className={"bg-white text-black p-2 rounded-lg border border-black"}/>
               <label
                 htmlFor="description"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
@@ -118,6 +112,10 @@ export default function (Component) {
             {tripData.isDateSet && tripData.isLocationSet ? (
               <Link
                 href={`/plan/${customUrl}`}
+                onClick={() => setTripData((prev) => ({
+                  ...prev,
+                  url: customUrl
+                }))}
                 className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
               >
                 Plan My Trip!

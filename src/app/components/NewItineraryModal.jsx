@@ -46,7 +46,7 @@ export default function NewItineraryModal({ onClose }) {
               <SearchBar setLocationData={setTripData} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              <DateRangeCalendar />
+              <DateRangeCalendar className={"border p-2 w-full"} />
             </div>
             <div>
               
@@ -69,11 +69,19 @@ export default function NewItineraryModal({ onClose }) {
               currentUser.isSignedIn ?
               <Link 
             href={`/plan/${customUrl}`}
+            onClick={() => setTripData((prev) => ({
+              ...prev,
+              url: customUrl
+            }))}
             className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
             </Link> : 
             <Link 
             href={`/plan/${customUrl}`}
+            onClick={() => setTripData((prev) => ({
+              ...prev,
+              url: customUrl
+            }))}
             className="bg-orange-400 text-white px-4 py-2 rounded">
               Continue as Guest
             </Link>:

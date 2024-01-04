@@ -5,6 +5,8 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
+import DateRangeCalendar from "@/app/components/DateRangeCalendar";
+import DatePicker from "@/app/components/DatePicker";
 
 export default function (props) {
   const currentUser = useUser();
@@ -19,9 +21,15 @@ export default function (props) {
     if (!currentUser.isSignedIn) {
       return redirect("/sign-in");
     }
+
+    // set clerkId in tripData
+    setTripData((prev) => ({
+      ...prev,
+      clerkId: currentUser.user.id,
+    }))
     console.log(tripData);
     // setTripState(props.params.encodedUrl);
-  }, [])
+  }, []);
 
   // another useEffect for updating state for changes
   // useEffect(() => {
@@ -32,8 +40,33 @@ export default function (props) {
     <div className="h-5/6 flex justify-center">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
-          <section className="">
-            {" "}
+          <section className="top_title">
+          <form className="">
+          <label>Title</label>
+          <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.title} placeholder="Title..." 
+          onChange={e => setTripData((prev) => ({
+            ...prev,
+            title: e.target.value
+          }))}/>
+          <label>Start Date</label>
+          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} startOrEndDate={"startDate"}/>
+          <label>End Date</label>
+          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} startOrEndDate={"endDate"}/>
+          <label>Notes</label>
+          <textarea
+                className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100 w-full"
+                id="notes"
+                name="notes"
+                placeholder="Notes (optional)"
+                rows="4"
+                onChange={e => (prev) => ({
+                  ...prev,
+                  notes: e.target.value
+                })}
+              />
+             <label>Days</label>
+             <section name={"days"} className={"contents"}></section>
+          </form>
             {/* This will be the section to display trip information*/}
           </section>
           <h3 className="text-4xl font-bold text-white mb-4">
@@ -95,6 +128,9 @@ export default function (props) {
           >
             Share My Trip!
           </a>
+          <button className={"text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}>
+            Save Trip Details
+          </button>
         </div>
       </main>
     </div>

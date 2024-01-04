@@ -7,7 +7,7 @@ import { useTripData } from '../context/TripDataContext';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
-const DateRangeCalendar = () => {
+const DateRangeCalendar = ({ className }) => {
   const { tripData, setTripData } = useTripData();
   const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -26,7 +26,7 @@ const DateRangeCalendar = () => {
   return (
     <div className='calendar'>
       <input readOnly required
-        className="border p-2 w-full"
+        className={className}
         onClick={handleClick}
         id="date"
         name="date"
