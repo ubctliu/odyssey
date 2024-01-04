@@ -1,27 +1,24 @@
 import { PrismaClient } from '@prisma/client';
 //UPDATE WITH DAY INFO
 
-// Trip doesn't need to check if another identical trip already exists - may need to handle duplicate trip urls (maybe with current timestamp in custom url?)
+// we don't need to worry about same days, as each trip will have Day 1 to Day x, correct?
 export default async function createDay({ day }) {
   const prisma = new PrismaClient();
 
   try {
 
-    const newTrip = await prisma.trip.create({
+    const newDay = await prisma.day.create({
       data: {
-        clerkId: trip.clerkId,
-        location: trip.location,
-        startDate: trip.startDate,
-        endDate: trip.endDate,
-        notes: trip.notes,
-        url: trip.customUrl,
+        date: day.date,
+        trip: day.tripId,
+        notes: day.notes
       }
     });
 
-    console.log("Trip created:", trip);
-    return newTrip;
+    console.log("Day created:", day);
+    return newDay;
   } catch (error) {
-    console.log("Error occurred while creating trip:", error);
+    console.log("Error occurred while creating day:", error);
     throw error;
   } finally {
     await prisma.$disconnect();
