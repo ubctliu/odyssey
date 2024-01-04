@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
+import DatePicker from "@/app/components/DatePicker";
 
 export default function (props) {
   const currentUser = useUser();
@@ -46,7 +47,10 @@ export default function (props) {
             ...prev,
             title: e.target.value
           }))}/>
-          <DateRangeCalendar className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100"}/>
+          <label>Start Date</label>
+          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100"} startOrEndDate={"startDate"}/>
+          <label>End Date</label>
+          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100"} startOrEndDate={"endDate"}/>
           </form>
             {/* This will be the section to display trip information*/}
           </section>
