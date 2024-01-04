@@ -46,7 +46,7 @@ export default function NewItineraryModal({ onClose }) {
               <SearchBar setLocationData={setTripData} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              <DateRangeCalendar />
+              <DateRangeCalendar className={"border p-2 w-full"} />
             </div>
             <div>
               

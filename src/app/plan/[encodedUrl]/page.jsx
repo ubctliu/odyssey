@@ -5,6 +5,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
+import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 
 export default function (props) {
   const currentUser = useUser();
@@ -19,9 +20,15 @@ export default function (props) {
     if (!currentUser.isSignedIn) {
       return redirect("/sign-in");
     }
+
+    // set clerkId in tripData
+    setTripData((prev) => ({
+      ...prev,
+      clerkId: currentUser.user.id
+    }))
     console.log(tripData);
     // setTripState(props.params.encodedUrl);
-  }, [])
+  }, []);
 
   // another useEffect for updating state for changes
   // useEffect(() => {
@@ -32,8 +39,15 @@ export default function (props) {
     <div className="h-5/6 flex justify-center">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
-          <section className="">
-            {" "}
+          <section className="top_title">
+          <form className="">
+          <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100" value={tripData.title} placeholder="Title..." 
+          onChange={e => setTripData((prev) => ({
+            ...prev,
+            title: e.target.value
+          }))}/>
+          <DateRangeCalendar />
+          </form>
             {/* This will be the section to display trip information*/}
           </section>
           <h3 className="text-4xl font-bold text-white mb-4">
