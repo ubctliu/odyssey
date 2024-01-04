@@ -1,25 +1,26 @@
 import { PrismaClient } from '@prisma/client';
+import getDayIdByTripId from '../getDayIdByTripId';
 
-// Try to update existing user
-export default async function updateUser(user) {
+export default async function updateDay(day) {
   const prisma = new PrismaClient();
+  const tripId = day.tripId;
+  const dayId = getDayIdByTripId(tripId); //need to fix this
 
   try {
 
-    const updatedUser = await prisma.user.update({
+    const updatedDay = await prisma.day.update({
       where: {
-        clerkId: user.id
+        dayId: day.id
       },
       data: {
-        email: user.email,
-        phoneNumber: user.phoneNumber
+        notes: day.notes
       }
     });
 
-    console.log("User updated:", updatedUser);
-    return updateUser;
+    console.log("Day updated:", updatedDay);
+    return updateDay;
   } catch (error) {
-    console.log("Error occurred while updating user:", error);
+    console.log("Error occurred while updating day:", error);
     throw error;
   } finally {
     await prisma.$disconnect();
