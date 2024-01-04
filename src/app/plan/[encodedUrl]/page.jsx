@@ -42,15 +42,28 @@ export default function (props) {
         <div className="flex flex-col justify-center items-center">
           <section className="top_title">
           <form className="">
-          <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100" value={tripData.title} placeholder="Title..." 
+          <label>Title</label>
+          <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.title} placeholder="Title..." 
           onChange={e => setTripData((prev) => ({
             ...prev,
             title: e.target.value
           }))}/>
           <label>Start Date</label>
-          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100"} startOrEndDate={"startDate"}/>
+          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} startOrEndDate={"startDate"}/>
           <label>End Date</label>
-          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-105 hover:bg-gray-100"} startOrEndDate={"endDate"}/>
+          <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} startOrEndDate={"endDate"}/>
+          <label>Notes</label>
+          <textarea
+                className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100 w-full"
+                id="notes"
+                name="notes"
+                placeholder="Notes (optional)"
+                rows="4"
+                onChange={e => (prev) => ({
+                  ...prev,
+                  notes: e.target.value
+                })}
+              />
           </form>
             {/* This will be the section to display trip information*/}
           </section>
@@ -113,6 +126,9 @@ export default function (props) {
           >
             Share My Trip!
           </a>
+          <button className={"text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}>
+            Save Trip Details
+          </button>
         </div>
       </main>
     </div>

@@ -15,7 +15,8 @@ export const TripDataProvider = ({ children }) => {
     isDateSet: false,
     key: 'selection',
     clerkId: "",
-    url: ""
+    url: "",
+    notes: ""
   });
 
   return (

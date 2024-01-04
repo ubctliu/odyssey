@@ -9,7 +9,8 @@ export const resetTripData = (tripData, setTripData) => {
     isDateSet: false,
     key: 'selection',
     clerkId: "",
-    url: ""
+    url: "",
+    notes: ""
   };
 
   // reset the base variables
