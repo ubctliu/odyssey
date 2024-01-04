@@ -10,7 +10,7 @@
     "prisma": "npx prisma"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.28.1",
+    "@clerk/nextjs": "^4.29.1",
     "@prisma/client": "^5.7.1",
     "@vercel/postgres": "^0.5.1",
     "@vis.gl/react-google-maps": "^0.4.2",
