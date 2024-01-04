@@ -64,6 +64,8 @@ export default function (props) {
                   notes: e.target.value
                 })}
               />
+             <label>Days</label>
+             <section name={"days"} className={"contents"}></section>
           </form>
             {/* This will be the section to display trip information*/}
           </section>

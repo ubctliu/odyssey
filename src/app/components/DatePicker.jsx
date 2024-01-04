@@ -23,10 +23,10 @@ const DatePicker = ({ className, startOrEndDate }) => {
       />
       {openCalendar && <Calendar className={className}
         date={tripData[startOrEndDate]}
-        onChange={item => {setTripData((prev) => ({
+        onChange={item => setTripData((prev) => ({
           ...prev,
           [startOrEndDate]: item
-        })); console.log(tripData)}}
+        }))}
       />}
       </div>
   )
