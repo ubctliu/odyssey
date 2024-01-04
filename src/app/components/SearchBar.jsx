@@ -1,11 +1,9 @@
 "use client"
 import {useRef, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
 
 const SearchBar = ({ className, setLocationData }) => {
   const inputRef = useRef(null);
-  const router = useRouter();
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -21,7 +19,7 @@ const SearchBar = ({ className, setLocationData }) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [inputValue, router]);
+  }, [inputValue]);
   
 
   const onPlaceChanged = place => {

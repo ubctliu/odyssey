@@ -1,49 +1,47 @@
-"use client"
-import { useUser } from "@clerk/nextjs";
-import vacationimg from "../../../public/images/vacationimg.png"
-import Image from "next/image"
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import { createUser } from "../../lib/api";
-import { useEffect } from "react";
-import { useTripData } from "../context/TripDataContext";
+
+'use client';
+
+import { useState } from "react";
+import Image from "next/image";
+import TitleTypeWriter from "@/app/components/TitleTypeWriter";
+import NewItineraryModal from "@/app/components/NewItineraryModal"; // Assuming NewItineraryModal is a separate component
+import vacation from '../../../public/images/vacation.png';
+import { useTripData } from "@/app/context/TripDataContext";
 import { resetTripData } from "@/lib/resetTripData";
 
-const userExists = async (user) => {
-  try {
-    const newUser = await createUser(user);
-  } catch (error) {
-    console.error("An error occurred:", error);
-  }
-};
-  
-export default function (Component) {
-  const currentUser = useUser();
+export default function Component() {
+  const [showModal, setShowModal] = useState(false);
   const { tripData, setTripData } = useTripData();
 
-  useEffect(() => {
-    if (currentUser.isLoaded && currentUser.user) {
-      userExists(currentUser.user);
-    }
-  }, [currentUser.isLoaded]);
-  
-  return (
-    <div className="h-5/6">
-      <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Welcome to Odyssey</h1>
-          <p className="text-2xl font-semibold text-white mb-4">Create and share your travel itineraries</p>
-          <Link
-            className="text-white bg-emerald-400 hover:text-white hover:bg-emerald-500 p-2 rounded-lg border"
-            href="/plan/new"
-            onClick={() => resetTripData(tripData, setTripData)}
-          >
-            + Create a New Itinerary
-          </Link>
-        </div>
-        <Image src={vacationimg} alt="vacation" className="w-1/2 border-solid border-x-orange-300 border-4" />
+  const openModal = () => {
+    setShowModal(true);
+  };
 
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  return (
+    <div>
+      {showModal && <NewItineraryModal onClose={closeModal} />}
+      <main className="px-6 py-8">
+        <section className="mb-10">
+          <h2 className="text-3xl font-semibold text-gray-800 mb-6 flex justify-center">Welcome to Odyssey</h2>
+          <span className=" font-semibold text-black mb-4 flex justify-center">
+            <TitleTypeWriter />
+          </span>
+          <div className="flex justify-center items-center">
+            <button
+              className="text-white bg-orange-400 p-4 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-50"
+              onClick={() => { openModal(); resetTripData(tripData, setTripData); }}
+            >
+              Get Started
+            </button>
+          </div>
+          <Image src={vacation} alt="vacation photo" className="mx-auto" />
+        </section>
       </main>
+     
     </div>
-  )
+  );
 }
