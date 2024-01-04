@@ -1,3 +1,4 @@
+//TODO: these fetch paths need to be updated to support more dynamic url pathing - right now only works locally
 export async function createUser(user) {
   try {
   const res = await fetch('http://localhost:3000/api/users/new', {
