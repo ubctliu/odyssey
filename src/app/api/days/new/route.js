@@ -1,15 +1,15 @@
 import createDay from '@/lib/db/createDay';
 import { NextResponse } from 'next/server';
 
-// POST /api/trips/new
-// Required fields in body: { Trip object, User object }  - subject to change
+// POST /api/days/new
+// Required fields in body: { Day object, Trip object } - I think?
 export async function POST(req) {
   if (req.method === "POST") {
-    const { trip, user } = await req.json();
+    const { day, trip} = await req.json();
     try {
-      const newTrip = await createTrip(user);
+      const newDay = await createDay(trip);
 
-      return NextResponse.json({ status: 201 }, { data: newTrip });
+      return NextResponse.json({ status: 201 }, { data: newDay });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }

@@ -10,7 +10,7 @@ async function getDayIdByTripId(tripId) {
     return null;
   }
 
-  // right now this checks the first day only... need to change
+  // right now this checks the first day only... need to change to handle any day
   const updatedDay = trip.days[0];
 
   // Check if the day you wish to update exists
