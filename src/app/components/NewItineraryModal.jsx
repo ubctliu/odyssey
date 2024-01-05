@@ -71,7 +71,8 @@ export default function NewItineraryModal({ onClose }) {
             href={`/plan/${customUrl}`}
             onClick={() => setTripData((prev) => ({
               ...prev,
-              url: customUrl
+              url: customUrl,
+              clerkId: currentUser.user.id
             }))}
             className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
@@ -80,7 +81,8 @@ export default function NewItineraryModal({ onClose }) {
             href={`/plan/${customUrl}`}
             onClick={() => setTripData((prev) => ({
               ...prev,
-              url: customUrl
+              url: customUrl,
+              clerkId: currentUser.user.id
             }))}
             className="bg-orange-400 text-white px-4 py-2 rounded">
               Continue as Guest

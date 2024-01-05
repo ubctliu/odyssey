@@ -114,7 +114,8 @@ export default function (Component) {
                 href={`/plan/${customUrl}`}
                 onClick={() => setTripData((prev) => ({
                   ...prev,
-                  url: customUrl
+                  url: customUrl,
+                  clerkId: currentUser.user.id
                 }))}
                 className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
               >

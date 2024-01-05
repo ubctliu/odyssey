@@ -7,6 +7,18 @@ import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
+import { createTrip } from "@/lib/api";
+
+
+const saveTrip = async (trip) => {
+  try {
+    console.log(trip);
+    const newTrip = await createTrip(trip);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+  
 
 export default function (props) {
   const currentUser = useUser();
@@ -22,18 +34,11 @@ export default function (props) {
       return redirect("/sign-in");
     }
 
-    // set clerkId in tripData
-    setTripData((prev) => ({
-      ...prev,
-      clerkId: currentUser.user.id,
-    }))
-    console.log(tripData);
     // setTripState(props.params.encodedUrl);
   }, []);
 
   // another useEffect for updating state for changes
   // useEffect(() => {
-
   // });
 
   return (
@@ -128,7 +133,8 @@ export default function (props) {
           >
             Share My Trip!
           </a>
-          <button className={"text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}>
+          <button className={"text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}
+          onClick={() => saveTrip(tripData)}>
             Save Trip Details
           </button>
         </div>

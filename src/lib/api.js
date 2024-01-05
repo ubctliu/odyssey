@@ -59,3 +59,25 @@ export async function updateUser(user) {
     console.error("Error retrieving user:", error);
   }
 }
+
+
+export async function createTrip(trip) {
+  try {
+    const res = await fetch(`/api/trips/new`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ trip })
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to create trip");
+    }
+  
+    const newTrip = await res.json();
+    return newTrip;
+  } catch (error) {
+    console.error("Error creating trip:", error);
+  }
+}

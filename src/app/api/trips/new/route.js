@@ -2,12 +2,12 @@ import createTrip from '@/lib/db/createTrip';
 import { NextResponse } from 'next/server';
 
 // POST /api/trips/new
-// Required fields in body: { Trip object, User object }  - subject to change
+// Required fields in body: { Trip object }  - subject to change
 export async function POST(req) {
   if (req.method === "POST") {
-    const { trip, user } = await req.json();
+    const { trip } = await req.json();
     try {
-      const newTrip = await createTrip(user);
+      const newTrip = await createTrip(trip);
 
       return NextResponse.json({ status: 201 }, { data: newTrip });
     } catch (error) {
