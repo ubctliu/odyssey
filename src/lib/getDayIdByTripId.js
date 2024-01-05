@@ -11,6 +11,7 @@ async function getDayIdByTripId(tripId) {
   }
 
   // right now this checks the first day only... need to change to handle any day
+  // more specifically, the day that the user clicks 
   const updatedDay = trip.days[0];
 
   // Check if the day you wish to update exists
