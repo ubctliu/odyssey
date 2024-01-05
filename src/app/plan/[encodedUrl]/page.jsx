@@ -7,20 +7,29 @@ import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
-import { createTrip } from "@/lib/api";
+import { createTrip, fetchTrip, updateTrip } from "@/lib/api";
 
 
+// TODO: test feature & change customURL to randomize it before merging to main
 const saveTrip = async (trip) => {
   try {
-    console.log(trip);
-    const newTrip = await createTrip(trip);
+    const tripExists = fetchTrip(trip);
+
+    if (!tripExists) {
+      const newTrip = await createTrip(trip);
+      console.log("New trip saved:", newTrip);
+    } else {
+      const updatedTrip = await updateTrip(trip);
+      console.log("Trip details updated:", updatedTrip);
+    }
+
   } catch (error) {
     console.error("An error occurred:", error);
   }
 };
   
 
-export default function (props) {
+export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
 
@@ -34,7 +43,6 @@ export default function (props) {
       return redirect("/sign-in");
     }
 
-    // setTripState(props.params.encodedUrl);
   }, []);
 
   // another useEffect for updating state for changes
