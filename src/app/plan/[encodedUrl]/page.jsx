@@ -7,8 +7,31 @@ import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
+import { createTrip, fetchTrip, updateTrip } from "@/lib/api";
 
-export default function (props) {
+
+/* feature is tested and working but one thing to keep in mind is that tripData is lost on hard refresh
+  right now which means that we kind of have to work around it atm unless we choose to store this info 
+  in session
+*/
+const saveTrip = async (trip) => {
+  try {
+    const tripExists = await fetchTrip(trip.url);
+    if (!tripExists.data) {
+      const newTrip = await createTrip(trip);
+      console.log("New trip saved:", newTrip);
+    } else {
+      const updatedTrip = await updateTrip(trip);
+      console.log("Trip details updated:", updatedTrip);
+    }
+    console.log(trip);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+  
+
+export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
 
@@ -22,18 +45,10 @@ export default function (props) {
       return redirect("/sign-in");
     }
 
-    // set clerkId in tripData
-    setTripData((prev) => ({
-      ...prev,
-      clerkId: currentUser.user.id,
-    }))
-    console.log(tripData);
-    // setTripState(props.params.encodedUrl);
   }, []);
 
   // another useEffect for updating state for changes
   // useEffect(() => {
-
   // });
 
   return (
@@ -128,7 +143,8 @@ export default function (props) {
           >
             Share My Trip!
           </a>
-          <button className={"text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}>
+          <button className={"text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}
+          onClick={() => saveTrip(tripData)}>
             Save Trip Details
           </button>
         </div>

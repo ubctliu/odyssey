@@ -34,10 +34,10 @@ export default function (Component) {
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
     ? stringToBase64(
-        `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}`
+        `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`
       )
     : stringToBase64(
-        `${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}`
+        `${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`
       );
 
   return (
@@ -114,7 +114,8 @@ export default function (Component) {
                 href={`/plan/${customUrl}`}
                 onClick={() => setTripData((prev) => ({
                   ...prev,
-                  url: customUrl
+                  url: customUrl,
+                  clerkId: currentUser.user.id
                 }))}
                 className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
               >

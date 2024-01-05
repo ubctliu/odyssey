@@ -1,15 +1,16 @@
-import createTrip from '@/lib/db/createTrip';
+import createEvent from '@/lib/db/createEvent';
 import { NextResponse } from 'next/server';
 
-// POST /api/trips/new
-// Required fields in body: { Trip object }  - subject to change
+// TODO
+// POST /api/events/new
+// Required fields in body: { }  - subject to change
 export async function POST(req) {
   if (req.method === "POST") {
-    const { trip } = await req.json();
+    const {} = await req.json();
     try {
-      const newTrip = await createTrip(trip);
+      const newEvent = await createEvent();
 
-      return NextResponse.json({ status: 201 }, { data: newTrip });
+      return NextResponse.json({ status: 201 }, { data: newEvent });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }
