@@ -11,6 +11,7 @@ export default async function updateTrip(trip) {
         url: trip.url
       },
       data: {
+      /* TODO: These currently don't exist in the schema - need to add */
        // description: trip.description,
        // title: trip.title,
         location: trip.location,
@@ -21,7 +22,7 @@ export default async function updateTrip(trip) {
     });
 
     console.log("Trip updated:", updatedTrip);
-    return updateUser;
+    return updatedTrip;
   } catch (error) {
     console.log("Error occurred while updating trip:", error);
     throw error;

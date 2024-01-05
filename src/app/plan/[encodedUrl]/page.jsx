@@ -10,19 +10,21 @@ import DatePicker from "@/app/components/DatePicker";
 import { createTrip, fetchTrip, updateTrip } from "@/lib/api";
 
 
-// TODO: test feature & change customURL to randomize it before merging to main
+/* feature is tested and working but one thing to keep in mind is that tripData is lost on hard refresh
+  right now which means that we kind of have to work around it atm unless we choose to store this info 
+  in session
+*/
 const saveTrip = async (trip) => {
   try {
-    const tripExists = fetchTrip(trip);
-
-    if (!tripExists) {
+    const tripExists = await fetchTrip(trip.url);
+    if (!tripExists.data) {
       const newTrip = await createTrip(trip);
       console.log("New trip saved:", newTrip);
     } else {
       const updatedTrip = await updateTrip(trip);
       console.log("Trip details updated:", updatedTrip);
     }
-
+    console.log(trip);
   } catch (error) {
     console.error("An error occurred:", error);
   }

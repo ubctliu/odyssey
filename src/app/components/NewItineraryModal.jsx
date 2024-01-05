@@ -20,7 +20,7 @@ export default function NewItineraryModal({ onClose }) {
   }
   
    // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
-  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}`) : stringToBase64(`${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}`);
+  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`) : stringToBase64(`${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`);
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>

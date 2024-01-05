@@ -13,12 +13,12 @@ export default async function fetchTrip(url) {
 
     if (!existingTrip) {
       console.log("Trip doesn't exist");
-      return;
+      return existingTrip; // equal to null
     }
 
 
     console.log("Trip fetched:", existingTrip);
-    return existingUser;
+    return existingTrip;
   } catch (error) {
     console.log("Error occurred while fetching trip:", error);
     throw error;

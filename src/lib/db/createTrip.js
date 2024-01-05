@@ -4,18 +4,26 @@ import { PrismaClient } from '@prisma/client';
 export default async function createTrip(trip) {
   const prisma = new PrismaClient();
   try {
-    // const newTrip = await prisma.trip.create({
-    //   data: {
-    //     location: trip.location,
-    //     startDate: trip.startDate,
-    //     endDate: trip.endDate,
-    //     notes: trip.notes,
-    //     url: url,
-    //   }
-    // });
+    // temporary solution, consider passing down info on call
+    const currentUser = await prisma.user.findUnique({
+      where: {
+        clerkId: trip.clerkId
+      }
+    });
+
+    const newTrip = await prisma.trip.create({
+      data: {
+        location: trip.location,
+        startDate: trip.startDate,
+        endDate: trip.endDate,
+        notes: trip.notes,
+        url: trip.url,
+        userId: currentUser.id
+      }
+    });
 
     console.log("Trip created:", newTrip);
-    // return newTrip;
+    return newTrip;
   } catch (error) {
     console.log("Error occurred while creating trip:", error);
     throw error;
