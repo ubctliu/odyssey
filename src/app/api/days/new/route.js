@@ -2,12 +2,12 @@ import createDay from '@/lib/db/createDay';
 import { NextResponse } from 'next/server';
 
 // POST /api/days/new
-// Required fields in body: { Day object, Trip object } - I think?
+// Required fields in body: { Day object } - I think?
 export async function POST(req) {
   if (req.method === "POST") {
-    const { day, trip} = await req.json();
+    const { day } = await req.json();
     try {
-      const newDay = await createDay(trip);
+      const newDay = await createDay(day);
 
       return NextResponse.json({ status: 201 }, { data: newDay });
     } catch (error) {

@@ -1,14 +1,14 @@
-import updateUser from '@/lib/db/updateUser';
+import updateDay from '@/lib/db/updateDay';
 import { NextResponse } from 'next/server';
 
-// PUT /api/users/update
-// Required fields in body: Clerk user object
+// PUT /api/days/update
+// Required fields in body: Trip object
 export async function PUT(req) {
   if (req.method === "PUT") {
-    const { user } = await req.json();
+    const { day } = await req.json();
     try {
-      const updatedUser = await updateUser(user);
-      return NextResponse.json({ status: 201 }, { data: updatedUser });
+      const updatedDay = await updateDay(day);
+      return NextResponse.json({ status: 201 }, { data: updatedDay });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }

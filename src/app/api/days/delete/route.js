@@ -1,15 +1,15 @@
-import deleteTrip from '@/lib/db/deleteTrip';
+import deleteDay from '@/lib/db/deleteDay';
 import { NextResponse } from 'next/server';
 
-// DELETE /api/trips/delete
-// Required fields in body: { Trip object, User object }  - subject to change
+// DELETE /api/days/delete
+// Required fields in body: { Day object } - I think?
 export async function DELETE(req) {
   if (req.method === "DELETE") {
-    const { trip, user } = await req.json();
+    const { day } = await req.json();
     try {
-      const deletedTrip = await deleteTrip({ trip, user });
+      const deletedDay = await deleteDay({ day });
 
-      return NextResponse.json({ status: 201 }, { data: deletedTrip });
+      return NextResponse.json({ status: 201 }, { data: deletedDay });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }
