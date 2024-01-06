@@ -42,26 +42,32 @@ export default function (Component) {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center">
+    <div className="h-screen flex flex-col justify-normal items-center bg-zinc-500">
       <h1 className="text-4xl font-bold text-white mb-4">
         {currentUser.isSignedIn
           ? `Hello, ${currentUser.user.firstName}.`
           : "Hello, Guest"}{" "}
         Here are your planned trips.
       </h1>
-      <main className="flex p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
-        <div className="flex flex-wrap justify-center items-center space-x-4 space-y-4">
+      <main className="h-1/2 w-1/2 mx-auto flex p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
+        <div className="flex flex-wrap justify-center items-center space-x-6 space-y-6">
           {[currentIndex, currentIndex + 1, currentIndex + 2].map((index) => {
             const id = imageIds[index % imageIds.length];
             return (
-              <div key={id} className="w-1/5 flex justify-center items-center">
+              <div
+                key={id}
+                className="flex flex-col justify-center items-center w-1/4"
+              >
                 <LazyLoad height={200} once>
                   <img
                     src={`https://picsum.photos/id/${id}/181/177.jpg`}
                     alt="Random images from mock data"
-                    className="border rounded-lg transform transition duration-500 ease-in-out hover:scale-110 animate-fade-in"
+                    className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
                   />
                 </LazyLoad>
+                <p className="mt-2 text-center text-white">
+                  Title for each trip {id}
+                </p>
               </div>
             );
           })}
@@ -70,7 +76,7 @@ export default function (Component) {
           type="button"
           tabIndex="0"
           onClick={nextImage}
-          className="flex items-center justify-venter p-2 bg-gray-200 text-white rounded-full overflow-hidden"
+          className="flex items-center justify-venter p-2 bg-gray-200 text-white rounded-full overflow-hidden hover:bg-gray-300 transition-colors duration-200"
         >
           <svg
             aria-hidden="true"
