@@ -7,7 +7,7 @@ export async function DELETE(req) {
   if (req.method === "DELETE") {
     const { day } = await req.json();
     try {
-      const deletedDay = await deleteDay({ day });
+      const deletedDay = await deleteDay(day);
 
       return NextResponse.json({ status: 201 }, { data: deletedDay });
     } catch (error) {
