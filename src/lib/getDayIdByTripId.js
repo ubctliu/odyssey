@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function getDayIdByTripId(tripId, clickedDay) {
+async function getDayIdByTripId(tripId, selectedDay) {
   const trip = await prisma.trip.findDayId({
     where: { id: tripId },
     include: { days: true }, // Include the related days
@@ -15,10 +15,10 @@ async function getDayIdByTripId(tripId, clickedDay) {
   }
 
   // finds the day that matches the clicked day
-  const clickedDay = trip.days.find(day => day.date === clickedDay);
+  const clickedDay = trip.days.find(day => day.date === selectedDay);
 
   // Check if the day you wish to update exists
-  if (!updatedDay) {
+  if (!clickedDay) {
     console.error('Day not found for the trip');
     return null;
   }
