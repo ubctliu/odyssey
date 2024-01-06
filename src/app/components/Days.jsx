@@ -7,7 +7,7 @@ import { fetchEvent } from '../../lib/api';
 // Props: title, notes, day, dayid
 export default function Days() {
     const dayid = 1; // Replace with props as needed
-  const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -57,8 +57,8 @@ export default function Days() {
           {events.map((event, index) => (
             <div key={index} className="text-gray-600 py-2">
               <div className="flex justify-between items-center" onClick={() => toggleVisibility(index)}>
-                <span>{event.timeStart} - {event.timeEnd}</span>
-                <button className="text-blue-500">Details</button>
+              <span>{event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} - {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
+            <button className="text-blue-500">Details</button>
               </div>
               {event.isVisible && (
                 <div className="mt-2 pl-4 border-l-2 border-gray-300">
