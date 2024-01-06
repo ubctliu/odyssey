@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function getDayIdByTripId(tripId, selectedDay) {
-  const trip = await prisma.trip.findDayId({
+  const trip = await prisma.trip.findUnique({
     where: { id: tripId },
     include: { days: true }, // Include the related days
 });
