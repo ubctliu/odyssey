@@ -3,10 +3,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function getDayIdByTripId(tripId, selectedDay) {
-  const trip = await prisma.trip.findUnique({
-    where: { id: tripId },
-    include: { days: true }, // Include the related days
-});
+  try {
+    const trip = await prisma.trip.findUnique({
+      where: { id: tripId },
+      include: { days: true }, // Include the related days
+    });
 
   // Check if the trip exists
   if (!trip) {
@@ -25,6 +26,12 @@ async function getDayIdByTripId(tripId, selectedDay) {
 
   // Return the day ID
   return clickedDay.id;
+  } catch (error) {
+    console.error('Error occurred while fetching day ID', error);
+    throw error;
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 export default getDayIdByTripId;
