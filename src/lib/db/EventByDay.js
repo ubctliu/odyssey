@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-export default async function fetchEventByDay(dayId = 1) {
+export default async function fetchEventByDay(dayId) {
   const prisma = new PrismaClient();
 
   try {
@@ -13,7 +13,6 @@ export default async function fetchEventByDay(dayId = 1) {
       },
     });
 
-    console.log("Events by day fetched:", eventsByDay);
     return eventsByDay;
   } catch (error) {
     console.error("Error occurred while fetching events by day:", error);

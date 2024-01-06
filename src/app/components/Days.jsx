@@ -1,21 +1,27 @@
 'use client'
+
 import React, { useState, useEffect } from 'react';
 import getDayNumberSuffix from '../../lib/getDayNumberSuffix';
 import Pencil from '../../../public/Icons/PencilIcon';
 import { fetchEvent } from '../../lib/api';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 // Props: title, notes, day, dayid
 export default function Days() {
-    const dayid = 1; // Replace with props as needed
-    const [events, setEvents] = useState([]);
+  const dayid = 1; // Replace with props as needed
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const fetchedData = await fetchEvent(dayid);
-        setEvents(addIsVisibleProperty(fetchedData));
+        setEvents(addIsVisibleProperty(fetchedData.data));
+        setIsLoading(false); // Set isLoading to false after data is fetched
       } catch (error) {
         console.error("Error fetching events:", error);
+        setIsLoading(false); // Set isLoading to false in case of an error
       }
     }
 
@@ -23,7 +29,17 @@ export default function Days() {
   }, []);
 
   const addIsVisibleProperty = (data) => {
-    return data.map((event) => ({ ...event, isVisible: false }));
+    if (Array.isArray(data)) {
+      return data.map((event) => {
+        return {
+          ...event,
+          isVisible: false,
+          timeStart: new Date(event.timeStart),
+          timeEnd: new Date(event.timeEnd)
+        };
+      });
+    }
+    return [];
   };
 
   const toggleVisibility = index => {
@@ -54,20 +70,28 @@ export default function Days() {
 
         <div className="mt-4">
           <h2 className="text-xl font-semibold text-gray-700">Events</h2>
-          {events.map((event, index) => (
-            <div key={index} className="text-gray-600 py-2">
-              <div className="flex justify-between items-center" onClick={() => toggleVisibility(index)}>
-              <span>{event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} - {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}</span>
-            <button className="text-blue-500">Details</button>
-              </div>
-              {event.isVisible && (
-                <div className="mt-2 pl-4 border-l-2 border-gray-300">
-                    <p>Location: {event.location}</p>
-                  <p>Notes: {event.notes}</p>
+          {isLoading ? (
+            <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
+          ) : (
+            events.map((event, index) => (
+              <div key={index} className="text-gray-600 py-2">
+                <div className="flex justify-between items-center">
+                  <span>
+                    {event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -  {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                  </span>
+                  <span onClick={() => toggleVisibility(index)} className="cursor-pointer text-blue-500">
+                    Details
+                  </span>
                 </div>
-              )}
-            </div>
-          ))}
+                {event.isVisible && (
+                  <div className="mt-2 pl-4 border-l-2 border-gray-300">
+                    <p>Location: {event.location}</p>
+                    <p>Notes: {event.notes}</p>
+                  </div>
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

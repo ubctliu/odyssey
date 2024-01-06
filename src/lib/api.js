@@ -61,8 +61,6 @@ export async function updateUser(user) {
 
 export async function fetchEvent(id) {
   try {
-    console.log("fetching event")
-    console.log(id)
     const res = await fetch(`http://localhost:3000/api/events/${id}`, {
       method: 'GET',
       headers: {
@@ -74,7 +72,6 @@ export async function fetchEvent(id) {
       throw new Error("Failed to retrieve event");
     }
     const fetchedEvent = await res.json();
-    console.log("Fetched event:", fetchedEvent);
     return fetchedEvent;
   } catch (error) {
     console.error("Error retrieving event:", error);
