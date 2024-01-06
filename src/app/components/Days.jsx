@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, useEffect } from 'react';
 import getDayNumberSuffix from '../../lib/getDayNumberSuffix';
 import Pencil from '../../../public/Icons/PencilIcon';
@@ -63,6 +62,7 @@ export default function Days() {
               </div>
               {event.isVisible && (
                 <div className="mt-2 pl-4 border-l-2 border-gray-300">
+                    <p>Location: {event.location}</p>
                   <p>Notes: {event.notes}</p>
                 </div>
               )}
