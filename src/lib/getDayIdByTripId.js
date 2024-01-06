@@ -1,7 +1,11 @@
-async function getDayIdByTripId(tripId) {
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function getDayIdByTripId(tripId, clickedDay) {
   const trip = await prisma.trip.findDayId({
-  where: { id: tripId },
-  include: { days: true }, // Include the related days
+    where: { id: tripId },
+    include: { days: true }, // Include the related days
 });
 
   // Check if the trip exists
@@ -10,9 +14,8 @@ async function getDayIdByTripId(tripId) {
     return null;
   }
 
-  // right now this checks the first day only... need to change to handle any day
-  // more specifically, the day that the user clicks 
-  const updatedDay = trip.days[0];
+  // finds the day that matches the clicked day
+  const clickedDay = trip.days.find(day => day.date === clickedDay);
 
   // Check if the day you wish to update exists
   if (!updatedDay) {
@@ -21,7 +24,7 @@ async function getDayIdByTripId(tripId) {
   }
 
   // Return the day ID
-  return updatedDay.id;
+  return clickedDay.id;
 }
 
 export default getDayIdByTripId;

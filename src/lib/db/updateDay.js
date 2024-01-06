@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import getDayIdByTripId from '../getDayIdByTripId';
 
-export default async function updateDay(day) {
+// need to figure out how to get the clickedDay
+// would we add an onClick to the pencil (edit) button? 
+export default async function updateDay(day, clickedDay) {
   const prisma = new PrismaClient();
   const tripId = day.tripId;
   const dayId = getDayIdByTripId(tripId);
