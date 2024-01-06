@@ -1,12 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-export default async function fetchEventByDay(day) {
+export default async function fetchEventByDay(dayId = 1) {
   const prisma = new PrismaClient();
 
   try {
     const eventsByDay = await prisma.event.findMany({
       where: {
-        dayId: day.id,
+        dayId: parseInt(dayId),
       },
       orderBy: {
         timeStart: "asc",

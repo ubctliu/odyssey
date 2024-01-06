@@ -1,7 +1,7 @@
 //TODO: these fetch paths need to be updated to support more dynamic url pathing - right now only works locally
 export async function createUser(user) {
   try {
-  const res = await fetch('http://localhost:3000/api/users/new', {
+  const res = await fetch('http://localhost:3001/api/users/new', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ export async function createUser(user) {
 
 export async function fetchUser(userId) {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+    const res = await fetch(`http://localhost:3001/api/users/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export async function fetchUser(userId) {
 
 export async function updateUser(user) {
   try {
-    const res = await fetch(`http://localhost:3000/api/users/update`, {
+    const res = await fetch(`http://localhost:3001/api/users/update`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -56,5 +56,27 @@ export async function updateUser(user) {
     return updatedUser;
   } catch (error) {
     console.error("Error retrieving user:", error);
+  }
+}
+
+export async function fetchEvent(id) {
+  try {
+    console.log("fetching event")
+    console.log(id)
+    const res = await fetch(`http://localhost:3001/api/events/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to retrieve event");
+    }
+    const fetchedEvent = await res.json();
+    console.log("Fetched event:", fetchedEvent);
+    return fetchedEvent;
+  } catch (error) {
+    console.error("Error retrieving event:", error);
   }
 }
