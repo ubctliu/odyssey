@@ -25,3 +25,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.bg-blur::before {
+  content: "";
+  @apply absolute inset-0 bg-no-repeat bg-cover bg-cover;
+  background-image: url(/images/vacationimg.png);
+  filter: blur(10px);
+  z-index: -1;
+}

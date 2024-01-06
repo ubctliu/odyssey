@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import vacationimg from "../../../../public/images/vacationimg.png"
 import { redirect } from "next/navigation";
 import SearchBar from "../../components/SearchBar";
 import Link from "next/link";
@@ -42,14 +43,25 @@ export default function (Component) {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-normal items-center bg-zinc-500">
-      <h1 className="text-4xl font-bold text-white mb-4">
+    <div className="h-screen flex flex-col justify-normal items-center bg-slate-350 bg-blur"
+        style={{ backgroundImage: `url(/images/vacationimg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', blur: '2px'}}
+    >
+      <h1 className="underline text-4xl font-bold text-slate-900 mb-4">
         {currentUser.isSignedIn
           ? `Hello, ${currentUser.user.firstName}.`
           : "Hello, Guest"}{" "}
         Here are your planned trips.
       </h1>
-      <main className="h-1/2 w-1/2 mx-auto flex p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
+      <main className="h-1/2
+      w-1/2
+      mx-auto
+      flex p-16
+      items-center
+      border border-b-6
+      border-solid border-b-slate-100
+      shadow-2xl
+      backdrop-blur-md bg-white/30
+      ">
         <div className="flex flex-wrap justify-center items-center space-x-6 space-y-6">
           {[currentIndex, currentIndex + 1, currentIndex + 2].map((index) => {
             const id = imageIds[index % imageIds.length];
