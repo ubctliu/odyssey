@@ -16,21 +16,24 @@ model User {
   phoneNumber String?  @db.Text
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  trips       Trip[]   
+  trips       Trip[]   @relation(onDelete: Cascade)
 }
 
 model Trip {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @db.Integer
-  url       String   @db.VarChar(255) @unique
-  location  String   @db.VarChar(255)
-  startDate DateTime @db.Date
-  endDate   DateTime @db.Date
-  notes     String?  @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id])
-  days      Day[]    
+  id          Int      @id @default(autoincrement())
+  userId      Int      @db.Integer
+  url         String   @db.VarChar(255) @unique
+  location    String   @db.VarChar(255)
+  description String?  @db.VarChar(255)
+  title       String?  @db.VarChar(255)
+  imageUrl    String?  @db.VarChar(255)
+  startDate   DateTime @db.Date
+  endDate     DateTime @db.Date
+  notes       String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  days        Day[]    @relation(onDelete: Cascade)
 }
 
 model Day {
@@ -38,20 +41,22 @@ model Day {
   date      DateTime @db.Date
   tripId    Int      @db.Integer
   notes     String?  @db.Text
+  lodging   String?  @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  trip      Trip     @relation(fields: [tripId], references: [id])
-  events    Event[]  
+  trip      Trip     @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  events    Event[]  @relation(onDelete: Cascade)
 }
 
 model Event {
-  id        Int      @id @default(autoincrement())
-  dayId     Int      @db.Integer
-  location  String   @db.VarChar(255)
-  timeStart DateTime @db.Timestamp
-  timeEnd   DateTime @db.Timestamp
-  notes     String?  @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  day       Day      @relation(fields: [dayId], references: [id])
+  id          Int      @id @default(autoincrement())
+  dayId       Int      @db.Integer
+  location    String   @db.VarChar(255)
+  timeStart   DateTime @db.Timestamp
+  timeEnd     DateTime @db.Timestamp
+  notes       String?  @db.Text
+  description String?  @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  day         Day      @relation(fields: [dayId], references: [id], onDelete: Cascade)
 }

@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import getDayIdByTripId from '../getDayIdByTripId';
+import getDayIdByTripId from '../../getDayIdByTripId';
 
 export default async function deleteDay( day ) {
   const prisma = new PrismaClient();
