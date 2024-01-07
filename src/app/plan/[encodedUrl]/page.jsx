@@ -8,6 +8,7 @@ import { useTripData } from "@/app/context/TripDataContext";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
 import { createTrip, fetchTrip, updateTrip } from "@/lib/api";
+import createAllDays from "@/lib/createAllDays";
 
 
 /* feature is tested and working but one thing to keep in mind is that tripData is lost on hard refresh
@@ -19,12 +20,11 @@ const saveTrip = async (trip) => {
     const tripExists = await fetchTrip(trip.url);
     if (!tripExists.data) {
       const newTrip = await createTrip(trip);
-      console.log("New trip saved:", newTrip);
+      const allDays = await createAllDays(trip)
     } else {
       const updatedTrip = await updateTrip(trip);
       console.log("Trip details updated:", updatedTrip);
     }
-    console.log(trip);
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -33,6 +33,7 @@ const saveTrip = async (trip) => {
 
 export default function () {
   const currentUser = useUser();
+  console.log(currentUser);
   const { tripData, setTripData } = useTripData();
 
   useEffect(() => {
