@@ -1,7 +1,6 @@
 'use client'
 import { useState } from 'react';
 import { DateRange } from 'react-date-range';
-import { format } from 'date-fns';
 import { useTripData } from '../context/TripDataContext';
 
 import 'react-date-range/dist/styles.css'; // main style file

@@ -1,4 +1,4 @@
-import updateTrip from '@/lib/db/updateTrip';
+import updateTrip from '@/lib/db/trips/updateTrip';
 import { NextResponse } from 'next/server';
 
 // PUT /api/trips/update

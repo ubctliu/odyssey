@@ -1,4 +1,4 @@
-// import updateDay from '@/lib/db/updateDay';
+// import updateDay from '@/lib/db/days/updateDay';
 // import { NextResponse } from 'next/server';
 
 // // PUT /api/days/update

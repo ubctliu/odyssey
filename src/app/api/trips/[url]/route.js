@@ -1,4 +1,4 @@
-import fetchTrip from '@/lib/db/fetchTrip';
+import fetchTrip from '@/lib/db/trips/fetchTrip';
 import { NextResponse } from 'next/server';
 
 
