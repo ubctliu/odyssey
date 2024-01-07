@@ -123,3 +123,22 @@ export async function fetchTrip(url) {
     console.error("Error fetching trip:", error);
   }
 }
+
+export async function fetchEvent(id) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/events/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to retrieve event");
+    }
+    const fetchedEvent = await res.json();
+    return fetchedEvent;
+  } catch (error) {
+    console.error("Error retrieving event:", error);
+  }
+}
