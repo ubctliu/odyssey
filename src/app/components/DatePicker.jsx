@@ -11,7 +11,6 @@ const DatePicker = ({ className, startOrEndDate }) => {
   const handleClick = () => {
     setOpenCalendar((prev) => !prev)
   }
-  
   return (
     <div>
     <input readOnly required

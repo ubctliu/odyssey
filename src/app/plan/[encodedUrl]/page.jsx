@@ -2,9 +2,10 @@
 import { useUser } from "@clerk/nextjs";
 import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
+import { populateTripData } from "@/lib/populateTripData";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
 import { createTrip, fetchTrip, updateTrip } from "@/lib/api";
@@ -29,11 +30,28 @@ const saveTrip = async (trip) => {
     console.error("An error occurred:", error);
   }
 };
+
+const loadTripDetails = async (url, setTripData) => {
+  try {
+    console.log(url)
+    const tripExists = await fetchTrip(url);
+    console.log("trip data", tripExists.data)
+    if (!tripExists) {
+      return;
+    } else {
+      populateTripData(tripExists.data, setTripData);
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
   
 
 export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
+  const pathname = usePathname();
+  const url = pathname.split("/plan/")[1];
 
   useEffect(() => {
     // Don't proceed until user data is loaded
@@ -45,6 +63,13 @@ export default function () {
       return redirect("/sign-in");
     }
 
+
+
+  }, []);
+
+  useEffect(() => {
+    loadTripDetails(url, setTripData);
+    console.log("tripdata after populating", tripData);
   }, []);
 
   // another useEffect for updating state for changes
