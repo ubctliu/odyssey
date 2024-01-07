@@ -1,6 +1,6 @@
 // api/events/[dayid]/
 
-import fetchEventByDay from '@/lib/db/EventByDay';
+import fetchEventByDay from '@/lib/db/events/EventByDay';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {

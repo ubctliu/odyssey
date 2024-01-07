@@ -1,4 +1,4 @@
-import createEvent from '@/lib/db/createEvent';
+import createEvent from '@/lib/db/events/createEvent';
 import { NextResponse } from 'next/server';
 
 // TODO

@@ -1,4 +1,4 @@
-// import deleteDay from '@/lib/db/deleteDay';
+// import deleteDay from '@/lib/db/days/deleteDay';
 // import { NextResponse } from 'next/server';
 
 // // DELETE /api/days/delete

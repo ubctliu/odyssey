@@ -1,4 +1,4 @@
-import updateEvent from '@/lib/db/updateEvent';
+import updateEvent from '@/lib/db/events/updateEvent';
 import { NextResponse } from 'next/server';
 
 // TODO

@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 export const populateTripData = (dbTrip, setTripData) => {
   const tripDataFromDB = {
     location: dbTrip.location,

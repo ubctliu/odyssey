@@ -1,4 +1,4 @@
-// import createDay from '@/lib/db/createDay';
+// import createDay from '@/lib/db/days/createDay';
 // import { NextResponse } from 'next/server';
 
 // // POST /api/days/new

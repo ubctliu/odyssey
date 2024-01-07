@@ -1,4 +1,4 @@
-import updateUser from '@/lib/db/updateUser';
+import updateUser from '@/lib/db/users/updateUser';
 import { NextResponse } from 'next/server';
 
 // PUT /api/users/update

@@ -2,7 +2,6 @@
 import { Calendar } from 'react-date-range';
 import { useTripData } from '../context/TripDataContext';
 import { useState } from 'react';
-import { format } from 'date-fns';
 
 const DatePicker = ({ className, startOrEndDate }) => {
   const { tripData, setTripData } = useTripData();

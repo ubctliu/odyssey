@@ -1,4 +1,4 @@
-import deleteEvent from '@/lib/db/deleteEvent';
+import deleteEvent from '@/lib/db/events/deleteEvent';
 import { NextResponse } from 'next/server';
 
 // TODO

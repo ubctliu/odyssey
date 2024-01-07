@@ -1,4 +1,4 @@
-import fetchUser from '@/lib/db/fetchUser';
+import fetchUser from '@/lib/db/users/fetchUser';
 import { NextResponse } from 'next/server';
 
 

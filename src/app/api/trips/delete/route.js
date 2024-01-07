@@ -1,4 +1,4 @@
-import deleteTrip from '@/lib/db/deleteTrip';
+import deleteTrip from '@/lib/db/trips/deleteTrip';
 import { NextResponse } from 'next/server';
 
 // DELETE /api/trips/delete

@@ -1,4 +1,4 @@
-import createTrip from '@/lib/db/createTrip';
+import createTrip from '@/lib/db/trips/createTrip';
 import { NextResponse } from 'next/server';
 
 // POST /api/trips/new

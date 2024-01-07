@@ -1,4 +1,4 @@
-import createUser from '@/lib/db/createUser';
+import createUser from '@/lib/db/users/createUser';
 import { NextResponse } from 'next/server';
 
 // POST /api/users/new
