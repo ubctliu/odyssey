@@ -32,7 +32,7 @@ const DateRangeCalendar = ({ className }) => {
         name="date"
         value={
           tripData.endDate.getDate() == new Date().getDate() ? 'Date Range (required)' :
-          `${format(tripData.startDate, 'MM/dd/yyyy')} - ${format(tripData.endDate, 'MM/dd/yyy')}`
+          `${tripData.startDate.toLocaleDateString('en-US', { timeZone: 'UTC' })} - ${tripData.endDate.toLocaleDateString('en-US', { timeZone: 'UTC' })}`
         }
       />
       {openCalendar && <DateRange
