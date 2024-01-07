@@ -63,8 +63,6 @@ export default function () {
       return redirect("/sign-in");
     }
 
-
-
   }, []);
 
   useEffect(() => {
