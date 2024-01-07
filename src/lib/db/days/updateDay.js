@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import getDayIdByTripId from '../getDayIdByTripId';
+import getDayIdByTripId from '../../getDayIdByTripId';
 
 // need to figure out how to get the selectedDay
 // would we add an onClick to the pencil (edit) button? 
@@ -15,7 +15,8 @@ export default async function updateDay(day, selectedDay) {
         id: dayId
       },
       data: {
-        notes: day.notes
+        notes: day.notes,
+        lodging: lodging
       }
     });
 

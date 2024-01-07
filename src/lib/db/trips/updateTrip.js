@@ -12,12 +12,13 @@ export default async function updateTrip(trip) {
       },
       data: {
       /* TODO: These currently don't exist in the schema - need to add */
-       // description: trip.description,
-       // title: trip.title,
+        description: trip.description,
+        title: trip.title,
         location: trip.location,
         startDate: trip.startDate,
         endDate: trip.endDate,
-        notes: trip.notes
+        notes: trip.notes,
+        imageUrl: trip.imageUrl
       }
     });
 

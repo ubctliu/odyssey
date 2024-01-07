@@ -9,6 +9,7 @@ export default async function createDay({ day }) {
       data: {
         date: day.date,
         trip: day.tripId,
+        lodging: day.lodging,
         notes: day.notes
       }
     });
