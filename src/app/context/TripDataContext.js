@@ -11,6 +11,7 @@ export const TripDataProvider = ({ children }) => {
     endDate: new Date(),
     title: "",
     description: "",
+    imageUrl: "",
     isLocationSet: false,
     isDateSet: false,
     key: 'selection',
