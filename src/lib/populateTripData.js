@@ -5,11 +5,12 @@ export const populateTripData = (dbTrip, setTripData) => {
     endDate: new Date(dbTrip.endDate),
     title: dbTrip.title ?? "",
     description: dbTrip.description ?? "",
-    imageUrl: dbTrip.title ?? "",
+    imageUrl: dbTrip.imageUrl ?? "",
     // isLocationSet: false,
     // isDateSet: false,
     // key: 'selection',
     // clerkId: "",
+    days: dbTrip.days,
     // days: [], needs logic to pull related days into array
     url: dbTrip.url,
     notes: dbTrip.url ?? ""
@@ -20,6 +21,6 @@ export const populateTripData = (dbTrip, setTripData) => {
     ...prev,
     ...tripDataFromDB
   }));
-  console.log("Loaded trip details from database:", dbTrip);
+  // console.log("Loaded trip details from database:", dbTrip);
 };
 

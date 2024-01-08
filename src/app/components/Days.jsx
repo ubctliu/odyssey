@@ -6,17 +6,18 @@ import Pencil from '../../../public/Icons/PencilIcon';
 import { fetchEvent } from '../../lib/api';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-
+// TODO: rework implementation & rename component to Day to fit convention
 // Props: title, notes, day, dayid
-export default function Days() {
-  const dayid = 1; // Replace with props as needed
+export default function Days({ day }) {
+  console.log(day);
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const fetchedData = await fetchEvent(dayid);
+        //TODO : fix implementation of this - currently not working
+        const fetchedData = await fetchEvent(id);
         setEvents(addIsVisibleProperty(fetchedData.data));
         setIsLoading(false); // Set isLoading to false after data is fetched
       } catch (error) {
@@ -46,7 +47,8 @@ export default function Days() {
     setEvents(events.map((event, i) => i === index ? { ...event, isVisible: !event.isVisible } : event));
   };
 
-  const currentDateTime = new Date(); // Replace with props as needed
+  console.log(day);
+  const currentDateTime = new Date(day.date);
   const dayOfWeek = currentDateTime.getDay();
   const month = currentDateTime.getMonth();
   const dayNumber = currentDateTime.getDate();
@@ -55,7 +57,7 @@ export default function Days() {
   const title = `${days[dayOfWeek]}, ${months[month]} ${dayNumber}${getDayNumberSuffix(dayNumber)}`;
 
   // Use props or state for notes
-  const notes = 'Note 1: Meeting at noon Note 2: Buy groceries';
+  const notes = day.notes;
 
   return (
     <div className="flex h-auto bg-gray-100 p-4">
@@ -77,7 +79,7 @@ export default function Days() {
               <div key={index} className="text-gray-600 py-2">
                 <div className="flex justify-between items-center">
                   <span>
-                    {event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -  {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                    {event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}
                   </span>
                   <span onClick={() => toggleVisibility(index)} className="cursor-pointer text-blue-500">
                     Details

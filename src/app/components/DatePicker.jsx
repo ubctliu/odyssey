@@ -16,7 +16,7 @@ const DatePicker = ({ className, startOrEndDate }) => {
         className={className}
         onClick={handleClick}
         value={
-          `${tripData[startOrEndDate].toLocaleDateString('en-US', { timeZone: 'UTC' })}`
+          `${tripData[startOrEndDate].toLocaleDateString('en-US')}`
         }
       />
       {openCalendar && <Calendar className={className}

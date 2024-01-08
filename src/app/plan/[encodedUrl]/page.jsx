@@ -8,7 +8,9 @@ import { useTripData } from "@/app/context/TripDataContext";
 import { populateTripData } from "@/lib/populateTripData";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
-import { createTrip, fetchTrip, updateTrip } from "@/lib/api";
+import { createTrip, fetchTrip, fetchTripWithDays, updateTrip } from "@/lib/api";
+import createAllDays from "@/lib/createAllDays";
+import Days from "@/app/components/Days";
 
 
 /* feature is tested and working but one thing to keep in mind is that tripData is lost on hard refresh
@@ -20,12 +22,11 @@ const saveTrip = async (trip) => {
     const tripExists = await fetchTrip(trip.url);
     if (!tripExists.data) {
       const newTrip = await createTrip(trip);
-      console.log("New trip saved:", newTrip);
+      const allDays = await createAllDays(trip)
     } else {
       const updatedTrip = await updateTrip(trip);
       console.log("Trip details updated:", updatedTrip);
     }
-    console.log(trip);
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -33,9 +34,8 @@ const saveTrip = async (trip) => {
 
 const loadTripDetails = async (url, setTripData) => {
   try {
-    console.log(url)
-    const tripExists = await fetchTrip(url);
-    console.log("trip data", tripExists.data)
+    const tripExists = await fetchTripWithDays(url);
+    // console.log("trip data", tripExists.data)
     if (!tripExists) {
       return;
     } else {
@@ -45,8 +45,9 @@ const loadTripDetails = async (url, setTripData) => {
     console.error("An error occurred:", error);
   }
 }
-  
 
+//TODO: look into getting imageUrl working - atm there will probably be an issue with external url rendering
+// w/o allowing it in next.config.js
 export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
@@ -66,8 +67,9 @@ export default function () {
   }, []);
 
   useEffect(() => {
+    // createAllDays(tripData);
     loadTripDetails(url, setTripData);
-    console.log("tripdata after populating", tripData);
+    // console.log("tripdata after populating", tripData);
   }, []);
 
   // another useEffect for updating state for changes
@@ -115,7 +117,11 @@ export default function () {
                 })}
               />
              <label>Days</label>
-             <section name={"days"} className={"contents"}></section>
+             <section name={"days"} className={"contents"}>
+              { /*renders trip days (only problem rn is that it is running a lot of times because of 
+              the useEffect rerendering)*/
+               tripData.days.map((day) => <Days key={day.id} day={day}/>)}
+             </section>
           </form>
             {/* This will be the section to display trip information*/}
           </section>

@@ -124,6 +124,27 @@ export async function fetchTrip(url) {
   }
 }
 
+export async function fetchTripWithDays(url) {
+  try {
+    const res = await fetch(`/api/trips/${url}/days`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to fetch trip with days");
+    }
+  
+    const trip = await res.json();
+    return trip;
+  } catch (error) {
+    console.error("Error fetching trip with days:", error);
+  }
+}
+
+
 export async function fetchEvent(id) {
   try {
     const res = await fetch(`http://localhost:3000/api/events/${id}`, {
