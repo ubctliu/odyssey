@@ -86,6 +86,18 @@ export default function () {
             ...prev,
             title: e.target.value
           }))}/>
+          <label>Description</label>
+          <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.description} placeholder="Description..." 
+          onChange={e => setTripData((prev) => ({
+            ...prev,
+            description: e.target.value
+          }))}/>
+           <label>Image URL</label>
+          <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.imageUrl} placeholder="Banner Image URL..." 
+          onChange={e => setTripData((prev) => ({
+            ...prev,
+            imageUrl: e.target.value
+          }))}/>
           <label>Start Date</label>
           <DatePicker className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} startOrEndDate={"startDate"}/>
           <label>End Date</label>

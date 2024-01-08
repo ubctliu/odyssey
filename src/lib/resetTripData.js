@@ -5,12 +5,14 @@ export const resetTripData = (tripData, setTripData) => {
     endDate: new Date(),
     title: "",
     description: "",
+    imageUrl: "",
     isLocationSet: false,
     isDateSet: false,
     key: 'selection',
     clerkId: "",
     url: "",
-    notes: ""
+    notes: "",
+    days: []
   };
 
   // reset the base variables

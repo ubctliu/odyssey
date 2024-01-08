@@ -10,6 +10,7 @@ export const populateTripData = (dbTrip, setTripData) => {
     // isDateSet: false,
     // key: 'selection',
     // clerkId: "",
+    // days: [], needs logic to pull related days into array
     url: dbTrip.url,
     notes: dbTrip.url ?? ""
   };
