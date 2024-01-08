@@ -17,7 +17,8 @@ export const TripDataProvider = ({ children }) => {
     key: 'selection',
     clerkId: "",
     url: "",
-    notes: ""
+    notes: "",
+    days: []
   });
 
   return (
