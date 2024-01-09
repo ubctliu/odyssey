@@ -5,8 +5,9 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 // TODO: rework implementation & rename component to Day to fit convention
 // Props: title, notes, day, dayid
-export default function Days({title, notes, setEdit, edit, isLoading, events, toggleVisibility, setIsLoading}) {
-
+export default function Days({ day, title, setTripData, setEdit, edit, isLoading, toggleVisibility, setIsLoading}) {
+const { notes, events } = day;
+const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
   const handleEdit = () => { 
     setEdit(!edit);
   }
@@ -27,13 +28,16 @@ export default function Days({title, notes, setEdit, edit, isLoading, events, to
           {isLoading ? (
             <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
           ) : (
-            events.map((event, index) => (
+            visibleEvents?.map((event, index) => (
               <div key={index} className="text-gray-600 py-2">
                 <div className="flex justify-between items-center">
                   <span>
-                    {event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}
+                    {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}
                   </span>
-                  <span onClick={() => toggleVisibility(index)} className="cursor-pointer text-blue-500">
+                  <span onClick={() => setVisibleEvents(
+                      visibleEvents.map((currEvent) => (
+                      currEvent.id === event.id ? { ...currEvent, isVisible: !currEvent.isVisible } : currEvent
+                    )))} className="cursor-pointer text-blue-500">
                     Details
                   </span>
                 </div>

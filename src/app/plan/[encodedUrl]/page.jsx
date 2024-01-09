@@ -8,7 +8,7 @@ import { useTripData } from "@/app/context/TripDataContext";
 import { populateTripData } from "@/lib/populateTripData";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
-import { createTrip, fetchTrip, fetchTripWithDays, updateTrip } from "@/lib/api";
+import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip } from "@/lib/api";
 import createAllDays from "@/lib/createAllDays";
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
@@ -35,7 +35,7 @@ const saveTrip = async (trip) => {
 
 const loadTripDetails = async (url, setTripData) => {
   try {
-    const tripExists = await fetchTripWithDays(url);
+    const tripExists = await fetchTripWithDaysAndEvents(url);
     // console.log("trip data", tripExists.data)
     if (!tripExists) {
       return;
@@ -51,7 +51,7 @@ const loadTripDetails = async (url, setTripData) => {
 // w/o allowing it in next.config.js
 export default function () {
   const currentUser = useUser();
-  console.log(currentUser);
+  // console.log(currentUser);
   const { tripData, setTripData } = useTripData();
   const pathname = usePathname();
   const url = pathname.split("/plan/")[1];
@@ -122,7 +122,7 @@ export default function () {
              <section name={"days"} className={"contents"}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
               the useEffect rerendering)*/
-               tripData.days.map((day) => <CompleteDays key={day.id} day={day}/>)}
+               tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
              </section>
           </form>
             {/* This will be the section to display trip information*/}
