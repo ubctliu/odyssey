@@ -19,16 +19,17 @@ export default function NewItineraryModal({ onClose }) {
     return <div>Loading...</div>
   }
   
-  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`) : stringToBase64(`${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${tripData.title}&${tripData.description}`);
+   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
+  const customUrl = currentUser.isSignedIn ? stringToBase64(`${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`) : stringToBase64(`${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`);
 
   return (
     <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-4/6">
         <div className="text-center">
-          <FaTimes className="cursor-pointer" onClick={onClose} />
-          <h2 className="text-xl font-bold mb-4">New Itinerary</h2>
-          <form>
+          <FaTimes className="cursor-pointer bg-black" onClick={onClose} />
+          <h2 className="text-xl font-bold  text-black mb-4">New Itinerary</h2>
+          <form className='text-black'>
             <div className="mb-4">
               <input
                 className="border p-2 w-full"
@@ -45,7 +46,7 @@ export default function NewItineraryModal({ onClose }) {
               <SearchBar setLocationData={setTripData} className={"border p-2 w-full"}/>
             </div>
             <div className="mb-4">
-              <DateRangeCalendar />
+              <DateRangeCalendar className={"border p-2 w-full"} />
             </div>
             <div>
               
@@ -68,11 +69,21 @@ export default function NewItineraryModal({ onClose }) {
               currentUser.isSignedIn ?
               <Link 
             href={`/plan/${customUrl}`}
+            onClick={() => setTripData((prev) => ({
+              ...prev,
+              url: customUrl,
+              clerkId: currentUser.user.id
+            }))}
             className="bg-blue-500 text-white px-4 py-2 rounded">
               Save
             </Link> : 
             <Link 
             href={`/plan/${customUrl}`}
+            onClick={() => setTripData((prev) => ({
+              ...prev,
+              url: customUrl,
+              clerkId: currentUser.user.id
+            }))}
             className="bg-orange-400 text-white px-4 py-2 rounded">
               Continue as Guest
             </Link>:
