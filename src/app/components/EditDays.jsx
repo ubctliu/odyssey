@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import SearchBar from './SearchBar';
+import { APIProvider } from '@vis.gl/react-google-maps';
 
 
 export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVisibility, setIsLoading }) {
@@ -92,11 +94,18 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                       Details
                     </span>
                   </div>
+                  <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
                   {event.isVisible && (
                     <div className="mt-2 pl-4 border-l-2 border-gray-300">
                       <p>
                         Location:
-                        <input
+                        <SearchBar
+                          setLocationData={setTripData}
+                          className={"text-gray-600 border border-gray-300 rounded p-2 w-full"}
+                          dayEvent={{ day, event }}
+                          tripData={tripData}
+                        />
+                        {/* <input
                           type="text"
                           className="text-gray-600 border border-gray-300 rounded p-2 w-full"
                           value={tripData.days
@@ -111,7 +120,7 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                               )} : curr)
                             }
                             ))}}
-                        />
+                        /> */}
                       </p>
                       <p>
                         Notes:
@@ -134,6 +143,7 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                       </p>
                     </div>
                   )}
+                  </APIProvider>
                 </div>
               ))
             )}
