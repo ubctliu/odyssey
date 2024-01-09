@@ -50,6 +50,7 @@ const loadTripDetails = async (url, setTripData) => {
 // w/o allowing it in next.config.js
 export default function () {
   const currentUser = useUser();
+  console.log(currentUser);
   const { tripData, setTripData } = useTripData();
   const pathname = usePathname();
   const url = pathname.split("/plan/")[1];
