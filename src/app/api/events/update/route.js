@@ -6,9 +6,10 @@ import { NextResponse } from 'next/server';
 // Required fields in body: { }  - subject to change
 export async function PUT(req) {
   if (req.method === "PUT") {
-    const {} = await req.json();
+    const request = await req.json();
     try {
-      const updatedEvent = await updateEvent();
+      console.log("request:", request);
+      const updatedEvent = await updateEvent(request);
 
       return NextResponse.json({ status: 201 }, { data: updatedEvent });
     } catch (error) {
