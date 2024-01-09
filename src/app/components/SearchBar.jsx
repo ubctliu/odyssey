@@ -11,7 +11,7 @@ const SearchBar = ({ className, setLocationData, dayEvent={} }) => {
   useEffect(() => {
     // if day event is provided, set event location instead of trip location
     const timeoutId = setTimeout(() => {
-      dayEvent ?
+      (dayEvent && Object.keys(dayEvent).length > 0) ?
       setTripData((prev) => ({
         ...prev,
         days: prev.days.map((curr) => 
@@ -39,7 +39,7 @@ const SearchBar = ({ className, setLocationData, dayEvent={} }) => {
   
 // set the location once on render 
   useEffect(() => {
-    setInputValue(dayEvent ? tripData.days
+    setInputValue(dayEvent && Object.keys(dayEvent).length > 0 ? tripData.days
       .find((dayItem) => dayItem.id === dayEvent.day.id)
       .events.find((eventItem) => eventItem.id === dayEvent.event.id).location: "");
   }, []);
