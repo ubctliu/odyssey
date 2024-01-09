@@ -1,9 +1,7 @@
 import updateEvent from '@/lib/db/events/updateEvent';
 import { NextResponse } from 'next/server';
 
-// TODO
-// PUT /api/events/new
-// Required fields in body: { }  - subject to change
+// PUT /api/events/update
 export async function PUT(req) {
   if (req.method === "PUT") {
     const request = await req.json();
