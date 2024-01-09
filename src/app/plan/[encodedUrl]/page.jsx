@@ -11,6 +11,7 @@ import DatePicker from "@/app/components/DatePicker";
 import { createTrip, fetchTrip, fetchTripWithDays, updateTrip } from "@/lib/api";
 import createAllDays from "@/lib/createAllDays";
 import Days from "@/app/components/Days";
+import CompleteDays from "@/app/components/CompleteDays";
 
 
 /* feature is tested and working but one thing to keep in mind is that tripData is lost on hard refresh
@@ -121,7 +122,7 @@ export default function () {
              <section name={"days"} className={"contents"}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
               the useEffect rerendering)*/
-               tripData.days.map((day) => <Days key={day.id} day={day}/>)}
+               tripData.days.map((day) => <CompleteDays key={day.id} day={day}/>)}
              </section>
           </form>
             {/* This will be the section to display trip information*/}

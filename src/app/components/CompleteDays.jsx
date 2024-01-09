@@ -9,7 +9,7 @@ import { fetchEvent } from "@/lib/api";
 const CompleteDays = ({ day }) => {
 
     const dayid = day.id;
-    const currentDateTime = new Date();
+    const currentDateTime = new Date(day.date);
     const dayOfWeek = currentDateTime.getDay();
     const month = currentDateTime.getMonth();
     const dayNumber = currentDateTime.getDate();
