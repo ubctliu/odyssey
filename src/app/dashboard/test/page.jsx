@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import vacationimg from "../../../../public/images/vacationimg.png"
 import { redirect } from "next/navigation";
 import SearchBar from "../../components/SearchBar";
 import Link from "next/link";
@@ -44,24 +43,15 @@ export default function (Component) {
 
   return (
     <div className="h-screen flex flex-col justify-normal items-center bg-slate-350 bg-blur"
-        style={{ backgroundImage: `url(/images/vacationimg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', blur: '2px'}}
+        // style={{ backgroundImage: `url(/images/vacationimg.png)`, backgroundSize: 'cover', backgroundPosition: 'center', blur: '2px'}}
     >
-      <h1 className="underline text-4xl font-bold text-slate-900 mb-4">
+      <h1 className="text-4xl font-bold text-slate-900 mb-4">
         {currentUser.isSignedIn
           ? `Hello, ${currentUser.user.firstName}.`
           : "Hello, Guest"}{" "}
         Here are your planned trips.
       </h1>
-      <main className="h-1/2
-      w-1/2
-      mx-auto
-      flex p-16
-      items-center
-      border border-b-6
-      border-solid border-b-slate-100
-      shadow-2xl
-      backdrop-blur-md bg-white/30
-      ">
+      <main className="h-1/2 w-1/2 mx-auto flex p-16 items-center border border-b-6 border-solid border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
         <div className="flex flex-wrap justify-center items-center space-x-6 space-y-6">
           {[currentIndex, currentIndex + 1, currentIndex + 2].map((index) => {
             const id = imageIds[index % imageIds.length];
@@ -77,7 +67,7 @@ export default function (Component) {
                     className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
                   />
                 </LazyLoad>
-                <p className="mt-2 text-center text-white">
+                <p className="mt-2 text-center text-black font-bold">
                   Title for each trip {id}
                 </p>
               </div>
