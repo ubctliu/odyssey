@@ -13,7 +13,7 @@ export const populateTripData = (dbTrip, setTripData) => {
     days: dbTrip.days,
     // days: [], needs logic to pull related days into array
     url: dbTrip.url,
-    notes: dbTrip.url ?? ""
+    notes: dbTrip.notes ?? "",
   };
   
   // set the trip data pulled from DB into the tripData context

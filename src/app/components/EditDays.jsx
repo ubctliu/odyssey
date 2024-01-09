@@ -1,40 +1,37 @@
 import React, { useState } from 'react';
+import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 
-export default function EditDays({ notes, title, setNotes, edit, setEdit, events, isLoading, toggleVisibility, setIsLoading, dayid }) {
-    const [eventNotes, setEventNotes] = useState(events.map((event) => event.notes));
-    const [eventLocations, setEventLocations] = useState(events.map((event) => event.location));
-    const [dayNotes, setDayNotes] = useState(notes);
+export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVisibility, setIsLoading }) {
+    // const [eventNotes, setEventNotes] = useState(events.map((event) => event.notes));
+    // const [eventLocations, setEventLocations] = useState(events.map((event) => event.location));
+    const {tripData, setTripData} = useTripData();
+    const { notes, events } = day;
+    const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
+    // const handleEventNotesChange = (index, event) => {
+    //   const updatedEventNotes = [...eventNotes];
+    //   updatedEventNotes[index] = event.target.value;
+    //   setEventNotes(updatedEventNotes);
+    // };
   
-    const handleNotesChange = (event) => {
-        setDayNotes(event.target.value);
-    };
-  
-    const handleEventNotesChange = (index, event) => {
-      const updatedEventNotes = [...eventNotes];
-      updatedEventNotes[index] = event.target.value;
-      setEventNotes(updatedEventNotes);
-    };
-  
-    const handleEventLocationChange = (index, event) => {
-      const updatedEventLocations = [...eventLocations];
-      updatedEventLocations[index] = event.target.value;
-      setEventLocations(updatedEventLocations);
-    };
+    // const handleEventLocationChange = (index, event) => {
+    //   const updatedEventLocations = [...eventLocations];
+    //   updatedEventLocations[index] = event.target.value;
+    //   setEventLocations(updatedEventLocations);
+    // };
   
     const handleSaveDayNotes = () => {
-        
-        console.log('Saving day notes:', dayNotes, 'for day:', dayid);
+        console.log('Saving day notes:', dayNotes, 'for day:', day.id);
       };
   
     const handleSaveEvent = () => {
         events.forEach((event, index) => {
           const updatedEvent = {
             ...event,
-            location: eventLocations[index],
-            notes: eventNotes[index]
+            location: events[index],
+            notes: events[index]
           };
           console.log('Saving event:', updatedEvent);
         });
@@ -56,8 +53,14 @@ export default function EditDays({ notes, title, setNotes, edit, setEdit, events
             <input
               type="text"
               className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-              value={dayNotes}
-              onChange={handleNotesChange}
+              value={day.notes}
+              onChange={e => { 
+                setTripData((prev) => ({
+                  ...prev,
+                  days: prev.days.map((curr) => 
+                  curr.id === day.id ? { ...curr, notes: e.target.value } : curr)
+                }
+                ))}}
             />
             <div className='flex justify-center'>
             <button
@@ -75,14 +78,17 @@ export default function EditDays({ notes, title, setNotes, edit, setEdit, events
             {isLoading ? (
               <AiOutlineLoading3Quarters className="animate-spin mx-auto" />
             ) : (
-              events.map((event, index) => (
+              visibleEvents?.map((event, index) => (
                 <div key={index} className="text-gray-600 py-2">
                   <div className="flex justify-between items-center">
                     <span>
-                      {event.timeStart.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
-                      {event.timeEnd.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                      {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
+                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
                     </span>
-                    <span onClick={() => toggleVisibility(index)} className="cursor-pointer text-blue-500">
+                    <span onClick={() => setVisibleEvents(
+                      visibleEvents.map((currEvent) => (
+                      currEvent.id === event.id ? { ...currEvent, isVisible: !currEvent.isVisible } : currEvent
+                    )))} className="cursor-pointer text-blue-500">
                       Details
                     </span>
                   </div>
@@ -93,8 +99,18 @@ export default function EditDays({ notes, title, setNotes, edit, setEdit, events
                         <input
                           type="text"
                           className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-                          value={eventLocations[index]}
-                          onChange={(event) => handleEventLocationChange(index, event)}
+                          value={tripData.days
+                            .find((dayItem) => dayItem.id === day.id)
+                            .events.find((eventItem) => eventItem.id === event.id).location}
+                          onChange={e => { 
+                            setTripData((prev) => ({
+                              ...prev,
+                              days: prev.days.map((curr) => 
+                              curr.id === day.id ? { ...curr, events: events.map((currEvent) => 
+                                currEvent.id === event.id ? { ...currEvent, location: e.target.value} : currEvent
+                              )} : curr)
+                            }
+                            ))}}
                         />
                       </p>
                       <p>
@@ -102,8 +118,18 @@ export default function EditDays({ notes, title, setNotes, edit, setEdit, events
                         <input
                           type="text"
                           className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-                          value={eventNotes[index]}
-                          onChange={(event) => handleEventNotesChange(index, event)}
+                          value={tripData.days
+                            .find((dayItem) => dayItem.id === day.id)
+                            .events.find((eventItem) => eventItem.id === event.id).notes}
+                          onChange={e => { 
+                            setTripData((prev) => ({
+                              ...prev,
+                              days: prev.days.map((curr) => 
+                              curr.id === day.id ? { ...curr, events: day.events.map((currEvent) =>
+                                currEvent.id === event.id ? { ...currEvent, notes: e.target.value} : currEvent
+                              )} : curr)
+                            }
+                            ))}}
                         />
                       </p>
                     </div>

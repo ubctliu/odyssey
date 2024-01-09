@@ -6,7 +6,7 @@ import EditDays from "./EditDays";
 import Days from "./Days";
 import { fetchEvent } from "@/lib/api";
 
-const CompleteDays = ({ day }) => {
+const CompleteDays = ({ day, setTripData }) => {
 
     const dayid = day.id;
     const currentDateTime = new Date(day.date);
@@ -18,7 +18,6 @@ const CompleteDays = ({ day }) => {
     const title = `${days[dayOfWeek]}, ${months[month]} ${dayNumber}${getDayNumberSuffix(dayNumber)}`;
 
     // Use props or state for notes
-    const [notes, setNotes] = useState(day.notes);
     const [edit, setEdit] = useState(false);
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -54,35 +53,29 @@ const CompleteDays = ({ day }) => {
       };
     
       const toggleVisibility = index => {
-        setEvents(events.map((event, i) => i === index ? { ...event, isVisible: !event.isVisible } : event));
+        setEvents(day.events.map((event, i) => i === index ? { ...event, isVisible: !event.isVisible } : event));
       };
-  
-
     
       return (
         <div>
           {edit ? (
             <EditDays
               toggleVisibility={toggleVisibility}
+              day={day}
               title={title}
-              notes={notes}
-              setNotes={setNotes}
-              dayid={dayid}
               edit={edit}
               setEdit={setEdit}
-              events={events}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
             />
           ) : (
             <Days
               toggleVisibility={toggleVisibility}
+              day={day}
               title={title}
-              notes={notes}
-              dayid={dayid}
+              setTripData={setTripData}
               edit={edit} 
               setEdit={setEdit}
-              events={events}
               isLoading={isLoading}
               setIsLoading={setIsLoading}      
             />
