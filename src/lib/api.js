@@ -183,3 +183,24 @@ export async function fetchEvent(id) {
     console.error("Error retrieving event:", error);
   }
 }
+
+export async function updateDaysEvent(updatedEventData) {
+  try {
+    const res = await fetch(`/api/events/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedEventData),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update event");
+    }
+    const updatedEvent = await res.json();
+    return updatedEvent;
+  } catch (error) {
+    console.error("Error updating event:", error);
+    throw error; // Rethrow the error to handle it in the calling code
+  }
+}
