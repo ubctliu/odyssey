@@ -225,6 +225,7 @@ export async function updateDayNotes(day) {
   }
 }
 
+
 export async function createDays(trip) {
   try {
     const res = await fetch(`/api/days/new`, {
