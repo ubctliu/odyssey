@@ -1,13 +1,14 @@
-import createDay from '@/lib/db/createDay';
+import createAllDays from '@/lib/createAllDays';
 import { NextResponse } from 'next/server';
 
 // POST /api/days/new
 // Required fields in body: { Day object } - I think?
 export async function POST(req) {
   if (req.method === "POST") {
-    const days  = await req.json();
+    const trip  = await req.json();
     try {
-      const newDays = await createDay(days);
+     // create them off the start date
+      const newDays = await createAllDays(trip);
 
       return NextResponse.json({ status: 201 }, { data: newDays });
     } catch (error) {

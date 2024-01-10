@@ -225,35 +225,14 @@ export async function updateDayNotes(day) {
   }
 }
 
-export async function updateDayNotes(day) {
-  try {
-    const res = await fetch(`/api/days/update/notes`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(day),
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to update notes");
-    }
-    
-    const updatedEvent = await res.json();
-    return updatedEvent;
-  } catch (error) {
-    console.error("Error updating notes:", error);
-  }
-}
-
-export async function createAllDays(dayArray) {
+export async function createDays(trip) {
   try {
     const res = await fetch(`/api/days/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dayArray)
+      body: JSON.stringify(trip)
     });
   
     if (!res.ok) {
@@ -261,6 +240,7 @@ export async function createAllDays(dayArray) {
     }
   
     const daysCreated = await res.json();
+
     return daysCreated;
   } catch (error) {
     console.error("Error creating days:", error);

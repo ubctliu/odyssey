@@ -1,28 +1,39 @@
-import { createDay } from '../lib/db/days/createDay'
+import createDay from '../lib/db/days/createDay'
+import fetchTripByUrl from './db/trips/fetchTripId';
+
 export default async function createAllDays(trip) {
-    console.log("createAllDays trip:", trip);
-  const { startDate, endDate, id: tripId } = trip;
+  const { startDate, endDate, url } = trip;
+    const tripByUrl = await fetchTripByUrl(url);
+    const tripId = tripByUrl.id;
+
+    
   console.log("createAllDays startDate:", startDate);
     console.log("createAllDays endDate:", endDate);
     console.log("createAllDays tripId:", tripId);
 
   const days = [];
 
-  // Calculate the number of days between the start and end dates
-  const diffInDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-  // Create an array of day objects based on the difference in days
-  for (let i = 0; i <= diffInDays; i++) {
-    const day = new Date(startDate);
-    day.setDate(startDate.getDate() + i);
-    // Add day with tripId and empty notes
-    days.push({ day, tripId, notes: '' });
-  }
-    console.log("createAllDays days:", days);
+// Calculate the number of days between the start and end dates
+const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+
+// Create an array of day objects based on the difference in days
+for (let i = 0; i <= diffInDays; i++) {
+  let day = new Date(start);
+  day.setDate(day.getDate() + i);
+
+  // Log each day for debugging
+  console.log("Day " + i + ":", day);
+
+  // Add day with tripId and empty notes
+  days.push({ day, tripId, notes: '' });
+}
 
   try {
-      const newDay = await createDay(tripId, days);
-        console.log("newDay:", newDay);
+      const newDays = await createDay(days);
+        console.log("newDay:", newDays);
       return newDays;
     }
   catch (error) {
