@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
-import { FaRegCalendarPlus } from "react-icons/fa6";
+import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchBar from './SearchBar';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { updateDayEvents, updateDayNotes } from "@/lib/api"
+import { updateDayEvents, updateDayNotes, deleteEvent } from "@/lib/api"
 
   // save events & handle loading animation for events
 const handleSaveEvents = async (day, setIsSaving) => {
@@ -53,12 +53,39 @@ const handleSaveNotes = async (day, setIsSaving) => {
   }
 };
 
-export default function EditDays({ day, title, edit, setEdit, isLoading }) {
+const handleDeleteEvent = async (event, setIsSaving, setVisibleEvents) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        delete: true,
+        eventId: event.id
+      }
+    ));
+    const deletedEvent = await deleteEvent(event);
+    // delete from visible events on delete event
+    setVisibleEvents((prev) => prev.filter((currEvent) => currEvent.id !== event.id));
+    console.log("Deleted event...", deletedEvent);
+  } catch (error) {
+    console.error("Error occurred while trying to delete event:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        delete: false,
+        eventId: null
+      }
+    ));
+  }
+}
+
+//TODO: link the events somehow to tripdata context to allow for dynamic rendering
+export default function EditDays({ day, title, edit, setEdit, isLoading, visibleEvents, setVisibleEvents}) {
     // crude implementation for loading state
-    const [isSaving, setIsSaving] = useState({notes: false, events: false});
+    const [isSaving, setIsSaving] = useState({notes: false, events: false, delete: false, eventId: null});
     const { tripData, setTripData } = useTripData();
     const { notes, events } = day;
-    const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
+    // const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
   
     const handleEdit = () => {
       setEdit(!edit);
@@ -68,7 +95,9 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
       <div className="flex h-auto bg-gray-100 p-4">
         <div className="border border-gray-300 shadow-lg rounded-lg p-6 bg-white max-w-lg w-full">
           <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-            {title} <Pencil className="inline-block w-4 h-4 ml-2 hover:cursor-pointer" onClick={handleEdit} />
+          <div className='group'>
+            {title} <Pencil className="inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce" onClick={handleEdit} />
+            </div>
           </h1>
           <hr className="my-4" />
           <div>
@@ -114,6 +143,11 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
                     )))} className="cursor-pointer text-blue-500">
                       Details
                     </span>
+                    {isSaving.delete && isSaving.eventId === event.id ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
+                    <div className='group'>
+                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving, setVisibleEvents)} className={"cursor-pointer group-hover:animate-bounce"} />
+                    </div>
+                    }
                   </div>
                   <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
                   {event.isVisible && (

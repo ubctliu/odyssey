@@ -3,12 +3,12 @@ import { NextResponse } from 'next/server';
 
 // TODO
 // DELETE /api/events/delete
-// Required fields in body: { }  - subject to change
+// Required fields in body: { event }  - subject to change
 export async function DELETE(req) {
   if (req.method === "DELETE") {
-    const {} = await req.json();
+    const { event } = await req.json();
     try {
-      const deletedEvent = await deleteEvent(user);
+      const deletedEvent = await deleteEvent(event);
 
       return NextResponse.json({ status: 201 }, { data: deletedEvent });
     } catch (error) {

@@ -21,6 +21,7 @@ const CompleteDays = ({ day, setTripData }) => {
     const [edit, setEdit] = useState(false);
     const [events, setEvents] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [visibleEvents, setVisibleEvents] = useState(day.events?.map((event) => ({ ...event, isVisible: false })));
 
 
     useEffect(() => {
@@ -62,6 +63,8 @@ const CompleteDays = ({ day, setTripData }) => {
             <EditDays
               toggleVisibility={toggleVisibility}
               day={day}
+              setVisibleEvents={setVisibleEvents}
+              visibleEvents={visibleEvents}
               title={title}
               edit={edit}
               setEdit={setEdit}
@@ -74,6 +77,8 @@ const CompleteDays = ({ day, setTripData }) => {
               day={day}
               title={title}
               setTripData={setTripData}
+              setVisibleEvents={setVisibleEvents}
+              visibleEvents={visibleEvents}
               edit={edit} 
               setEdit={setEdit}
               isLoading={isLoading}
