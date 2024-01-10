@@ -93,7 +93,9 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
       <div className="flex h-auto bg-gray-100 p-4">
         <div className="border border-gray-300 shadow-lg rounded-lg p-6 bg-white max-w-lg w-full">
           <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-            {title} <Pencil className="inline-block w-4 h-4 ml-2 hover:cursor-pointer" onClick={handleEdit} />
+          <div className='group'>
+            {title} <Pencil className="inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce" onClick={handleEdit} />
+            </div>
           </h1>
           <hr className="my-4" />
           <div>
@@ -140,7 +142,10 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
                       Details
                     </span>
                     {isSaving.delete && isSaving.eventId === event.id ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
-                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving)} className={"cursor-pointer"} />}
+                    <div className='group'>
+                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving)} className={"cursor-pointer group-hover:animate-bounce"} />
+                    </div>
+                    }
                   </div>
                   <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
                   {event.isVisible && (
