@@ -249,7 +249,7 @@ export async function createDays(trip) {
 }
 
 
-export async function createEvent(day, event) {
+export async function createEvent(day, event, setVisibleEvents) {
   try {
     const res = await fetch(`/api/events/new`, {
       method: 'POST',
@@ -264,6 +264,8 @@ export async function createEvent(day, event) {
     }
   
     const newEvent = await res.json();
+    // add to visible events on create event
+    setVisibleEvents((prev) => [...prev, {...event, isVisible: false}]);
     return newEvent;
   } catch (error) {
     console.error("Error creating event:", error);

@@ -24,11 +24,17 @@ const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...
   //     // setVisibleEvents(events?.map((event) => ({ ...event, isVisible: false })));
   //   }
   // }, []);
+  
+  //pass setVisibleEvents to createEvent and call to trigger re-render?
+  useEffect(() => {
+  }, [visibleEvents])
  
   return (
     <div className="flex h-auto bg-gray-100 p-4">
       <div className="border border-gray-300 shadow-lg rounded-lg p-6 bg-white max-w-lg w-full">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">{title} <Pencil className='inline-block w-4 h-4 ml-2 hover:cursor-pointer' onClick={handleEdit}/></h1>
+        <div className='group'>
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4">{title} <Pencil className='inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce' onClick={handleEdit}/></h1>
+        </div>
         <hr className='my-4'/>
         <div>
           <h2 className="text-xl font-semibold text-gray-700">Notes</h2>
@@ -37,7 +43,9 @@ const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...
         </div>
 
         <div className="mt-4">
-          <h2 className="text-xl font-semibold text-gray-700">Events <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer"} onClick={() => createEvent(day, {location: "", timeStart: new Date(), timeEnd: new Date()})}/></h2>
+          <div className='group'>
+          <h2 className="text-xl font-semibold text-gray-700">Events <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => createEvent(day, {location: "", timeStart: new Date(), timeEnd: new Date()}, setVisibleEvents)}/></h2>
+          </div>
           {isLoading ? (
             <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
           ) : (

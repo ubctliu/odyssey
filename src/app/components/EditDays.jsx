@@ -53,7 +53,7 @@ const handleSaveNotes = async (day, setIsSaving) => {
   }
 };
 
-const handleDeleteEvent = async (event, setIsSaving) => {
+const handleDeleteEvent = async (event, setIsSaving, setVisibleEvents) => {
   try {
     setIsSaving((prev) => (
       { 
@@ -63,6 +63,8 @@ const handleDeleteEvent = async (event, setIsSaving) => {
       }
     ));
     const deletedEvent = await deleteEvent(event);
+    // delete from visible events on delete event
+    setVisibleEvents((prev) => prev.filter((currEvent) => currEvent.id !== event.id));
     console.log("Deleted event...", deletedEvent);
   } catch (error) {
     console.error("Error occurred while trying to delete event:", error);
@@ -143,7 +145,7 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
                     </span>
                     {isSaving.delete && isSaving.eventId === event.id ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
                     <div className='group'>
-                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving)} className={"cursor-pointer group-hover:animate-bounce"} />
+                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving, setVisibleEvents)} className={"cursor-pointer group-hover:animate-bounce"} />
                     </div>
                     }
                   </div>
