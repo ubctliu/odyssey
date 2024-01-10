@@ -58,7 +58,8 @@ const handleDeleteEvent = async (event, setIsSaving) => {
     setIsSaving((prev) => (
       { 
         ...prev,
-        delete: true
+        delete: true,
+        eventId: event.id
       }
     ));
     const deletedEvent = await deleteEvent(event);
@@ -69,15 +70,17 @@ const handleDeleteEvent = async (event, setIsSaving) => {
     setIsSaving((prev) => (
       { 
         ...prev,
-        delete: false
+        delete: false,
+        eventId: null
       }
     ));
   }
 }
 
+//TODO: link the events somehow to tripdata context to allow for dynamic rendering
 export default function EditDays({ day, title, edit, setEdit, isLoading }) {
     // crude implementation for loading state
-    const [isSaving, setIsSaving] = useState({notes: false, events: false, delete: false});
+    const [isSaving, setIsSaving] = useState({notes: false, events: false, delete: false, eventId: null});
     const { tripData, setTripData } = useTripData();
     const { notes, events } = day;
     const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
@@ -136,7 +139,7 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
                     )))} className="cursor-pointer text-blue-500">
                       Details
                     </span>
-                    {isSaving.delete ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
+                    {isSaving.delete && isSaving.eventId === event.id ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
                     <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving)} className={"cursor-pointer"} />}
                   </div>
                   <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
