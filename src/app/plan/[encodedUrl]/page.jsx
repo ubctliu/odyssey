@@ -12,11 +12,6 @@ import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDa
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
 
-
-/* feature is tested and working but one thing to keep in mind is that tripData is lost on hard refresh
-  right now which means that we kind of have to work around it atm unless we choose to store this info 
-  in session
-*/
 const saveTrip = async (trip) => {
   console.log(trip);
   try {
@@ -39,7 +34,6 @@ const saveTrip = async (trip) => {
 const loadTripDetails = async (url, setTripData) => {
   try {
     const tripExists = await fetchTripWithDaysAndEvents(url);
-    // console.log("trip data", tripExists.data)
     if (!tripExists) {
       return;
     } else {
@@ -54,7 +48,6 @@ const loadTripDetails = async (url, setTripData) => {
 // w/o allowing it in next.config.js
 export default function () {
   const currentUser = useUser();
-  // console.log(currentUser);
   const { tripData, setTripData } = useTripData();
   const pathname = usePathname();
   const url = pathname.split("/plan/")[1];
@@ -72,14 +65,8 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    // createAllDays(tripData);
     loadTripDetails(url, setTripData);
-    // console.log("tripdata after populating", tripData);
   }, []);
-
-  // another useEffect for updating state for changes
-  // useEffect(() => {
-  // });
 
   return (
     <div className="h-5/6 flex justify-center">

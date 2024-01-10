@@ -4,14 +4,13 @@ import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaRegCalendarPlus } from "react-icons/fa6";
 import { createEvent } from "@/lib/api";
-import { useTripData } from '@/app/context/TripDataContext';
 
 
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
   try {
     setIsCreating(true);
     const newEvent = await createEvent(day, {location: "", timeStart: new Date(), timeEnd: new Date()});
-        // add to visible events on create event
+    // add to visible events on create event
     setVisibleEvents((prev) => [...prev, {...newEvent.data, isVisible: false}]);
     console.log("Created event...", newEvent);
   } catch (error) {
@@ -22,12 +21,11 @@ const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
 }
 
 
-// TODO: rework implementation & rename component to Day to fit convention
-// Props: title, notes, day, dayid
+// TODO: rename component to Day to fit convention
+// Props: day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents
 export default function Days({ day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents}) {
 const { notes, events } = day;
 const [isCreating, setIsCreating] = useState(false);
-const { tripData, setTripData } = useTripData();
   const handleEdit = () => { 
     setEdit(!edit);
   }
