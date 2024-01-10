@@ -1,43 +1,63 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchBar from './SearchBar';
 import { APIProvider } from '@vis.gl/react-google-maps';
+import { updateDayEvents, updateDayNotes } from "@/lib/api"
 
+  // save events & handle loading animation for events
+const handleSaveEvents = async (day, setIsSaving) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        events: true
+      }
+    ));
+  const updatedEvents = await updateDayEvents(day.events);
+  console.log("Updating events...", updatedEvents);
+  } catch (error) {
+    console.error("Error occurred while trying to update events:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        events: false
+      }
+    ));
+  }
+};
 
-export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVisibility, setIsLoading }) {
-    // const [eventNotes, setEventNotes] = useState(events.map((event) => event.notes));
-    // const [eventLocations, setEventLocations] = useState(events.map((event) => event.location));
-    const {tripData, setTripData} = useTripData();
+  // save notes & handle loading animation for notes
+const handleSaveNotes = async (day, setIsSaving) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        notes: true
+      }
+    ));
+    const updatedNotes = await updateDayNotes(day);
+    console.log("Updating notes...", updatedNotes);
+  } catch (error) {
+    console.error("Error occurred while trying to update events:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        notes: false
+      }
+    ));
+  }
+};
+
+export default function EditDays({ day, title, edit, setEdit, isLoading }) {
+    // crude implementation for loading state
+    const [isSaving, setIsSaving] = useState({notes: false, events: false});
+    const { tripData, setTripData } = useTripData();
     const { notes, events } = day;
     const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
-    // const handleEventNotesChange = (index, event) => {
-    //   const updatedEventNotes = [...eventNotes];
-    //   updatedEventNotes[index] = event.target.value;
-    //   setEventNotes(updatedEventNotes);
-    // };
-  
-    // const handleEventLocationChange = (index, event) => {
-    //   const updatedEventLocations = [...eventLocations];
-    //   updatedEventLocations[index] = event.target.value;
-    //   setEventLocations(updatedEventLocations);
-    // };
-  
-    const handleSaveDayNotes = () => {
-        console.log('Saving day notes:', dayNotes, 'for day:', day.id);
-      };
-  
-    const handleSaveEvent = () => {
-        events.forEach((event, index) => {
-          const updatedEvent = {
-            ...event,
-            location: events[index],
-            notes: events[index]
-          };
-          console.log('Saving event:', updatedEvent);
-        });
-      };
   
     const handleEdit = () => {
       setEdit(!edit);
@@ -55,7 +75,7 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
             <input
               type="text"
               className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-              value={day.notes}
+              value={notes}
               onChange={e => { 
                 setTripData((prev) => ({
                   ...prev,
@@ -65,12 +85,12 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                 ))}}
             />
             <div className='flex justify-center'>
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4"
-              onClick={handleSaveDayNotes}
+            {isSaving.notes ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : <button
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4" type="button"
+              onClick={() => handleSaveNotes(day, setIsSaving)}
             >
               Save Notes
-            </button>
+            </button>}
             </div>
             <hr className="my-4" />
           </div>
@@ -105,22 +125,6 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                           dayEvent={{ day, event }}
                           tripData={tripData}
                         />
-                        {/* <input
-                          type="text"
-                          className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-                          value={tripData.days
-                            .find((dayItem) => dayItem.id === day.id)
-                            .events.find((eventItem) => eventItem.id === event.id).location}
-                          onChange={e => { 
-                            setTripData((prev) => ({
-                              ...prev,
-                              days: prev.days.map((curr) => 
-                              curr.id === day.id ? { ...curr, events: events.map((currEvent) => 
-                                currEvent.id === event.id ? { ...currEvent, location: e.target.value} : currEvent
-                              )} : curr)
-                            }
-                            ))}}
-                        /> */}
                       </p>
                       <p>
                         Notes:
@@ -149,12 +153,13 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
             )}
           </div>
           <div className="flex justify-center">
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4 ml-4"
-              onClick={handleSaveEvent}
+          {isSaving.events ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> :   
+          <button
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4 ml-4" type="button"
+              onClick={()=> handleSaveEvents(day, setIsSaving)}
             >
               Save Event Change
-            </button>
+            </button>}
           </div>
         </div>
       </div>

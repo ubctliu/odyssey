@@ -31,7 +31,7 @@ const SearchBar = ({ className, setLocationData, dayEvent={} }) => {
         isLocationSet: inputValue !== ""
       }))
     }, 300);
-    console.log(tripData);
+    // console.log(tripData);
     return () => {
       clearTimeout(timeoutId);
     };
