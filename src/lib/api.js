@@ -265,7 +265,6 @@ export async function createEvent(day, event, setVisibleEvents) {
   
     const newEvent = await res.json();
     // add to visible events on create event
-    setVisibleEvents((prev) => [...prev, {...event, isVisible: false}]);
     return newEvent;
   } catch (error) {
     console.error("Error creating event:", error);

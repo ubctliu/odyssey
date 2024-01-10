@@ -80,12 +80,12 @@ const handleDeleteEvent = async (event, setIsSaving, setVisibleEvents) => {
 }
 
 //TODO: link the events somehow to tripdata context to allow for dynamic rendering
-export default function EditDays({ day, title, edit, setEdit, isLoading }) {
+export default function EditDays({ day, title, edit, setEdit, isLoading, visibleEvents, setVisibleEvents}) {
     // crude implementation for loading state
     const [isSaving, setIsSaving] = useState({notes: false, events: false, delete: false, eventId: null});
     const { tripData, setTripData } = useTripData();
     const { notes, events } = day;
-    const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
+    // const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
   
     const handleEdit = () => {
       setEdit(!edit);

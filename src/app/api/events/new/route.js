@@ -9,7 +9,7 @@ export async function POST(req) {
 
     try {
       const newEvent = await createEvent(day, event);
-      return NextResponse.json({ status: 201 }, { data: newEvent });
+      return NextResponse.json({ status: 201, data: newEvent });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }
