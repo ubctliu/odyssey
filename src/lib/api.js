@@ -247,3 +247,25 @@ export async function createDays(trip) {
     console.error("Error creating days:", error);
   }
 }
+
+
+export async function createEvent(day, event) {
+  try {
+    const res = await fetch(`/api/events/new`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ day, event })
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to create event");
+    }
+  
+    const newEvent = await res.json();
+    return newEvent;
+  } catch (error) {
+    console.error("Error creating event:", error);
+  }
+}

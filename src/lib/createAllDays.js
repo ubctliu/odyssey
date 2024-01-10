@@ -1,5 +1,5 @@
-import createDay from '../lib/db/days/createDay'
-import fetchTripByUrl from './db/trips/fetchTripId';
+import createDay from "@/lib/db/days/createDay";
+import fetchTripByUrl from '@/lib/db/trips/fetchTripId';
 
 export default async function createAllDays(trip) {
   const { startDate, endDate, url } = trip;
