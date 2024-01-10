@@ -8,8 +8,7 @@ import { useTripData } from "@/app/context/TripDataContext";
 import { populateTripData } from "@/lib/populateTripData";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
-import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip } from "@/lib/api";
-import createAllDays from "@/lib/createAllDays";
+import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDays } from "@/lib/api";
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
 
@@ -19,11 +18,15 @@ import CompleteDays from "@/app/components/CompleteDays";
   in session
 */
 const saveTrip = async (trip) => {
+  console.log(trip);
   try {
     const tripExists = await fetchTrip(trip.url);
     if (!tripExists.data) {
       const newTrip = await createTrip(trip);
-      const allDays = await createAllDays(trip)
+      setTimeout(async () => {
+        const allDays = await createDays(trip);
+        // Rest of the code related to allDays
+      }, 3000);
     } else {
       const updatedTrip = await updateTrip(trip);
       console.log("Trip details updated:", updatedTrip);

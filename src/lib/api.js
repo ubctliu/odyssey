@@ -225,14 +225,15 @@ export async function updateDayNotes(day) {
   }
 }
 
-export async function createAllDays(dayArray) {
+
+export async function createDays(trip) {
   try {
     const res = await fetch(`/api/days/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dayArray)
+      body: JSON.stringify(trip)
     });
   
     if (!res.ok) {
@@ -240,6 +241,7 @@ export async function createAllDays(dayArray) {
     }
   
     const daysCreated = await res.json();
+
     return daysCreated;
   } catch (error) {
     console.error("Error creating days:", error);
