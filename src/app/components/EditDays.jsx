@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
+import { FaRegCalendarPlus } from "react-icons/fa6";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchBar from './SearchBar';
 import { APIProvider } from '@vis.gl/react-google-maps';

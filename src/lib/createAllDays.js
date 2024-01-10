@@ -1,4 +1,4 @@
-import { createDay } from '../lib/db/days/createDay';
+import createDay from '@/lib/db/createDay';
 
 export default async function createAllDays(trip) {
     console.log("createAllDays trip:", trip);

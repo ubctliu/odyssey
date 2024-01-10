@@ -2,15 +2,28 @@
 import React, { useState, useEffect } from 'react';
 import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FaRegCalendarPlus } from "react-icons/fa6";
+import { createEvent } from "@/lib/api";
+import { useTripData } from '@/app/context/TripDataContext';
 
 // TODO: rework implementation & rename component to Day to fit convention
 // Props: title, notes, day, dayid
-export default function Days({ day, title, setTripData, setEdit, edit, isLoading, toggleVisibility, setIsLoading}) {
+export default function Days({ day, title, setEdit, edit, isLoading, toggleVisibility, setIsLoading}) {
 const { notes, events } = day;
+const { tripData, setTripData } = useTripData();
 const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
   const handleEdit = () => { 
     setEdit(!edit);
   }
+
+  //TODO: add at least partial refresh on events when new event is added 
+  // useEffect(() => {
+  //   const currentDay = tripData.days.find((currDay) => currDay.id === day.id).events;
+  //   console.log(currentDay);
+  //   if (currentDay && currentDay.events) {
+  //     // setVisibleEvents(events?.map((event) => ({ ...event, isVisible: false })));
+  //   }
+  // }, []);
  
   return (
     <div className="flex h-auto bg-gray-100 p-4">
@@ -24,12 +37,12 @@ const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...
         </div>
 
         <div className="mt-4">
-          <h2 className="text-xl font-semibold text-gray-700">Events</h2>
+          <h2 className="text-xl font-semibold text-gray-700">Events <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer"} onClick={() => createEvent(day, {location: "", timeStart: new Date(), timeEnd: new Date()})}/></h2>
           {isLoading ? (
             <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
           ) : (
             visibleEvents?.map((event, index) => (
-              <div key={index} className="text-gray-600 py-2">
+              <div key={index} className="text-gray-600 py-2 hover:bg-gray-200 rounded">
                 <div className="flex justify-between items-center">
                   <span>
                     {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}
