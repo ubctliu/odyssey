@@ -1,4 +1,5 @@
-import { createDay } from '../lib/db/days/createDay'
+import { createDay } from '../lib/db/days/createDay';
+
 export default async function createAllDays(trip) {
     console.log("createAllDays trip:", trip);
   const { startDate, endDate, id: tripId } = trip;
