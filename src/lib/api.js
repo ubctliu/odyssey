@@ -269,3 +269,25 @@ export async function createEvent(day, event) {
     console.error("Error creating event:", error);
   }
 }
+
+
+export async function deleteEvent(event) {
+  try {
+    const res = await fetch(`/api/events/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ event })
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to delete event");
+    }
+  
+    const deletedEvent = await res.json();
+    return deletedEvent;
+  } catch (error) {
+    console.error("Error deleting event:", error);
+  }
+}

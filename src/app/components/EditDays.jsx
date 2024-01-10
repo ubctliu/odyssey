@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
-import { FaRegCalendarPlus } from "react-icons/fa6";
+import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchBar from './SearchBar';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { updateDayEvents, updateDayNotes } from "@/lib/api"
+import { updateDayEvents, updateDayNotes, deleteEvent } from "@/lib/api"
 
   // save events & handle loading animation for events
 const handleSaveEvents = async (day, setIsSaving) => {
@@ -53,9 +53,31 @@ const handleSaveNotes = async (day, setIsSaving) => {
   }
 };
 
+const handleDeleteEvent = async (event, setIsSaving) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        delete: true
+      }
+    ));
+    const deletedEvent = await deleteEvent(event);
+    console.log("Deleted event...", deletedEvent);
+  } catch (error) {
+    console.error("Error occurred while trying to delete event:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        delete: false
+      }
+    ));
+  }
+}
+
 export default function EditDays({ day, title, edit, setEdit, isLoading }) {
     // crude implementation for loading state
-    const [isSaving, setIsSaving] = useState({notes: false, events: false});
+    const [isSaving, setIsSaving] = useState({notes: false, events: false, delete: false});
     const { tripData, setTripData } = useTripData();
     const { notes, events } = day;
     const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
@@ -114,6 +136,8 @@ export default function EditDays({ day, title, edit, setEdit, isLoading }) {
                     )))} className="cursor-pointer text-blue-500">
                       Details
                     </span>
+                    {isSaving.delete ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
+                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving)} className={"cursor-pointer"} />}
                   </div>
                   <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
                   {event.isVisible && (
