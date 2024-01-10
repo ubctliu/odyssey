@@ -167,7 +167,7 @@ export async function fetchTripWithDaysAndEvents(url) {
 
 export async function fetchEvent(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/events/${id}`, {
+    const res = await fetch(`/api/events/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ export async function fetchEvent(id) {
   }
 }
 
-export async function updateDaysEvent(updatedEventData) {
+export async function updateDayEvents(updatedEventData) {
   try {
     const res = await fetch(`/api/events/update`, {
       method: 'PUT',
@@ -201,6 +201,26 @@ export async function updateDaysEvent(updatedEventData) {
     return updatedEvent;
   } catch (error) {
     console.error("Error updating event:", error);
-    throw error; // Rethrow the error to handle it in the calling code
+  }
+}
+
+export async function updateDayNotes(day) {
+  try {
+    const res = await fetch(`/api/days/update/notes`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(day),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update notes");
+    }
+    
+    const updatedEvent = await res.json();
+    return updatedEvent;
+  } catch (error) {
+    console.error("Error updating notes:", error);
   }
 }
