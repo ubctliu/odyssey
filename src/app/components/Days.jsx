@@ -45,8 +45,10 @@ const [isCreating, setIsCreating] = useState(false);
 
         <div className="mt-4">
           <div className='group'>
-          <h2 className="text-xl font-semibold text-gray-700">Events</h2>
-          {isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}
+          <div className="flex items-center">
+            <h2 className="text-xl font-semibold text-gray-700">Events</h2>
+            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
+          </div>      
           </div>
           {isLoading ? (
             <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
