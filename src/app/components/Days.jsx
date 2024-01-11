@@ -23,7 +23,7 @@ const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
 
 // TODO: rename component to Day to fit convention
 // Props: day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents
-export default function Days({ day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents}) {
+export default function Days({ day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents, readOnly}) {
 const { notes, events } = day;
 const [isCreating, setIsCreating] = useState(false);
   const handleEdit = () => { 
@@ -34,7 +34,7 @@ const [isCreating, setIsCreating] = useState(false);
     <div className="flex h-auto bg-gray-100 p-4">
       <div className="border border-gray-300 shadow-lg rounded-lg p-6 bg-white max-w-lg w-full">
         <div className='group'>
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4">{title} <Pencil className='inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce' onClick={handleEdit}/></h1>
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4">{title} {readOnly === "readonly" ? <div></div> : <Pencil className='inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce' onClick={handleEdit}/>}</h1>
         </div>
         <hr className='my-4'/>
         <div>
@@ -47,7 +47,7 @@ const [isCreating, setIsCreating] = useState(false);
           <div className='group'>
           <div className="flex items-center">
             <h2 className="text-xl font-semibold text-gray-700">Events</h2>
-            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
+            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : readOnly === "readonly" ? <div></div> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
           </div>      
           </div>
           {isLoading ? (

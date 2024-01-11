@@ -6,7 +6,7 @@ import EditDays from "./EditDays";
 import Days from "./Days";
 import { fetchEvent } from "@/lib/api";
 
-const CompleteDays = ({ day, setTripData }) => {
+const CompleteDays = ({ day, setTripData, readOnly }) => {
 
     const dayid = day.id;
     const currentDateTime = new Date(day.date);
@@ -81,6 +81,7 @@ const CompleteDays = ({ day, setTripData }) => {
               visibleEvents={visibleEvents}
               edit={edit} 
               setEdit={setEdit}
+              readOnly={readOnly}
               isLoading={isLoading}
               setIsLoading={setIsLoading}      
             />
