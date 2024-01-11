@@ -29,6 +29,11 @@ const { notes, events } = day;
 const [isCreating, setIsCreating] = useState(false);
   const handleEdit = () => { 
     setEdit(!edit);
+    // close all open details when switching between edit/normal
+    setVisibleEvents(
+      visibleEvents.map((currEvent) => (
+      { ...currEvent, isVisible: false }
+    )));
   }
 
   return (
@@ -58,8 +63,7 @@ const [isCreating, setIsCreating] = useState(false);
               <div key={index} className="text-gray-600 py-2 hover:bg-gray-200 rounded">
                 <div className="flex justify-between items-center">
                   <span>
-                    {console.log(event)}
-                    {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}
+                    {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}  {event.location}
                   </span>
                   <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (

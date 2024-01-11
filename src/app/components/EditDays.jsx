@@ -87,6 +87,11 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
   
     const handleEdit = () => {
       setEdit(!edit);
+      // close all open details when switching between edit/normal
+      setVisibleEvents(
+        visibleEvents.map((currEvent) => (
+        { ...currEvent, isVisible: false }
+      )));
     };
   
     return (
@@ -133,7 +138,8 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                   <div className="flex justify-between items-center">
                     <span>
                       {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
-                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}  
+                      {event.location}
                     </span>
                     <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (
@@ -153,7 +159,8 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                       <p>
                         Location:
                         <SearchBar
-                          setLocationData={setTripData}
+                          setVisibleEvents={setVisibleEvents}
+                          visibleEvents={visibleEvents}
                           className={"text-gray-600 border border-gray-300 rounded p-2 w-full"}
                           dayEvent={{ day, event }}
                           tripData={tripData}
@@ -167,7 +174,7 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                           value={tripData.days
                             .find((dayItem) => dayItem.id === day.id)
                             .events.find((eventItem) => eventItem.id === event.id).notes}
-                          onChange={e => { 
+                          onChange={e => {
                             setTripData((prev) => ({
                               ...prev,
                               days: prev.days.map((curr) => 
@@ -175,7 +182,10 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                                 currEvent.id === event.id ? { ...currEvent, notes: e.target.value} : currEvent
                               )} : curr)
                             }
-                            ))}}
+                            ))
+                            setVisibleEvents(visibleEvents.map((currEvent) => (
+                              currEvent.id === event.id ? { ...currEvent, notes: e.target.value } : currEvent)));
+                          }}
                         />
                       </p>
                     </div>
