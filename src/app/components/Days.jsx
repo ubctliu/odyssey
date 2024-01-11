@@ -4,6 +4,7 @@ import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaRegCalendarPlus } from "react-icons/fa6";
 import { createEvent } from "@/lib/api";
+import Collapsible from '@/app/components/Collapsible';
 
 
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
@@ -28,6 +29,11 @@ const { notes, events } = day;
 const [isCreating, setIsCreating] = useState(false);
   const handleEdit = () => { 
     setEdit(!edit);
+    // close all open details when switching between edit/normal
+    setVisibleEvents(
+      visibleEvents.map((currEvent) => (
+      { ...currEvent, isVisible: false }
+    )));
   }
 
   return (
@@ -44,10 +50,10 @@ const [isCreating, setIsCreating] = useState(false);
         </div>
 
         <div className="mt-4">
+        <Collapsible className={"text-xl font-semibold text-gray-700"} title={"Events"}>
           <div className='group'>
           <div className="flex items-center">
-            <h2 className="text-xl font-semibold text-gray-700">Events</h2>
-            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : readOnly === "readonly" ? <div></div> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
+            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : readOnly === "readonly" ? <div></div> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce hover:fill-cyan-700"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
           </div>      
           </div>
           {isLoading ? (
@@ -57,8 +63,7 @@ const [isCreating, setIsCreating] = useState(false);
               <div key={index} className="text-gray-600 py-2 hover:bg-gray-200 rounded">
                 <div className="flex justify-between items-center">
                   <span>
-                    {console.log(event)}
-                    {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}
+                    {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}  {event.location}
                   </span>
                   <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (
@@ -76,6 +81,7 @@ const [isCreating, setIsCreating] = useState(false);
               </div>
             ))
           )}
+          </Collapsible>
         </div>
       </div>
     </div>
