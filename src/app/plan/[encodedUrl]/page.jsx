@@ -11,6 +11,7 @@ import DatePicker from "@/app/components/DatePicker";
 import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDays, fetchUser } from "@/lib/api";
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
+import Collapsible from "@/app/components/Collapsible";
 
 const checkUserDetails = async (url, clerkId, setOwnedByUser) => {
   const userExists = await fetchUser(clerkId);
@@ -138,11 +139,13 @@ export default function () {
                   notes: e.target.value
                 })}
               />
-             <label>Days</label>
+
              <section name={"days"} className={"contents"}>
+             <Collapsible title={"Days"}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
               the useEffect rerendering)*/
                tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
+              </Collapsible>
              </section>
           </form> : 
           <form className="">
