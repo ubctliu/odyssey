@@ -77,9 +77,9 @@ export default function () {
       return;
     }
 
-    if (!currentUser.isSignedIn) {
-      return redirect("/sign-in");
-    }
+    // if (!currentUser.isSignedIn) {
+    //   return redirect("/sign-in");
+    // }
 
 
   }, []);
