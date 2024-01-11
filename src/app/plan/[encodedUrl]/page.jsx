@@ -139,13 +139,12 @@ export default function () {
                   notes: e.target.value
                 })}
               />
-
              <section name={"days"} className={"contents"}>
-             <Collapsible title={"Days"}>
+             <Collapsible title={"Days"} className={""}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
               the useEffect rerendering)*/
                tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
-              </Collapsible>
+               </Collapsible>
              </section>
           </form> : 
           <form className="">
@@ -183,11 +182,12 @@ export default function () {
                   notes: e.target.value
                 })}
                 readOnly={"readonly"} />
-             <label>Days</label>
              <section name={"days"} className={"contents"}>
+             <Collapsible title={"Days"} className={""}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
               the useEffect rerendering)*/
                tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly={"readonly"} />)}
+               </ Collapsible>
              </section>
           </form> }
             {/* This will be the section to display trip information*/}

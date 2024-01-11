@@ -4,6 +4,7 @@ import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaRegCalendarPlus } from "react-icons/fa6";
 import { createEvent } from "@/lib/api";
+import Collapsible from '@/app/components/Collapsible';
 
 
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
@@ -44,10 +45,10 @@ const [isCreating, setIsCreating] = useState(false);
         </div>
 
         <div className="mt-4">
+        <Collapsible className={"text-xl font-semibold text-gray-700"} title={"Events"}>
           <div className='group'>
           <div className="flex items-center">
-            <h2 className="text-xl font-semibold text-gray-700">Events</h2>
-            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : readOnly === "readonly" ? <div></div> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
+            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : readOnly === "readonly" ? <div></div> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce hover:fill-cyan-700"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
           </div>      
           </div>
           {isLoading ? (
@@ -76,6 +77,7 @@ const [isCreating, setIsCreating] = useState(false);
               </div>
             ))
           )}
+          </Collapsible>
         </div>
       </div>
     </div>

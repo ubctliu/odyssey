@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 
-const Collapsible = ({ children, title }) => {
+const Collapsible = ({ children, title, className }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isRotated, setIsRotated] = useState(false);
 
@@ -12,7 +12,7 @@ const Collapsible = ({ children, title }) => {
   return (
     <div>
       <div onClick={() => {toggleCollapse();  setIsRotated(!isRotated);}} style={{ cursor: 'pointer', borderBottom: '1px solid #ccc' }}>
-        <h3>{title} <IoIosArrowDown onClick={() => setIsRotated(!isRotated)} className={`inline-block pointer-events-auto transform transition-transform duration-300 ${isRotated ? 'rotate-180' : ''}`}/></h3>
+        <h3 className={className}> {title} <IoIosArrowDown onClick={() => setIsRotated(!isRotated)} className={`inline-block pointer-events-auto transform transition-transform duration-300 ${isRotated ? 'rotate-180' : ''}`}/></h3>
       </div>
       {!isCollapsed && <div>{children}</div>}
     </div>
