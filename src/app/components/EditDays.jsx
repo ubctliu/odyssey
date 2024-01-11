@@ -140,8 +140,8 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                       value={event.timeStart} />-
                       <TimePickerComponent 
                       value={event.timeEnd} />
-                      {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
-                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                      {/* {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
+                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} */}
                     </span>
                     <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (

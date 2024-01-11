@@ -25,6 +25,7 @@ const TimePickerComponent = ({ className, value }) => {
       format={format}
       use12Hours
       inputReadOnly
+      minuteStep={5} //creates 5 minute intervals
     />
   );
 };
