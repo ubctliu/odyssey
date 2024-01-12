@@ -1,15 +1,11 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-import Image from "next/image";
 import Hero from "./components/Hero";
 import Banner from "./components/Banner";
 import About from "./about/page";
 import { createUser } from "@/lib/api";
 import { useEffect, useState } from "react";
 import { useTripData } from "@/app/context/TripDataContext";
-import { resetTripData } from "@/lib/resetTripData";
-import TitleTypeWriter from "@/app/components/TitleTypeWriter";
-import NewItineraryModal from "@/app/components/NewItineraryModal";
 
 const userExists = async (user) => {
   try {

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useTripData } from "@/app/context/TripDataContext";
+import { resetTripData } from "@/lib/resetTripData";
+import NewItineraryModal from "./NewItineraryModal";
 import AOS from "aos";
 import 'aos/dist/aos.css';
 

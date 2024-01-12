@@ -1,6 +1,5 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-// import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { APIProvider } from "@vis.gl/react-google-maps";
