@@ -3,7 +3,7 @@ import {useRef, useState, useEffect } from 'react';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
 import { useTripData } from '../context/TripDataContext';
 
-const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={} }) => {
+const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={}, newTripCreation=false }) => {
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
   const {tripData, setTripData} = useTripData();
@@ -50,6 +50,12 @@ const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={} }) 
   const onPlaceChanged = place => {
     if (place) {
       setInputValue(place.formatted_address || place.name);
+      if (newTripCreation) {
+      setTripData((prev) => ({
+        ...prev,
+        placeId: place.place_id
+      }));
+    }
     }
 
     // Keep focus on input element

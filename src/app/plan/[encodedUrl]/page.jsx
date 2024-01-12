@@ -12,6 +12,8 @@ import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDa
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
 import Collapsible from "@/app/components/Collapsible";
+import SuggestionBox from "@/app/components/SuggestionBox";
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 const checkUserDetails = async (url, clerkId, setOwnedByUser) => {
   const userExists = await fetchUser(clerkId);
@@ -70,6 +72,7 @@ export default function () {
   const { tripData, setTripData } = useTripData();
   const [ownedByUser, setOwnedByUser] = useState(true);
   const pathname = usePathname();
+  const [type, setType] = useState("");
   const url = pathname.split("/plan/")[1];
 
   useEffect(() => {
@@ -87,6 +90,7 @@ export default function () {
 
   useEffect(() => {
     loadTripDetails(url, setTripData);
+    console.log(tripData)
   }, []);
 
   // editting safeguards against non-users/different users
@@ -98,8 +102,10 @@ export default function () {
   //   return () => clearTimeout(timeoutId);
   //   }
   // }, [currentUser.isLoaded])
-
   return (
+    <APIProvider
+        apiKey={process.env.GOOGLE_MAPS_API_KEY}
+      >
     <div className="h-5/6 flex justify-center">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
@@ -139,6 +145,11 @@ export default function () {
                   notes: e.target.value
                 })}
               />
+              <div className={"flex justify-around"}>
+              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => setType("restaurant")}>Show nearby restaurants</button>
+              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => setType("tourist_attraction")}>Show tourist attractions</button>
+              </div>
+              <SuggestionBox type={type}></SuggestionBox>
              <section name={"days"} className={"contents"}>
              <Collapsible title={"Days"} className={""}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
@@ -258,5 +269,6 @@ export default function () {
         </div>
       </main>
     </div>
+    </APIProvider>
   );
 }

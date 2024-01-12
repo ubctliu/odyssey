@@ -27,6 +27,7 @@ model Trip {
   description String?  @db.VarChar(255)
   title       String?  @db.VarChar(255)
   imageUrl    String?  @db.VarChar(255)
+  placeId     String   @db.VarChar(255)
   startDate   DateTime @db.Date
   endDate     DateTime @db.Date
   notes       String?  @db.Text
@@ -51,9 +52,9 @@ model Day {
 model Event {
   id          Int      @id @default(autoincrement())
   dayId       Int      @db.Integer
-  location    String   @db.VarChar(255)
-  timeStart   DateTime @db.Timestamp
-  timeEnd     DateTime @db.Timestamp
+  location    String?   @db.VarChar(255)
+  timeStart   DateTime? @db.Timestamp
+  timeEnd     DateTime? @db.Timestamp
   notes       String?  @db.Text
   description String?  @db.VarChar(255)
   createdAt   DateTime @default(now())
