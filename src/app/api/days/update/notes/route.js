@@ -1,13 +1,15 @@
-import updateEvent from '@/lib/db/events/updateEvent';
+import updateDayNotes from '@/lib/db/days/updateDayNotes';
 import { NextResponse } from 'next/server';
 
-// PUT /api/events/update
+// PUT /api/days/update/notes
+// Required fields in body: day
 export async function PUT(req) {
   if (req.method === "PUT") {
-    const events  = await req.json();
+    const day  = await req.json();
     try {
-      const updatedEvent = await updateEvent(events);
-      return NextResponse.json({ status: 201 }, { data: updatedEvent });
+      console.log("from update notes", day);
+      const updatedDay = await updateDayNotes(day);
+      return NextResponse.json({ status: 201 }, { data: updatedDay });
     } catch (error) {
       return NextResponse.json({ status: 500 }, { message: `${error}: Internal server error`});
     }

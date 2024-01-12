@@ -3,7 +3,7 @@ import { Calendar } from 'react-date-range';
 import { useTripData } from '../context/TripDataContext';
 import { useState } from 'react';
 
-const DatePicker = ({ className, startOrEndDate }) => {
+const DatePicker = ({ className, startOrEndDate, readOnly }) => {
   const { tripData, setTripData } = useTripData();
   const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -12,13 +12,16 @@ const DatePicker = ({ className, startOrEndDate }) => {
   }
   return (
     <div>
-    <input readOnly required
+      {readOnly === "readonly" ?  <input required
+        className={className}
+        defaultValue={`${tripData[startOrEndDate].toLocaleDateString('en-US')}`}
+        readOnly={readOnly}
+      />: <input required
         className={className}
         onClick={handleClick}
-        value={
-          `${tripData[startOrEndDate].toLocaleDateString('en-US')}`
-        }
-      />
+        defaultValue={`${tripData[startOrEndDate].toLocaleDateString('en-US')}`}
+        readOnly={readOnly}
+      />}
       {openCalendar && <Calendar className={className}
         date={tripData[startOrEndDate]}
         onChange={item => setTripData((prev) => ({

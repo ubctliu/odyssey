@@ -1,53 +1,106 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTripData } from '@/app/context/TripDataContext';
 import Pencil from '../../../public/Icons/PencilIcon';
+import { FaTrashAlt } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import SearchBar from './SearchBar';
 import { APIProvider } from '@vis.gl/react-google-maps';
+import { updateDayEvents, updateDayNotes, deleteEvent } from "@/lib/api"
 
+  // save events & handle loading animation for events
+const handleSaveEvents = async (day, setIsSaving) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        events: true
+      }
+    ));
+  const updatedEvents = await updateDayEvents(day.events);
+  console.log("Updating events...", updatedEvents);
+  } catch (error) {
+    console.error("Error occurred while trying to update events:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        events: false
+      }
+    ));
+  }
+};
 
-export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVisibility, setIsLoading }) {
-    // const [eventNotes, setEventNotes] = useState(events.map((event) => event.notes));
-    // const [eventLocations, setEventLocations] = useState(events.map((event) => event.location));
-    const {tripData, setTripData} = useTripData();
+  // save notes & handle loading animation for notes
+const handleSaveNotes = async (day, setIsSaving) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        notes: true
+      }
+    ));
+    const updatedNotes = await updateDayNotes(day);
+    console.log("Updating notes...", updatedNotes);
+  } catch (error) {
+    console.error("Error occurred while trying to update events:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        notes: false
+      }
+    ));
+  }
+};
+
+const handleDeleteEvent = async (event, setIsSaving, setVisibleEvents) => {
+  try {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        delete: true,
+        eventId: event.id
+      }
+    ));
+    const deletedEvent = await deleteEvent(event);
+    // delete from visible events on delete event
+    setVisibleEvents((prev) => prev.filter((currEvent) => currEvent.id !== event.id));
+    console.log("Deleted event...", deletedEvent);
+  } catch (error) {
+    console.error("Error occurred while trying to delete event:", error);
+  } finally {
+    setIsSaving((prev) => (
+      { 
+        ...prev,
+        delete: false,
+        eventId: null
+      }
+    ));
+  }
+}
+
+export default function EditDays({ day, title, edit, setEdit, isLoading, visibleEvents, setVisibleEvents, readonly}) {
+    // crude implementation for loading state
+    const [isSaving, setIsSaving] = useState({notes: false, events: false, delete: false, eventId: null});
+    const { tripData, setTripData } = useTripData();
     const { notes, events } = day;
-    const [visibleEvents, setVisibleEvents] = useState(events?.map((event) => ({ ...event, isVisible: false })));
-    // const handleEventNotesChange = (index, event) => {
-    //   const updatedEventNotes = [...eventNotes];
-    //   updatedEventNotes[index] = event.target.value;
-    //   setEventNotes(updatedEventNotes);
-    // };
-  
-    // const handleEventLocationChange = (index, event) => {
-    //   const updatedEventLocations = [...eventLocations];
-    //   updatedEventLocations[index] = event.target.value;
-    //   setEventLocations(updatedEventLocations);
-    // };
-  
-    const handleSaveDayNotes = () => {
-        console.log('Saving day notes:', dayNotes, 'for day:', day.id);
-      };
-  
-    const handleSaveEvent = () => {
-        events.forEach((event, index) => {
-          const updatedEvent = {
-            ...event,
-            location: events[index],
-            notes: events[index]
-          };
-          console.log('Saving event:', updatedEvent);
-        });
-      };
   
     const handleEdit = () => {
       setEdit(!edit);
+      // close all open details when switching between edit/normal
+      setVisibleEvents(
+        visibleEvents.map((currEvent) => (
+        { ...currEvent, isVisible: false }
+      )));
     };
   
     return (
       <div className="flex h-auto bg-gray-100 p-4">
         <div className="border border-gray-300 shadow-lg rounded-lg p-6 bg-white max-w-lg w-full">
           <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-            {title} <Pencil className="inline-block w-4 h-4 ml-2 hover:cursor-pointer" onClick={handleEdit} />
+          <div className='group'>
+            {title} <Pencil className="inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce" onClick={handleEdit} />
+            </div>
           </h1>
           <hr className="my-4" />
           <div>
@@ -55,7 +108,7 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
             <input
               type="text"
               className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-              value={day.notes}
+              value={notes}
               onChange={e => { 
                 setTripData((prev) => ({
                   ...prev,
@@ -65,12 +118,12 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                 ))}}
             />
             <div className='flex justify-center'>
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4"
-              onClick={handleSaveDayNotes}
+            {isSaving.notes ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : <button
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4" type="button"
+              onClick={() => handleSaveNotes(day, setIsSaving)}
             >
               Save Notes
-            </button>
+            </button>}
             </div>
             <hr className="my-4" />
           </div>
@@ -85,7 +138,8 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                   <div className="flex justify-between items-center">
                     <span>
                       {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
-                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                      {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}  
+                      {event.location}
                     </span>
                     <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (
@@ -93,6 +147,11 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                     )))} className="cursor-pointer text-blue-500">
                       Details
                     </span>
+                    {isSaving.delete && isSaving.eventId === event.id ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : 
+                    <div className='group'>
+                    <FaTrashAlt onClick={() => handleDeleteEvent(event, setIsSaving, setVisibleEvents)} className={"cursor-pointer group-hover:animate-bounce"} />
+                    </div>
+                    }
                   </div>
                   <APIProvider apiKey={process.env.GOOGLE_MAPS_API_KEY} libraries={['places']}>
                   {event.isVisible && (
@@ -100,27 +159,12 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                       <p>
                         Location:
                         <SearchBar
-                          setLocationData={setTripData}
+                          setVisibleEvents={setVisibleEvents}
+                          visibleEvents={visibleEvents}
                           className={"text-gray-600 border border-gray-300 rounded p-2 w-full"}
                           dayEvent={{ day, event }}
                           tripData={tripData}
                         />
-                        {/* <input
-                          type="text"
-                          className="text-gray-600 border border-gray-300 rounded p-2 w-full"
-                          value={tripData.days
-                            .find((dayItem) => dayItem.id === day.id)
-                            .events.find((eventItem) => eventItem.id === event.id).location}
-                          onChange={e => { 
-                            setTripData((prev) => ({
-                              ...prev,
-                              days: prev.days.map((curr) => 
-                              curr.id === day.id ? { ...curr, events: events.map((currEvent) => 
-                                currEvent.id === event.id ? { ...currEvent, location: e.target.value} : currEvent
-                              )} : curr)
-                            }
-                            ))}}
-                        /> */}
                       </p>
                       <p>
                         Notes:
@@ -130,7 +174,7 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                           value={tripData.days
                             .find((dayItem) => dayItem.id === day.id)
                             .events.find((eventItem) => eventItem.id === event.id).notes}
-                          onChange={e => { 
+                          onChange={e => {
                             setTripData((prev) => ({
                               ...prev,
                               days: prev.days.map((curr) => 
@@ -138,7 +182,10 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
                                 currEvent.id === event.id ? { ...currEvent, notes: e.target.value} : currEvent
                               )} : curr)
                             }
-                            ))}}
+                            ))
+                            setVisibleEvents(visibleEvents.map((currEvent) => (
+                              currEvent.id === event.id ? { ...currEvent, notes: e.target.value } : currEvent)));
+                          }}
                         />
                       </p>
                     </div>
@@ -149,12 +196,13 @@ export default function EditDays({ day, title, edit, setEdit,isLoading, toggleVi
             )}
           </div>
           <div className="flex justify-center">
-            <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4 ml-4"
-              onClick={handleSaveEvent}
+          {isSaving.events ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> :   
+          <button
+              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-4 ml-4" type="button"
+              onClick={()=> handleSaveEvents(day, setIsSaving)}
             >
               Save Event Change
-            </button>
+            </button>}
           </div>
         </div>
       </div>

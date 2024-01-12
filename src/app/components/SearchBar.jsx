@@ -3,7 +3,7 @@ import {useRef, useState, useEffect } from 'react';
 import { useAutocomplete } from '@vis.gl/react-google-maps';
 import { useTripData } from '../context/TripDataContext';
 
-const SearchBar = ({ className, setLocationData, dayEvent={} }) => {
+const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={} }) => {
   const inputRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
   const {tripData, setTripData} = useTripData();
@@ -11,27 +11,30 @@ const SearchBar = ({ className, setLocationData, dayEvent={} }) => {
   useEffect(() => {
     // if day event is provided, set event location instead of trip location
     const timeoutId = setTimeout(() => {
-      (dayEvent && Object.keys(dayEvent).length > 0) ?
-      setTripData((prev) => ({
-        ...prev,
-        days: prev.days.map((curr) => 
-        curr.id === dayEvent.day.id ? { ...curr, events: dayEvent.day.events.map((currEvent) => 
-          currEvent.id === dayEvent.event.id ? 
-            {...currEvent,
-            location: dayEvent
-              ? inputValue || currEvent.location
-              : inputValue,
-            }
-        : currEvent ),}: curr)
-      })):
-      setTripData((prev) => 
+      if (dayEvent && Object.keys(dayEvent).length > 0) {
+        setTripData((prev) => ({
+          ...prev,
+          days: prev.days.map((curr) => 
+          curr.id === dayEvent.day.id ? { ...curr, events: dayEvent.day.events.map((currEvent) => 
+            currEvent.id === dayEvent.event.id ? 
+              {...currEvent,
+              location: dayEvent
+                ? inputValue || currEvent.location
+                : inputValue,
+              }
+          : currEvent ),}: curr)
+        }));
+        setVisibleEvents(visibleEvents.map((currEvent) => (
+          currEvent.id === dayEvent.event.id ? { ...currEvent, location: inputValue } : currEvent)));
+      } else {
+        setTripData((prev) => 
       ({ 
         ...prev,
         location: inputValue,
         isLocationSet: inputValue !== ""
       }))
+    }
     }, 300);
-    console.log(tripData);
     return () => {
       clearTimeout(timeoutId);
     };

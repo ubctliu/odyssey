@@ -167,7 +167,7 @@ export async function fetchTripWithDaysAndEvents(url) {
 
 export async function fetchEvent(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/events/${id}`, {
+    const res = await fetch(`/api/events/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -181,5 +181,114 @@ export async function fetchEvent(id) {
     return fetchedEvent;
   } catch (error) {
     console.error("Error retrieving event:", error);
+  }
+}
+
+export async function updateDayEvents(updatedEventData) {
+  try {
+    const res = await fetch(`/api/events/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedEventData),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update event");
+    }
+    const updatedEvent = await res.json();
+    return updatedEvent;
+  } catch (error) {
+    console.error("Error updating event:", error);
+  }
+}
+
+export async function updateDayNotes(day) {
+  try {
+    const res = await fetch(`/api/days/update/notes`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(day),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update notes");
+    }
+    
+    const updatedEvent = await res.json();
+    return updatedEvent;
+  } catch (error) {
+    console.error("Error updating notes:", error);
+  }
+}
+
+
+export async function createDays(trip) {
+  try {
+    const res = await fetch(`/api/days/new`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(trip)
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to create days");
+    }
+  
+    const daysCreated = await res.json();
+
+    return daysCreated;
+  } catch (error) {
+    console.error("Error creating days:", error);
+  }
+}
+
+
+export async function createEvent(day, event, setVisibleEvents) {
+  try {
+    const res = await fetch(`/api/events/new`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ day, event })
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to create event");
+    }
+  
+    const newEvent = await res.json();
+    // add to visible events on create event
+    return newEvent;
+  } catch (error) {
+    console.error("Error creating event:", error);
+  }
+}
+
+
+export async function deleteEvent(event) {
+  try {
+    const res = await fetch(`/api/events/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ event })
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to delete event");
+    }
+  
+    const deletedEvent = await res.json();
+    return deletedEvent;
+  } catch (error) {
+    console.error("Error deleting event:", error);
   }
 }
