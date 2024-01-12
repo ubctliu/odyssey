@@ -1,6 +1,6 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-import vacationimg from "../../../../public/images/vacationimg.png";
+// import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";

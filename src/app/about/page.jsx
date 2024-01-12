@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import FadeInOnScroll from "../components/FadeInOnScroll";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ParallaxTextBlock = ({ text, alternate }) => {
   const sideOfScreen = alternate ? "justify-start" : "justify-end text-right";
@@ -18,38 +21,58 @@ const ParallaxTextBlock = ({ text, alternate }) => {
 };
 
 const About = () => {
+  useEffect(() => {
+    AOS.init({duration:1700})
+  })
+
   return (
-    <div>
-      <div className="flex max-h-screen bg-fixed bg-aboutParallax bg-cover">
-        <h1 className="justify-left pl-6 mt-6 font-bold text-5xl">
+    <div flex justify-center items-center>
+      <div className="flex justify-center items-center max-h-screen bg-fixed bg-aboutParallax bg-cover">
+        <FadeInOnScroll>
+        <h1 className="mt-10 font-palanquin text-8xl max-sm:text-[72px] max-sm:leading-[82] font-bold" data-aos="fade-up">
           {" "}
-          Why Odessey?{" "}
+          Why Odyssey?{" "}
         </h1>
-      </div>
+        </FadeInOnScroll>
+        </div>
       <div className="bg-fixed bg-aboutParallax bg-cover">
-        <ParallaxTextBlock
-          text="We provide a unique platform for travelers to create and share itineraries from around the world.
-            Whether you're planning a short city break or a month-long journey across continents, Odyssey helps you create the perfect itinerary."
-          alternate={true}
-        />
-        <ParallaxTextBlock
-          text="Tailored Itineraries: Whether you're a culture enthusiast, a nature lover, or a thrill-seeker, we've got you covered. Our intuitive platform allows you to craft customized itineraries that match your travel style and preferences."
-          alternate={false}
-        />
-        <ParallaxTextBlock
-          text="Seamless Planning: Say goodbye to the hassle of travel planning. Our user-friendly interface, extensive destination guides, and collaboration features make organizing your journey a breeze. Focus on the excitement of your upcoming adventure while we take care of the details."
-          alternate={true}
-        />
-        <ParallaxTextBlock
-          text="Share Your Plans: If you're traveling with others, you can easily share your itinerary with tripmates to all collaborate and plan together. Your group itinerary will update live so you can all have the most recent changes as soon as they are saved."
-          alternate={false}
-        />
-        <p className="w-1/2 mx-auto text-center pb-4">
+        <FadeInOnScroll>
+        <p className="font-montserrat text-3xl font-bold pl-4 pr-4 pb-0 text-1xl w-1/2 transition-opacity duration-4 text-white" data-aos="fade-up">
+          We provide a unique platform for travelers to create and share itineraries from around the world.
+          Whether you're planning a short city break or a month-long journey across continents, Odyssey helps you create the perfect itinerary."
+        </p>
+          </FadeInOnScroll>
+          <br />
+          <br />
+          <FadeInOnScroll>
+          <p className="font-montserrat text-3xl font-bold pl-4 pr-4 pb-0 text-1xl w-1/2 transition-opacity duration-400 text-white" data-aos="fade-up">
+          Tailored Itineraries: Whether you're a culture enthusiast, a nature lover, or a thrill-seeker, we've got you covered. Our intuitive platform allows you to craft customized itineraries that match your travel style and preferences."
+          </p>
+          </FadeInOnScroll>
+          <br />
+          <br />
+          <FadeInOnScroll>
+        <p className="font-montserrat text-3xl font-bold pl-4 pr-4 pb-0 text-1xl w-1/2 transition-opacity duration-400 text-white" data-aos="fade-up">
+          Seamless Planning: Say goodbye to the hassle of travel planning. Our user-friendly interface, extensive destination guides, and collaboration features make organizing your journey a breeze. Focus on the excitement of your upcoming adventure while we take care of the details."
+        </p>
+          </FadeInOnScroll>
+          <br />
+          <br />
+          <FadeInOnScroll>
+        <p className="font-montserrat text-3xl font-bold pl-4 pr-4 pb-0 text-1xl w-1/2 transition-opacity duration-400 text-white" data-aos="fade-up">
+          Share Your Plans: If you're traveling with others, you can easily share your itinerary with trip-mates to all collaborate and plan together. Your group itinerary will update live so you can all have the most recent changes as soon as they are saved."
+        </p>
+          </FadeInOnScroll>
+          <br />
+          <br />
+          <FadeInOnScroll>
+        <p className="font-montserrat text-3xl font-bold pl-4 pr-4 pb-0 text-1xl w-1/2 transition-opacity duration-400 text-white" data-aos="fade-up">
           Embark on a journey of discovery with Odyssey — where every
           destination becomes a story, and every traveler an author of their own
           adventure. Ready to start planning your next trip? Join us today and
           let the exploration begin!
         </p>
+          </FadeInOnScroll>
       </div>
     </div>
   );
