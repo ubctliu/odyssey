@@ -1,15 +1,14 @@
 import 'rc-time-picker/assets/index.css';
 import React from 'react';
-import { useTripData } from '../context/TripDataContext';
 import { useState } from 'react';
 import moment from 'moment'; //JavaScript library for parsing, validating, manipulating, and formatting dates.
 import TimePicker from 'rc-time-picker';
 
-const format = 'h:mm a';
-// const now = moment().hour(0).minute(0);
-
+//for some reason all time is showing up as 8:something PM for me...
 const TimePickerComponent = ({ className, value }) => {
-  const [selectedTime, setSelectedTime] = useState(moment(value, format));
+  const format = 'hh:mm a';
+  const parsedValue = moment(value, "YYYY-MM-DDTHH:mm:ss.SSSZ").format(format);
+  const [selectedTime, setSelectedTime] = useState(moment(parsedValue, format));
 
   const onChange = (value) => {
     console.log(value && value.format(format));
