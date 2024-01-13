@@ -18,10 +18,15 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
+  background: linear-gradient
+    (to bottom, transparent, rgb(var(--background-end-rgb)))
     rgb(var(--background-start-rgb));
+}
+
+.bg-blur::before {
+  content: "";
+  @apply absolute inset-0 bg-no-repeat bg-cover;
+  background-image: url(/images/vacationimg.png);
+  filter: blur(10px);
+  z-index: -1;
 }
