@@ -77,6 +77,7 @@ const loadTripDetails = async (url, setTripData, setDaysExist) => {
   }
 };
 
+// unused for now until we figure out how to allow for editing/saving w/o db connection
 const createInitialEmptyDays = async (tripData, setTripData) => {
   if (tripData.days.length !== 0) {
     return;
@@ -135,7 +136,7 @@ export default function () {
   }, []);
 
   useEffect(() => {
-    createInitialEmptyDays(tripData, setTripData);
+    //createInitialEmptyDays(tripData, setTripData);
     loadTripDetails(url, setTripData, setDaysExist);
   }, []);
 
