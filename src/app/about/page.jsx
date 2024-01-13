@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import FadeInOnScroll from "../components/FadeInOnScroll";
 import AOS from "aos";
