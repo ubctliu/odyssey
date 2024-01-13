@@ -6,7 +6,7 @@ import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from "react";
 
 const fetchSearchResults = async (placesService, locationData, type) => {
-  const filter = ["seppuku", "cemetery", "lottery"]; //remove unwanted results
+  const filter = ["seppuku", "cemetery", "lottery", "inn", "hotel", "airport", "club", "resort", "fairmont"]; //remove unwanted results
   const request = {
     location: {lat: locationData.latValue, lng: locationData.lngValue },
     radius: 50000,
@@ -18,14 +18,15 @@ const fetchSearchResults = async (placesService, locationData, type) => {
 
   console.log(request);
   try {
-
+    //TODO: add more results + make results more relevant
     const response = await new Promise((resolve) => {
-      placesService.nearbySearch(request, (results, status) => {
+      placesService.nearbySearch(request, (results, status, next_page_token) => {
         const filteredResults = results.filter(place => {
           const name = place.name.toLowerCase();
           return !filter.some(keyword => name.includes(keyword));
         });
-        resolve({ filteredResults, status });
+        // console.log(next_page_token);
+        resolve({ filteredResults, status, next_page_token });
       });
     });
 

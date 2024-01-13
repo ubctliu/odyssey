@@ -74,6 +74,7 @@ export default function () {
   const pathname = usePathname();
   const [type, setType] = useState("");
   const url = pathname.split("/plan/")[1];
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     // Don't proceed until user data is loaded
@@ -103,9 +104,6 @@ export default function () {
   //   }
   // }, [currentUser.isLoaded])
   return (
-    <APIProvider
-        apiKey={process.env.GOOGLE_MAPS_API_KEY}
-      >
     <div className="h-5/6 flex justify-center">
       <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
@@ -146,10 +144,13 @@ export default function () {
                 })}
               />
               <div className={"flex justify-around"}>
-              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => setType("restaurant")}>Show nearby restaurants</button>
-              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => setType("tourist_attraction")}>Show tourist attractions</button>
+              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => {setType("restaurant"); setRender(true);}}>Show nearby restaurants</button>
+              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => {setType("tourist_attraction"); setRender(true);}}>Show tourist attractions</button>
               </div>
-              <SuggestionBox type={type}></SuggestionBox>
+              <APIProvider
+              apiKey={process.env.GOOGLE_MAPS_API_KEY}>
+              {render && <SuggestionBox type={type}></SuggestionBox>}
+              </APIProvider>
              <section name={"days"} className={"contents"}>
              <Collapsible title={"Days"} className={""}>
               { /*renders trip days (only problem rn is that it is running a lot of times because of 
@@ -269,6 +270,5 @@ export default function () {
         </div>
       </main>
     </div>
-    </APIProvider>
   );
 }
