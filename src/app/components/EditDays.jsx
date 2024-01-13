@@ -139,10 +139,18 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                       <TimePickerComponent 
                         value={event.timeStart}
                         dayEvent={{ day, event }}
+                        tripData={tripData}
+                        setVisibleEvents={setVisibleEvents}
+                        visibleEvents={visibleEvents}
+                        timeStartOrEnd={"timeStart"}
                         />-
                       <TimePickerComponent 
                         value={event.timeEnd}
                         dayEvent={{ day, event }}
+                        tripData={tripData}
+                        setVisibleEvents={setVisibleEvents}
+                        visibleEvents={visibleEvents}
+                        timeStartOrEnd={"timeEnd"}
                         />
                       {/* {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
                       {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} */}
