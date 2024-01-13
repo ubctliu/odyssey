@@ -27,7 +27,7 @@ model Trip {
   description String?  @db.VarChar(255)
   title       String?  @db.VarChar(255)
   imageUrl    String?  @db.VarChar(255)
-  placeId     String   @db.VarChar(255)
+  placeId     String?  @db.VarChar(255)
   startDate   DateTime @db.Date
   endDate     DateTime @db.Date
   notes       String?  @db.Text
