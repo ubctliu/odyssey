@@ -12,6 +12,8 @@ import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDa
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
 import Collapsible from "@/app/components/Collapsible";
+import SuggestionBox from "@/app/components/SuggestionBox";
+import { APIProvider } from "@vis.gl/react-google-maps";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { CiShare2 } from "react-icons/ci";
 import { FaClipboard, FaSave } from "react-icons/fa";
@@ -80,7 +82,9 @@ export default function () {
   const { tripData, setTripData } = useTripData();
   const [ownedByUser, setOwnedByUser] = useState(true);
   const pathname = usePathname();
+  const [type, setType] = useState("");
   const url = pathname.split("/plan/")[1];
+  const [render, setRender] = useState(false);
   const [daysExist, setDaysExist] = useState(false);
   const [copyClicked, setCopyClicked] = useState(false);
 
@@ -98,6 +102,7 @@ export default function () {
 
   useEffect(() => {
     loadTripDetails(url, setTripData, setDaysExist);
+    console.log(tripData);
   }, []);
 
   // editting safeguards against non-users/different users
@@ -162,6 +167,14 @@ return (
                   }))}
                 />
                 <section name="days" className="contents">
+                    <div className={"flex justify-around"}>
+              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => {setType("restaurant"); setRender(true);}}>Show nearby restaurants</button>
+              <button type="button" className={"bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded mt-2"} onClick={() => {setType("tourist_attraction"); setRender(true);}}>Show tourist attractions</button>
+              </div>
+              <APIProvider
+              apiKey={process.env.GOOGLE_MAPS_API_KEY}>
+              {render && <SuggestionBox type={type}></SuggestionBox>}
+              </APIProvider>
                   <Collapsible title="Days" className="">
                     {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
                   </Collapsible>

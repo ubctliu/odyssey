@@ -18,7 +18,8 @@ export const TripDataProvider = ({ children }) => {
     clerkId: "",
     url: "",
     notes: "",
-    days: []
+    days: [],
+    placeId: "" // place id for google coords
   });
 
   return (

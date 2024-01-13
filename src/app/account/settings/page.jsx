@@ -1,7 +1,7 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import vacationimg from "../../../../public/images/vacationimg.png"
+// import vacationimg from "../../../../public/images/vacationimg.png"
 import { useEffect, useState } from "react";
 import { fetchUser, updateUser } from "@/lib/api";
 
@@ -68,7 +68,7 @@ return (
         Update
       </button>
     </div>
-    <Image src={vacationimg} alt="vacation" className="w-1/2 border-solid border-x-orange-300 border-4" />
+    {/* <Image src={vacationimg} alt="vacation" className="w-1/2 border-solid border-x-orange-300 border-4" /> */}
 
   </main>
 </div>
