@@ -77,6 +77,41 @@ const loadTripDetails = async (url, setTripData, setDaysExist) => {
   }
 };
 
+// unused for now until we figure out how to allow for editing/saving w/o db connection
+const createInitialEmptyDays = async (tripData, setTripData) => {
+  if (tripData.days.length !== 0) {
+    return;
+  }
+  const days = [];
+
+  const start = new Date(tripData.startDate);
+  const end = new Date(tripData.endDate);
+
+// Calculate the number of days between the start and end dates
+const diffInDays = Math.floor((end - start) / (1000 * 60 * 60 * 24));
+
+// Create an array of day objects based on the difference in days
+for (let i = 0; i <= diffInDays; i++) {
+let day = new Date(start);
+day.setDate(day.getDate() + i);
+
+// Log each day for debugging
+console.log("Day " + i + ":", day);
+
+// Add day with tripId and empty notes
+days.push({ key: i ,date: day.toISOString(), tripId: tripData.tripId, notes: '' });
+}
+
+try {
+  setTripData((prev) => ({
+    ...prev,
+    days: days
+  }));
+} catch (error) {
+  console.error("Error setting initial days:", error);
+}
+};
+
 export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
@@ -101,9 +136,10 @@ export default function () {
   }, []);
 
   useEffect(() => {
+    //createInitialEmptyDays(tripData, setTripData);
     loadTripDetails(url, setTripData, setDaysExist);
-    console.log(tripData);
   }, []);
+
 
   // editting safeguards against non-users/different users
   // useEffect(() => {
