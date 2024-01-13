@@ -7,9 +7,9 @@ export default async function createEvent(day, event) {
     const newEvent = await prisma.event.create({
       data: {
         dayId: day.id,
-        timeStart: event.timeStart,
-        location: event.location,
-        timeEnd: event.timeEnd,
+        timeStart: event.timeStart ?? "",
+        location: event.location ?? "",
+        timeEnd: event.timeEnd ?? "",
         notes: event.notes ?? "",
         description: event.description ?? ""
       }

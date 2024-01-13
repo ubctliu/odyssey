@@ -12,7 +12,8 @@ export const resetTripData = (tripData, setTripData) => {
     clerkId: "",
     url: "",
     notes: "",
-    days: []
+    days: [],
+    placeId: ""
   };
 
   // reset the base variables

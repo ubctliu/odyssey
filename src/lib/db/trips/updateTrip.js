@@ -11,7 +11,6 @@ export default async function updateTrip(trip) {
         url: trip.url
       },
       data: {
-      /* TODO: These currently don't exist in the schema - need to add */
         description: trip.description,
         title: trip.title,
         location: trip.location,

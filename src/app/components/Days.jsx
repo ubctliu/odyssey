@@ -10,7 +10,7 @@ import Collapsible from '@/app/components/Collapsible';
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
   try {
     setIsCreating(true);
-    const newEvent = await createEvent(day, {location: "", timeStart: new Date(), timeEnd: new Date()});
+    const newEvent = await createEvent(day, {});
     // add to visible events on create event
     setVisibleEvents((prev) => [...prev, {...newEvent.data, isVisible: false}]);
     console.log("Created event...", newEvent);

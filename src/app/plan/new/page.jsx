@@ -84,6 +84,7 @@ export default function (Component) {
                 className={
                   "bg-white text-black p-2 rounded-lg border border-black"
                 }
+                newTripCreation={true}
               />
               <label
                 htmlFor="date"
