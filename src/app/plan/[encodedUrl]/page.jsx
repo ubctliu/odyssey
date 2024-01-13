@@ -1,6 +1,6 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-import vacationimg from "../../../../public/images/vacationimg.png";
+// import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -121,17 +121,12 @@ export default function () {
   }
 
 return (
-  <div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-    <div className="h-5/6 flex justify-center text-black border border-black rounded-lg">
-      <main className="flex justify-between p-16 bg-white items-center border border-b-8 border-solid border-b-slate-700 rounded-lg">
+    <div className="h-5/6 flex justify-center text-black">
+      <main className="flex justify-between p-16 bg-gray-200 items-center border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col justify-center items-center">
           <section className="top_title">
             {ownedByUser ? (
               <form className="">
-                <div className="flex justify-center items-center">
-                <h1 className="text-4xl font-semibold text-gray-800 mb-4">Edit Trip Details</h1>
-                </div>
-                <hr className="pb-2 h-2"/>
                 <label>Title</label>
                 <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.title} placeholder="Title..." 
                 onChange={e => setTripData((prev) => ({
@@ -201,7 +196,7 @@ return (
               </form>
             )}
           </section>
-          <div className="flex space-x-1 mx-2 pt-4 px-2">
+          <div className="flex mx-2">
             <button
               className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
               onClick={handleShare}
@@ -228,6 +223,5 @@ return (
         </div>
       </main>
     </div>
-  </div>
   );
 }
