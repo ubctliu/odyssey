@@ -3,13 +3,8 @@ import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { redirect } from "next/navigation";
-import SearchBar from "../../components/SearchBar";
-import Link from "next/link";
 import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
-import LazyLoad from "react-lazyload";
-import { images } from "../../../../next.config";
 
 export default function (Component) {
   const currentUser = useUser();
