@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import TitleTypeWriter from "@/app/components/TitleTypeWriter";
 import NewItineraryModal from "@/app/components/NewItineraryModal"; // Assuming NewItineraryModal is a separate component
-import vacation from '../../../public/images/vacation.png';
+// import vacation from '../../../public/images/vacation.png';
 import { useTripData } from "@/app/context/TripDataContext";
 import { resetTripData } from "@/lib/resetTripData";
 
@@ -36,7 +36,7 @@ export default function Component() {
               Get Started
             </button>
           </div>
-          <Image src={vacation} alt="vacation photo" className="mx-auto" />
+          {/* <Image src={vacation} alt="vacation photo" className="mx-auto" /> */}
         </section>
       </main>
      

@@ -6,6 +6,7 @@ export const populateTripData = (dbTrip, setTripData) => {
     title: dbTrip.title ?? "",
     description: dbTrip.description ?? "",
     imageUrl: dbTrip.imageUrl ?? "",
+    placeId: dbTrip.placeId ?? "",
     // isLocationSet: false,
     // isDateSet: false,
     // key: 'selection',

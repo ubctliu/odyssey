@@ -1,6 +1,5 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { APIProvider } from "@vis.gl/react-google-maps";
@@ -9,12 +8,14 @@ import Link from "next/link";
 import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { resetTripData } from "@/lib/resetTripData";
+// import vacationimg from "../../../../public/images/vacationimg.png";
 
 export default function (Component) {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
+  const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
 
   // Don't proceed until user data is loaded
@@ -84,6 +85,8 @@ export default function (Component) {
                 className={
                   "bg-white text-black p-2 rounded-lg border border-black"
                 }
+                newTripCreation={true}
+                setAutoCompleted={setAutoCompleted}
               />
               <label
                 htmlFor="date"
@@ -109,7 +112,7 @@ export default function (Component) {
                 })}
               />
             </form>
-            {tripData.isDateSet && tripData.isLocationSet ? (
+            {tripData.isDateSet && tripData.isLocationSet && autoCompleted ? (
               <Link
                 href={`/plan/${customUrl}`}
                 onClick={() => setTripData((prev) => ({
@@ -131,7 +134,9 @@ export default function (Component) {
             )}
           </div>
           <Image
-            src={vacationimg}
+            // src={vacationimg}
+            width={50}
+            height={50}
             alt="vacation"
             className="w-1/2 border-solid border-x-orange-300 border-4"
           />

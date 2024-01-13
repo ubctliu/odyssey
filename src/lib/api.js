@@ -249,7 +249,7 @@ export async function createDays(trip) {
 }
 
 
-export async function createEvent(day, event, setVisibleEvents) {
+export async function createEvent(day, event) {
   try {
     const res = await fetch(`/api/events/new`, {
       method: 'POST',
