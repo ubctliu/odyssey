@@ -10,7 +10,9 @@ export default async function updateEvent(events) {
         where: { id: event.id },
         data: {
           notes: event.notes,
-          location: event.location
+          location: event.location,
+          timeStart: event.timeStart,
+          timeEnd: event.timeEnd
         }
       });
       // returnArray.push(updatedEvent);

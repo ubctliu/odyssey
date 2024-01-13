@@ -137,9 +137,13 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                   <div className="flex justify-between items-center">
                     <span>
                       <TimePickerComponent 
-                      value={event.timeStart} />-
+                        value={event.timeStart}
+                        dayEvent={{ day, event }}
+                        />-
                       <TimePickerComponent 
-                      value={event.timeEnd} />
+                        value={event.timeEnd}
+                        dayEvent={{ day, event }}
+                        />
                       {/* {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} -{' '}
                       {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} */}
                     </span>
