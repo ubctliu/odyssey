@@ -102,6 +102,7 @@ export default function () {
 
   useEffect(() => {
     loadTripDetails(url, setTripData, setDaysExist);
+    console.log(tripData);
   }, []);
 
   // editting safeguards against non-users/different users
