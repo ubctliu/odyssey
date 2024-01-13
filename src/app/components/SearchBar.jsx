@@ -50,7 +50,7 @@ const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={}, ne
   const onPlaceChanged = place => {
     if (place) {
       setInputValue(place.formatted_address || place.name);
-      setAutoCompleted(true);
+      !setAutoCompleted ?? setAutoCompleted(true);
       if (newTripCreation) {
       setTripData((prev) => ({
         ...prev,
@@ -70,7 +70,7 @@ const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={}, ne
 
   const handleInputChange = event => {
     setInputValue(event.target.value);
-    setAutoCompleted(false);
+    !setAutoCompleted ?? setAutoCompleted(false);
   };
 
   return (
