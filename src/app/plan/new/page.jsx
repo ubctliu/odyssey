@@ -133,8 +133,8 @@ export default function (Component) {
               </Link>
             )}
           </div>
-          <Image
-            // src={vacationimg}
+            <Image
+            src={"/images/vacationimg.png"}
             width={50}
             height={50}
             alt="vacation"
