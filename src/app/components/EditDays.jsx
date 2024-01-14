@@ -91,7 +91,7 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
       setEdit(!edit);
       // close all open details when switching between edit/normal
       setVisibleEvents(
-        visibleEvents.map((currEvent) => (
+        visibleEvents?.map((currEvent) => (
         { ...currEvent, isVisible: false }
       )));
     };
