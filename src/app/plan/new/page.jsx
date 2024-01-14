@@ -9,13 +9,13 @@ import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import { useEffect, useState } from "react";
 import { resetTripData } from "@/lib/resetTripData";
-// import vacationimg from "../../../../public/images/vacationimg.png";
 
 export default function (Component) {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
   const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
+  const fuji = "/images/fuji.png"
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
@@ -26,9 +26,9 @@ export default function (Component) {
   //   return redirect("/sign-in")
   // }
 
-  useEffect(() => {
-    resetTripData(tripData, setTripData);
-  }, [])
+  // useEffect(() => {
+  //   resetTripData(tripData, setTripData);
+  // }, [])
 
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
@@ -40,25 +40,38 @@ export default function (Component) {
       );
 
   return (
-    <div className="h-5/6">
+    <div className="relative overflow-hidden">
+      <div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
+        <div className="md:pe-8 md:w-1/2 xl:pe-0 xl:w-5/12">
+          {/* <Image
+            width={500}
+            height={200}
+            src={fuji}
+            ></Image> */}
+        </div>
       <APIProvider
         apiKey={process.env.GOOGLE_MAPS_API_KEY}
         libraries={["places"]}
-      >
-        <main className="flex justify-between p-16 bg-gray-400 items-center border border-b-8 border-solid border-b-slate-700">
+        >
+        <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
           <div className="flex flex-col justify-center items-center space-y-3">
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
               {" "}
               {currentUser.isSignedIn
                 ? `Hello, ${currentUser.user.firstName}.`
                 : "Hello, Guest"}{" "}
-              Where are you going?
+              Where are you <span className="text-blue-600 dark:text-blue-500">going?</span>
             </h1>
+             <p class="mt-3 text-base text-gray-500">
+              Enter your dream destination and dates below.
+              </p>
+              <div>
+
             <form className="space-y-2">
               <label
                 htmlFor="title"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
-              >
+                >
                 Title
               </label>
               <input
@@ -71,11 +84,11 @@ export default function (Component) {
                     title: e.target.value,
                   }))
                 }
-              />
+                />
               <label
                 htmlFor="location"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
-              >
+                >
                 Location
               </label>
               <SearchBar
@@ -85,17 +98,17 @@ export default function (Component) {
                 }
                 newTripCreation={true}
                 setAutoCompleted={setAutoCompleted}
-              />
+                />
               <label
                 htmlFor="date"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
-              />
+                />
                 Date
               <DateRangeCalendar className={"bg-white text-black p-2 rounded-lg border border-black"}/>
               <label
                 htmlFor="description"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
-              >
+                >
                 Description
               </label>
               <textarea
@@ -108,29 +121,30 @@ export default function (Component) {
                   ...prev,
                   description: e.target.value,
                 })}
-              />
+                />
             </form>
             {tripData.isDateSet && tripData.isLocationSet && autoCompleted ? (
               <Link
-                href={`/plan/${customUrl}`}
-                onClick={() => setTripData((prev) => ({
-                  ...prev,
-                  url: customUrl,
-                  clerkId: currentUser.user.id
-                }))}
-                className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
+              href={`/plan/${customUrl}`}
+              onClick={() => setTripData((prev) => ({
+                ...prev,
+                url: customUrl,
+                clerkId: currentUser.user.id
+              }))}
+              className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
               >
                 Plan My Trip!
               </Link>
             ) : (
               <Link
-                href={""}
-                className="bg-gray-400 text-white p-2 rounded-lg border border-black hover:text-white"
+              href={""}
+              className="bg-gray-400 text-white p-2 rounded-lg border border-black hover:text-white"
               >
                 Missing required fields!
               </Link>
             )}
           </div>
+            </div>
           {/* <Image
             src={vacationimg}
             width={50}
@@ -140,6 +154,7 @@ export default function (Component) {
           /> */}
         </main>
       </APIProvider>
+          </div>
     </div>
   );
 }
