@@ -7,14 +7,15 @@ import Link from "next/link";
 import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { resetTripData } from "@/lib/resetTripData";
+// import vacationimg from "../../../../public/images/vacationimg.png";
 
 export default function (Component) {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
+  const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
-  const vacationimg = "/public/images/vacationimg.png";
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
@@ -82,6 +83,8 @@ export default function (Component) {
                 className={
                   "bg-white text-black p-2 rounded-lg border border-black"
                 }
+                newTripCreation={true}
+                setAutoCompleted={setAutoCompleted}
               />
               <label
                 htmlFor="date"
@@ -107,7 +110,7 @@ export default function (Component) {
                 })}
               />
             </form>
-            {tripData.isDateSet && tripData.isLocationSet ? (
+            {tripData.isDateSet && tripData.isLocationSet && autoCompleted ? (
               <Link
                 href={`/plan/${customUrl}`}
                 onClick={() => setTripData((prev) => ({

@@ -249,7 +249,7 @@ export async function createDays(trip) {
 }
 
 
-export async function createEvent(day, event, setVisibleEvents) {
+export async function createEvent(day, event) {
   try {
     const res = await fetch(`/api/events/new`, {
       method: 'POST',
@@ -290,5 +290,28 @@ export async function deleteEvent(event) {
     return deletedEvent;
   } catch (error) {
     console.error("Error deleting event:", error);
+  }
+}
+
+export async function generateAndUploadAIImage(trip) {
+  try {
+    const res = await fetch(`/api/trips/bannergpt`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(trip)
+    });
+    console.log(res);
+    if (!res.ok) {
+      throw new Error("Failed to create event");
+    }
+  
+    const newtrip = await res.json();
+    // add to visible events on create event
+    console.log(newtrip);
+    return newtrip;
+  } catch (error) {
+    console.error("Error creating AI Image:", error);
   }
 }

@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
+    ],
+  },
+};
+
 const withImages = require('next-images');
 const withVideos = require('next-videos');
 
@@ -10,6 +20,8 @@ module.exports = withImages(withVideos({
   env: {
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
   },
-  ...nextConfig
+  images: {
+    domains: ['maps.googleapis.com'],
   },
-));
+  ...nextConfig
+}));

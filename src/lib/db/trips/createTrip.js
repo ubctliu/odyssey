@@ -23,6 +23,7 @@ export default async function createTrip(trip) {
         title: trip.title,
         description: trip.description,
         imageUrl: trip.imageUrl,
+        placeId: trip.placeId,
         userId: currentUser.id
       }
     });

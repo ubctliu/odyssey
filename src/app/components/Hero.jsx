@@ -41,7 +41,7 @@ const Hero = () => {
     };
     return (
         <section
-        className="w-full flex xl:flex-row flex-col justify-center min-h-screen gap-10 max-container pl-20" data-aos='fade-right'>
+        className="w-screen flex xl:flex-row flex-col justify-center min-h-screen gap-10 max-container pl-20" data-aos='fade-right'>
             <div
             className="relative x1:w-2/5 flex flex-col justify-center items-start w-full max-xl:padding-x animate-slideIn">
                 <h1 className="mt-10 font-palanquin text-8xl max-sm:text-[72px] max-sm:leading-[82] font-bold animate-slideIn">
