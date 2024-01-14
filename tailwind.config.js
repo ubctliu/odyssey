@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        aboutParallax: 'url("../../public/images/plane1.png")',
+        aboutParallax: 'url("/images/plane1.png")', // Adjust the path as needed
       },
       keyframes: {
         zoomInOut: {
@@ -17,7 +17,6 @@ module.exports = {
           '75%': { transform: 'scale(1.7)'},
           '90%': { transform: 'scale(1.9)'},
           '100%': { transform: 'scale(1)'},
-         },
         },
         slideIn: {
           "0%": { transform: "translateX(100%)" },
@@ -27,11 +26,21 @@ module.exports = {
           "0%": { opacity: 0 },
           "100%": { opacity: 1 },
         },
+        spin: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)',
+          },
+        },
       },
       animation: {
         zoomInOut: 'zoomInOut 12s infinite',
         "fade-in": "fadeIn 1s ease-in forwards",
         slideIn: "slideIn 2s ease-in-out",
+        spin: "spin 1s linear infinite", // Added spin animation here
       },
     },
-  }
+  },
+}
