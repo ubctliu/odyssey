@@ -5,8 +5,14 @@ import Suggestion from "@/app/components/Suggestion";
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from "react";
 
+/* fetch google places nearby search results 
+  params: placesService (PlacesService(div)), 
+          locationData ({lat: latitude, lng: longitude}),
+          type (desired search type) */
 const fetchSearchResults = async (placesService, locationData, type) => {
-  const filter = ["seppuku", "cemetery", "lottery", "inn", "hotel", "airport", "club", "resort", "fairmont"]; //remove unwanted results
+  const filter = ["lodging", "university", "gym"]; 
+  // remove unwanted results using google types
+  // https://developers.google.com/maps/documentation/javascript/supported_types 
   const request = {
     location: {lat: locationData.latValue, lng: locationData.lngValue },
     radius: 50000,
@@ -23,7 +29,8 @@ const fetchSearchResults = async (placesService, locationData, type) => {
       placesService.nearbySearch(request, (results, status, next_page_token) => {
         const filteredResults = results.filter(place => {
           const name = place.name.toLowerCase();
-          return !filter.some(keyword => name.includes(keyword));
+          const types = place.types;
+          return !filter.some(keyword => types.includes(keyword));
         });
         // console.log(next_page_token);
         resolve({ filteredResults, status, next_page_token });

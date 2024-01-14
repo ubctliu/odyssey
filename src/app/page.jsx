@@ -37,7 +37,7 @@ export default function (Component) {
   return (
     <div>
       <Banner />
-        <About />
+        {/* <About /> */}
       <br/>
         <Hero />
         <br />
