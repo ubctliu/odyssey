@@ -9,24 +9,24 @@ import 'aos/dist/aos.css';
 import Link from "next/link";
 
 const beach = "/images/beach.png";
-const userExists = async (user) => {
-    try {
-      const newUser = await createUser(user);
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
+// const userExists = async (user) => {
+//     try {
+//       const newUser = await createUser(user);
+//     } catch (error) {
+//       console.error("An error occurred:", error);
+//     }
+//   };
 
 const Hero = () => {
     const [showModal, setShowModal] = useState(false);
     const currentUser = useUser();
     const { tripData, setTripData } = useTripData();
   
-    useEffect(() => {
-      if (currentUser.isLoaded && currentUser.user) {
-        userExists(currentUser.user);
-      }
-    }, [currentUser.isLoaded]);
+    // useEffect(() => {
+    //   if (currentUser.isLoaded && currentUser.user) {
+    //     userExists(currentUser.user);
+    //   }
+    // }, [currentUser.isLoaded]);
 
     useEffect(() => {
       AOS.init({duration:2000})

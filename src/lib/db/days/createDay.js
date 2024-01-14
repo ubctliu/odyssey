@@ -17,6 +17,26 @@ export default async function createDay(days) {
       data: transformedDays,
     });
 
+    // const existingTrip = await prisma.trip.findUnique({
+    //     where: {
+    //       id: days[0].tripId,
+    //     },
+    //     include: {
+    //       days:{
+    //         include: {
+    //           events: true
+    //         },
+    //       },
+    //     },
+    //   });
+
+    //   if (!existingTrip) {
+    //     console.log("Trip doesn't exist");
+    //     return existingTrip; // equal to null
+    //   }
+
+    // setTripData((prev) => ({ ...prev, days: existingTrip.days }));
+
     return newDays;
   } catch (error) {
     console.log("Error occurred while creating days:", error);

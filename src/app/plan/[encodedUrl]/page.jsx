@@ -111,7 +111,7 @@ try {
   console.error("Error setting initial days:", error);
 }
 };
-
+// TODO: consider adding visibleDays or some state variable to hold the changable days?
 export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
@@ -140,6 +140,8 @@ export default function () {
     loadTripDetails(url, setTripData, setDaysExist);
   }, []);
 
+  // useEffect(() => {
+  // }, [tripData.days]);
 
   // editting safeguards against non-users/different users
   // useEffect(() => {
@@ -212,7 +214,7 @@ return (
               {render && <SuggestionBox type={type}></SuggestionBox>}
               </APIProvider>
                   <Collapsible title="Days" className="">
-                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
+                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} />)}
                   </Collapsible>
                 </section>
               </form>
@@ -239,7 +241,7 @@ return (
                 />
                 <section name="days" className="contents">
                   <Collapsible title="Days" className="">
-                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly />)}
+                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly={"readonly"}/>)}
                   </Collapsible>
                 </section>
               </form>
