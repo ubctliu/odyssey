@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    domains: ['firebasestorage.googleapis.com', 'maps.googleapis.com'],
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "firebasestorage.googleapis.com",
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
       },
     ],
   },
@@ -18,10 +19,7 @@ module.exports = withImages(withVideos({
     return config;
   },
   env: {
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
   },
-  images: {
-    domains: ['maps.googleapis.com'],
-  },
-  ...nextConfig
+  ...nextConfig,
 }));
