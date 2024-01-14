@@ -145,7 +145,7 @@ export default function () {
 
   useEffect(() => {
     //createInitialEmptyDays(tripData, setTripData);
-    loadTripDetails(url, setTripData, setDaysExist, setVisibleDays);
+    loadTripDetails(url, setTripData, setDaysExist);
   }, []);
 
   useEffect(() => {
