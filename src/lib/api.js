@@ -226,21 +226,25 @@ export async function updateDayNotes(day) {
 }
 
 
-export async function createDays(trip) {
+export async function createDays(trip, setTripData) {
   try {
     const res = await fetch(`/api/days/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(trip)
+      body: JSON.stringify({trip})
     });
   
     if (!res.ok) {
       throw new Error("Failed to create days");
     }
   
-    const daysCreated = await res.json();
+    const data = await res.json();
+    setTripData((prev) => ({
+      ...prev, 
+      days: data.data
+    }));
 
     return daysCreated;
   } catch (error) {
