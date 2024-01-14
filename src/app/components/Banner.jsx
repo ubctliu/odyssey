@@ -5,8 +5,8 @@ const Banner = () => {
     const logo = "/images/odysseylogonew.png";
 
     return (
-        <section className="relative w-full h-full bg-banner bg-center mx-0">
-            <div className="relative w-full h-full overflow-hidden">
+        <section className="relative w-screen h-full bg-banner bg-center mx-0">
+            <div className="relative w-screen h-full overflow-hidden">
                 <img 
                 className="animate-zoomInOut overflow-hidden" 
                 src={mountains} 

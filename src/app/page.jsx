@@ -40,7 +40,7 @@ export default function (Component) {
         {/* <About /> */}
       <br/>
         <Hero />
-        <br />
+        <br/>
       <main className="p-16 bg-neutral-900 border border-b-8 border-solid border-b-slate-700">
         <div className="flex flex-col items-center">
         </div>
