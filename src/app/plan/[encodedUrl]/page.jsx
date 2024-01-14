@@ -172,7 +172,6 @@ export default function () {
         const storageRef = ref(ImageToDB, `upload/${v4()}`);
         uploadBytes(storageRef, file[0])
           .then(() => {
-            setTimeout(() => {
               getDownloadURL(storageRef)
                 .then((url) => {
                   setTripData((prev) => ({
@@ -186,7 +185,6 @@ export default function () {
                   console.log("Error getting download URL:", error);
                   reject(error);
                 });
-            }, 3000);
           })
           .catch((error) => {
             console.log("Error uploading image:", error);
