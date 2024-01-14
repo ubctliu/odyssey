@@ -5,13 +5,13 @@ const Banner = () => {
     const logo = "/images/odysseylogonew.png";
 
     return (
-        <section className="relative w-full h-full bg-banner bg-center">
+        <section className="relative w-full h-full bg-banner bg-center mx-0">
             <div className="relative w-full h-full overflow-hidden">
                 <img 
-                className="animate-zoomInOut" 
+                className="animate-zoomInOut overflow-hidden" 
                 src={mountains} 
                 style={{ 
-                    width: '100&', 
+                    width: '100%', 
                     filter: 'grayscale(100%) saturate(0%) sepia(1) hue-rotate(197.768deg) saturate(104%) brightness(40%)', 
                      background: 'linear-gradient(to right, rgba(37, 38, 58, 0.6), rgba(37, 38, 58, 0.6)',
                     transformOrigin: 'center'
