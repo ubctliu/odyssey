@@ -1,7 +1,6 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import SearchBar from "../../components/SearchBar";
 import Link from "next/link";
@@ -21,7 +20,6 @@ export default function (Component) {
   if (!currentUser.isLoaded) {
     return <div>Loading...</div>;
   }
-
 
   // if (!currentUser.isSignedIn){
   //   return redirect("/sign-in")
@@ -130,13 +128,13 @@ export default function (Component) {
               </Link>
             )}
           </div>
-          <Image
+          {/* <Image
             src={vacationimg}
             width={50}
             height={50}
             alt="vacation"
             className="w-1/2 border-solid border-x-orange-300 border-4"
-          />
+          /> */}
         </main>
       </APIProvider>
     </div>
