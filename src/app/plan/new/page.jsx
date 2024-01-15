@@ -131,7 +131,7 @@ export default function (Component) {
                     setTripData((prev) => ({
                       ...prev,
                       url: customUrl,
-                      clerkId: currentUser.user.id,
+                      clerkId: currentUser.user?.id ?? "",
                     }))
                   }
                   className="bg-white text-black p-2 rounded-lg border border-black hover:bg-blue-500 hover:text-white"
