@@ -118,6 +118,7 @@ try {
   console.error("Error setting initial days:", error);
 }
 };
+
 // TODO: consider adding visibleDays or some state variable to hold the changable days?
 export default function () {
   const currentUser = useUser();
@@ -148,9 +149,9 @@ export default function () {
     loadTripDetails(url, setTripData, setDaysExist);
   }, []);
 
-  useEffect(() => {
-    console.log(tripData.days);
-  }, [tripData.days]);
+  // useEffect(() => {
+  //   console.log(tripData.days);
+  // }, [tripData.days]);
 
   // editting safeguards against non-users/different users
   // useEffect(() => {
