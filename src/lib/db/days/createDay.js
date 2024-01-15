@@ -2,7 +2,8 @@ import { PrismaClient } from '@prisma/client';
 
 export default async function createDay(days) {
   const prisma = new PrismaClient();
-  console.log("createDay days:", days);
+  // console.log("createDay days:", days);
+  const totalNewDays = [];
 
   try {
     // Transform the input data to match the Day model
@@ -13,11 +14,19 @@ export default async function createDay(days) {
       lodging: day.lodging || '',
     }));
 
-    const newDays = await prisma.day.createMany({
-      data: transformedDays,
+    const newDayPromises = transformedDays.map(async (day) => {
+      return prisma.day.create({
+        data: day,
+      });
     });
 
-    return newDays;
+    totalNewDays.push(...await Promise.all(newDayPromises));
+
+    // const newDays = await prisma.day.createMany({
+    //   data: transformedDays,
+    // });
+
+    return totalNewDays;
   } catch (error) {
     console.log("Error occurred while creating days:", error);
     throw error;

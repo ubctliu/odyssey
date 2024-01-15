@@ -35,7 +35,7 @@ const checkUserDetails = async (url, clerkId, setOwnedByUser) => {
     setOwnedByUser(false);
 }
 
-const saveTrip = async (trip, clerkId, setOwnedByUser) => {
+const saveTrip = async (trip, clerkId, setOwnedByUser, setTripData) => {
   console.log(trip);
   try {
     const userExists = await fetchUser(clerkId);
@@ -48,11 +48,14 @@ const saveTrip = async (trip, clerkId, setOwnedByUser) => {
     // }
     // setOwnedByUser(true);
     if (!tripExists.data) {
-      const newTrip = await createTrip(trip);
-      setTimeout(async () => {
-        const allDays = await createDays(trip);
-        // Rest of the code related to allDays
-      }, 3000);
+      (async () => {
+        try {
+          const newTrip = await createTrip(trip);
+          const allDays = await createDays(trip, setTripData);
+        } catch (error) {
+          console.error('An error occurred:', error);
+        }
+      })();
     } else {
       const updatedTrip = await updateTrip(trip);
       console.log("Trip details updated:", updatedTrip);
@@ -115,7 +118,7 @@ try {
   console.error("Error setting initial days:", error);
 }
 };
-
+// TODO: consider adding visibleDays or some state variable to hold the changable days?
 export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
@@ -145,6 +148,9 @@ export default function () {
     loadTripDetails(url, setTripData, setDaysExist);
   }, []);
 
+  useEffect(() => {
+    console.log(tripData.days);
+  }, [tripData.days]);
 
   // editting safeguards against non-users/different users
   // useEffect(() => {
@@ -294,7 +300,7 @@ return (
               {render && <SuggestionBox type={type}></SuggestionBox>}
               </APIProvider>
                   <Collapsible title="Days" className="">
-                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
+                    {tripData.days?.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} />)}
                   </Collapsible>
                 </section>
               </form>
@@ -322,7 +328,7 @@ return (
                 />
                 <section name="days" className="contents">
                   <Collapsible title="Days" className="">
-                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly />)}
+                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly={"readonly"}/>)}
                   </Collapsible>
                 </section>
               </form>
@@ -345,7 +351,7 @@ return (
             </button>
             <button
               className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
-              onClick={() => saveTrip(tripData, currentUser.user.id, setOwnedByUser)}
+              onClick={() => saveTrip(tripData, currentUser.user.id, setOwnedByUser, setTripData)}
             >
               <span className="flex items-center">
                 Save Trip Details <FaSave className="ml-1" />

@@ -6,13 +6,17 @@ import { FaRegCalendarPlus } from "react-icons/fa6";
 import { createEvent } from "@/lib/api";
 import Collapsible from '@/app/components/Collapsible';
 
-
+// TODO: add conditionals to things that may be empty like setVisibleEvents, google api photos, etc...
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
   try {
     setIsCreating(true);
     const newEvent = await createEvent(day, {timeStart: new Date(), timeEnd: new Date()});
     // add to visible events on create event
-    setVisibleEvents((prev) => [...prev, {...newEvent.data, isVisible: false}]);
+    setVisibleEvents((prev) => (
+      prev && prev.length > 0
+        ? [...prev, { ...newEvent.data, isVisible: false }]
+        : [{ ...newEvent.data, isVisible: false }]
+    ));
     console.log("Created event...", newEvent);
   } catch (error) {
     console.error("Error occurred while trying to create event:", error);
@@ -31,7 +35,7 @@ const [isCreating, setIsCreating] = useState(false);
     setEdit(!edit);
     // close all open details when switching between edit/normal
     setVisibleEvents(
-      visibleEvents.map((currEvent) => (
+      visibleEvents?.map((currEvent) => (
       { ...currEvent, isVisible: false }
     )));
   }

@@ -119,6 +119,7 @@ export default function (Component) {
                   rows="4"
                   onChange={(e) => (prev) => ({
                     ...prev,
+
                     description: e.target.value,
                   })}
                 />

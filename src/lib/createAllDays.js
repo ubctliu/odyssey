@@ -7,9 +7,9 @@ export default async function createAllDays(trip) {
     const tripId = tripByUrl.id;
 
     
-  console.log("createAllDays startDate:", startDate);
-    console.log("createAllDays endDate:", endDate);
-    console.log("createAllDays tripId:", tripId);
+  // console.log("createAllDays startDate:", startDate);
+  //   console.log("createAllDays endDate:", endDate);
+  //   console.log("createAllDays tripId:", tripId);
 
   const days = [];
 
@@ -25,15 +25,15 @@ for (let i = 0; i <= diffInDays; i++) {
   day.setDate(day.getDate() + i);
 
   // Log each day for debugging
-  console.log("Day " + i + ":", day);
+  // console.log("Day " + i + ":", day);
 
   // Add day with tripId and empty notes
   days.push({ day, tripId, notes: '' });
 }
-
+  
   try {
       const newDays = await createDay(days);
-        console.log("newDay:", newDays);
+        // console.log("newDay:", newDays);
       return newDays;
     }
   catch (error) {
