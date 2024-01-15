@@ -69,7 +69,7 @@ const Hero = () => {
             </div>
             <div className="flex justify-center items-center xl:min-h-screen max-xl:py-40 bg-primary bg-hero bg-center pr-5 animate-slideIn" data-aos='fade-left'>
                 <img src={beach} 
-                alt="A view of the sky from a plane"
+                alt="A view of the beach from a plane"
                 width={1000}
                 height={500}
                 className="object-contain relative z-10"

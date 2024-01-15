@@ -51,7 +51,7 @@ export default function (Component) {
           libraries={["places"]}
         >
           <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
-            <div className="flex flex-col justify-center items-center space-y-3 p-4">
+            <div className="flex flex-col justify-center items-center space-y-3 p-6">
               <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
                 {" "}
                 {currentUser.isSignedIn
