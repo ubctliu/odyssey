@@ -15,7 +15,7 @@ export default function (Component) {
   const { tripData, setTripData } = useTripData();
   const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
-  const fuji = "/images/fuji.png"
+  const fuji = "/images/fuji.png";
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
@@ -33,28 +33,25 @@ export default function (Component) {
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
     ? stringToBase64(
-        `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`
+        `${currentUser.user.id}&${tripData.location}&${tripData.startDate}&${
+          tripData.endDate
+        }&${Math.floor(Math.random() * 1000)}`
       )
     : stringToBase64(
-        `${tripData.guestId}&${tripData.location}&${tripData.startDate}&${tripData.endDate}&${Math.floor(Math.random() * 1000)}`
+        `${tripData.guestId}&${tripData.location}&${tripData.startDate}&${
+          tripData.endDate
+        }&${Math.floor(Math.random() * 1000)}`
       );
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
-        <div className="md:pe-8 md:w-1/2 xl:pe-0 xl:w-5/12">
-          {/* <Image
-            width={500}
-            height={200}
-            src={fuji}
-            ></Image> */}
-        </div>
+    <div className="max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <div className="h-5/6 flex justify-center text-black">
       <APIProvider
         apiKey={process.env.GOOGLE_MAPS_API_KEY}
         libraries={["places"]}
         >
         <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
-          <div className="flex flex-col justify-center items-center space-y-3">
+          <div className="flex flex-col justify-center items-center space-y-3 p-4">
             <h1 className="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
               {" "}
               {currentUser.isSignedIn
@@ -65,17 +62,15 @@ export default function (Component) {
              <p class="mt-3 text-base text-gray-500">
               Enter your dream destination and dates below.
               </p>
-              <div>
-
-            <form className="space-y-2">
+            <form>
               <label
                 htmlFor="title"
-                className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-medium font-bold text-gray-900 dark:text-white"
                 >
                 Title
               </label>
               <input
-                className="bg-white text-black p-2 rounded-lg border border-black"
+                className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
                 placeholder="Title (optional)"
                 value={tripData.title}
                 onChange={(e) =>
@@ -87,14 +82,14 @@ export default function (Component) {
                 />
               <label
                 htmlFor="location"
-                className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-medium font-bold text-gray-900 dark:text-white"
                 >
                 Location
               </label>
               <SearchBar
                 setLocationData={setTripData}
                 className={
-                  "bg-white text-black p-2 rounded-lg border border-black"
+                  "bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
                 }
                 newTripCreation={true}
                 setAutoCompleted={setAutoCompleted}
@@ -103,16 +98,16 @@ export default function (Component) {
                 htmlFor="date"
                 className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
                 />
-                Date
-              <DateRangeCalendar className={"bg-white text-black p-2 rounded-lg border border-black"}/>
+                <span className="font-bold">Date</span>
+              <DateRangeCalendar className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}/>
               <label
                 htmlFor="description"
-                className="block mb-2 text-medium font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-medium font-bold text-gray-900 dark:text-white"
                 >
                 Description
               </label>
               <textarea
-                className="bg-white text-black p-4 rounded-lg border border-black"
+                className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
                 id="description"
                 name="description"
                 placeholder="Description (optional)"
@@ -131,7 +126,7 @@ export default function (Component) {
                 url: customUrl,
                 clerkId: currentUser.user.id
               }))}
-              className="bg-white text-black p-2 rounded-lg border border-black hover:bg-black hover:text-white"
+              className="bg-white text-black p-2 rounded-lg border border-black hover:bg-blue-500 hover:text-white"
               >
                 Plan My Trip!
               </Link>
@@ -144,17 +139,9 @@ export default function (Component) {
               </Link>
             )}
           </div>
-            </div>
-          {/* <Image
-            src={vacationimg}
-            width={50}
-            height={50}
-            alt="vacation"
-            className="w-1/2 border-solid border-x-orange-300 border-4"
-          /> */}
         </main>
       </APIProvider>
-          </div>
+      </div>
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default function NewItineraryModal({ onClose }) {
           <form className='text-black'>
             <div className="mb-4">
               <input
-                className="border p-2 w-full"
+                className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
                 id="title"
                 name="title"
                 placeholder="Title (optional)"
@@ -43,17 +43,17 @@ export default function NewItineraryModal({ onClose }) {
                 }))}/>
             </div>
             <div className="mb-4">
-              <SearchBar setLocationData={setTripData} className={"border p-2 w-full"}/>
+              <SearchBar setLocationData={setTripData} className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}/>
             </div>
             <div className="mb-4">
-              <DateRangeCalendar className={"border p-2 w-full"} />
+              <DateRangeCalendar className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} />
             </div>
             <div>
               
             </div>
             <div className="mb-4">
               <textarea
-                className="border p-2 w-full"
+                className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
                 id="description"
                 name="description"
                 placeholder="Description (optional)"
