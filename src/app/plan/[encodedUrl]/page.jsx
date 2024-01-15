@@ -131,6 +131,7 @@ export default function () {
   const [daysExist, setDaysExist] = useState(false);
   const [copyClicked, setCopyClicked] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
+  const [signedIn, setSignedIn] = useState(true);
 
   useEffect(() => {
     // Don't proceed until user data is loaded
@@ -139,7 +140,8 @@ export default function () {
     }
 
     if (!currentUser.isSignedIn) {
-      return redirect("/sign-in");
+      setSignedIn(false);
+      // return redirect("/sign-in");
     }
 
   }, []);
@@ -350,14 +352,22 @@ return (
                 </span>
               )}
             </button>
-            <button
+            {signedIn ? <button
               className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
               onClick={() => saveTrip(tripData, currentUser.user.id, setOwnedByUser, setTripData)}
             >
               <span className="flex items-center">
                 Save Trip Details <FaSave className="ml-1" />
               </span>
-            </button>
+            </button> : <button
+              className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-red-100"
+              type={"button"}
+            >
+              <span className="flex items-center">
+                Must be signed in to save! <FaSave className="ml-1" />
+              </span>
+            </button>}
+           
           </div>
         </div>
       </main>
