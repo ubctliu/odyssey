@@ -302,12 +302,10 @@ export async function fetchTripIdByUserId(userId) {
         'Content-Type': 'application/json',
       }
     });
-    console.log('res.body from api file', res.body)
     if (!res.ok) {
       throw new Error("Failed to retrieve trip data");
     }
     const fetchedUserData = await res.json();
-    console.log("fetchedUserData from api file, api call DONE", fetchedUserData)
     return fetchedUserData;
 
   } catch (error) {

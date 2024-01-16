@@ -14,11 +14,16 @@ export default function Component() {
   const [showModal, setShowModal] = useState(false);
   // const [currentIndex, setCurrentIndex] = useState(0);
   const [userTripData, setUserTripData] = useState([]);
-  // const { tripData, setTripData } = useTripData();
+  const { tripData, setTripData } = useTripData();
   const currentUser = useUser();
-  // const clerkId = currentUser.user.id; //for some reason this is undefined
-  const clerkId = "user_2Zh2ZEV5av1UkhUiMwjaFRLO2a9"; //Angela's clerkId
   const takeoff = "/videos/planetakeoff.mp4";
+
+  // Don't proceed until user data is loaded
+  if (!currentUser.isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  const clerkId = currentUser.user.id;
 
   useEffect(() => {
     async function fetchTripIds(clerkId) {
@@ -37,23 +42,10 @@ export default function Component() {
     fetchTripIds(clerkId);
   }, [clerkId]); 
 
-  // Don't proceed until user data is loaded
-  if (!currentUser.isLoaded) {
-    return <div>Loading...</div>;
-  }
-
   const imageIds = Array.from(
     { length: 3 },
     () => Math.floor(Math.random() * 250) + 1
   );
-
-  //remove console logs later
-  // console.log('currentUser', currentUser)
-  // console.log('currentUser.user.id', currentUser.user.id) 
-  // console.log('currentUser.trips', currentUser.trips) //undefined
-  // console.log('trip ids', tripIds)
-  console.log('userTripData', userTripData) //not logging?
-  //
 
   const nextImage = () => {
     setCurrentIndex((currentIndex + 1) % imageIds.length);
