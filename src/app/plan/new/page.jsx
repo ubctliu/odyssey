@@ -15,7 +15,6 @@ export default function (Component) {
   const { tripData, setTripData } = useTripData();
   const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
-  const plane2 = "/images/plane2.png";
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {

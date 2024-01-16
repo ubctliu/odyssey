@@ -1,6 +1,5 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
-// import vacationimg from "../../../../public/images/vacationimg.png";
 import Image from "next/image";
 import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -203,8 +202,6 @@ export default function () {
     setImgLoading(false);
     
   }
-
-  
 
 return (
   <div className="max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
