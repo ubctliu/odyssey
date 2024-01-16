@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-
+import Image from "next/image";
 import TitleTypeWriter from "@/app/components/TitleTypeWriter";
 import NewItineraryModal from "@/app/components/NewItineraryModal"; // Assuming NewItineraryModal is a separate component
 import { useTripData } from "@/app/context/TripDataContext";
@@ -66,8 +66,8 @@ export default function Component() {
         >
         </video>
       </div>
-      <main className="mt-2 absolute h-1/2 w-3/4 mx-auto flex p-16 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
-        <h1 className="top-0 text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-20">
+      <main className="mt-2 absolute h-1/2 w-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
+        <h1 className=" text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-5">
           {currentUser.isSignedIn
             ? `Hello, ${currentUser.user.firstName}.`
             : "Hello, Guest"}{" "}
@@ -79,7 +79,7 @@ export default function Component() {
               return (
                 <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
                 <img
-                  // src={`https://picsum.photos/id/${trip.id}/181/177.jpg`}
+                  src={trip.imageUrl}
                   alt="Trip banner image"
                   className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
                 />
