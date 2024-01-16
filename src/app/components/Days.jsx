@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Pencil from '../../../public/Icons/PencilIcon';
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaRegCalendarPlus } from "react-icons/fa6";
@@ -7,6 +7,7 @@ import { createEvent } from "@/lib/api";
 import Collapsible from '@/app/components/Collapsible';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Event from "@/app/components/Event";
+import { useTripData } from '../context/TripDataContext';
 
 // TODO: add conditionals to things that may be empty like setVisibleEvents, google api photos, etc...
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
@@ -27,25 +28,11 @@ const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
   }
 }
 
-
-const EventList = React.memo(function EventList({ events }) {
-  return events.map((event, index) => (
-    <Event event={event} index={index} key={event.id} />
-  ));
-});
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 // TODO: rename component to Day to fit convention
 // Props: day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents
 export default function Days({ day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents, readOnly}) {
 const { notes, events } = day;
+const { tripData, setTripData } = useTripData();
 const [isCreating, setIsCreating] = useState(false);
   const handleEdit = () => { 
     setEdit(!edit);
@@ -56,7 +43,7 @@ const [isCreating, setIsCreating] = useState(false);
     )));
   }
 
-  function onDragEnd(result, setVisibleEvents, visibleEvents) {
+  function onDragEnd(result, day) {
     if (!result.destination) {
       return;
     }
@@ -71,7 +58,14 @@ const [isCreating, setIsCreating] = useState(false);
       result.destination.index
     );
 
-    setVisibleEvents({ events });
+    setTripData((prev) => ({
+      ...prev,
+      days: prev.days.map((currDay) =>
+        day.id === currDay.id ? { ...currDay, events } : currDay
+      ),
+    }));
+    
+    setVisibleEvents(events);
   }
 
   
@@ -117,12 +111,12 @@ const [isCreating, setIsCreating] = useState(false);
   {isLoading ? (
     <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
   ) : (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext onDragEnd={(result) => onDragEnd(result, day)}>
       <Droppable droppableId="event-list">
         {provided => (
           <div ref={provided.innerRef} {...provided.droppableProps}>
             {visibleEvents?.map((event, index) => (
-              <Draggable draggableId={String(event.id)} index={index}>
+              <Draggable key={event.id} draggableId={String(event.id)} index={index}>
                 {(provided) => (
                   <div
                     ref={provided.innerRef}
