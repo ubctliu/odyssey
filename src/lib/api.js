@@ -319,3 +319,21 @@ export async function generateAndUploadAIImage(trip) {
     console.error("Error creating AI Image:", error);
   }
 }
+export async function fetchTripIdByUserId(userId) {
+  try {
+    const res = await fetch(`/api/users/${userId}/trips`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    if (!res.ok) {
+      throw new Error("Failed to retrieve trip data");
+    }
+    const fetchedUserData = await res.json();
+    return fetchedUserData;
+
+  } catch (error) {
+    console.error("Error retrieving trip data:", error);
+  }
+}
