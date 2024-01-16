@@ -10,8 +10,8 @@ export default function TopNavBar() {
     <div className="h-5/6">
       <nav className="flex justify-between items-center p-6 bg-white shadow-md border-b-black border-solid w-screen">
         <div className="flex items-center">
-          <PlaneIcon className="w-6 h-6 mr-2 hover:animate-spin" />
-          <a href="/" className="font-semibold text-lg">Odyssey</a>
+          <PlaneIcon className="w-7 h-7 mr-2 hover:animate-spin" />
+          <a href="/" className="font-semibold text-xl">Odyssey</a>
         </div>
         <div>
         <div className="flex justify-between space-x-4">
