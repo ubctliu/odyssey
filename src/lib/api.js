@@ -292,3 +292,25 @@ export async function deleteEvent(event) {
     console.error("Error deleting event:", error);
   }
 }
+
+export async function fetchTripIdByUserId(userId) {
+  console.log('api getting called!')
+  try {
+    const res = await fetch(`/api/users/${userId}/trips`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
+    console.log('res.body from api file', res.body)
+    if (!res.ok) {
+      throw new Error("Failed to retrieve trip data");
+    }
+    const fetchedUserData = await res.json();
+    console.log("fetchedUserData from api file, api call DONE", fetchedUserData)
+    return fetchedUserData;
+
+  } catch (error) {
+    console.error("Error retrieving trip data:", error);
+  }
+}
