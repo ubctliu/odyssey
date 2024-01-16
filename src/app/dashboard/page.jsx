@@ -27,6 +27,7 @@ export default function Component() {
   const { tripData, setTripData } = useTripData();
   const currentUser = useUser();
   const takeoff = "/videos/planetakeoff.mp4";
+  const defaultDashboardImage = "/images/defaultDashboardImage.jpg";
 
   useEffect(() => {
     if (!currentUser.isLoaded) {
@@ -79,7 +80,7 @@ export default function Component() {
               return (
                 <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
                 <img
-                  src={trip.imageUrl}
+                  src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
                   alt="Trip banner image"
                   className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
                 />
