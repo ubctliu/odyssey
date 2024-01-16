@@ -62,11 +62,11 @@ export default function Component() {
           loop
           muted
           playsInline
-          className="top-0 left-0 w-full h-50 object-fit"
+          className="top-0 left-0 w-full h-50 object-fit z-0"
         >
         </video>
       </div>
-      <main className="absolute h-1/2 w-1/2 mx-auto flex p-16 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
+      <main className="mt-2 absolute h-1/2 w-3/4 mx-auto flex p-16 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
         <h1 className="top-0 text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-20">
           {currentUser.isSignedIn
             ? `Hello, ${currentUser.user.firstName}.`
@@ -100,7 +100,7 @@ export default function Component() {
               className="text-white bg-orange-400 p-4 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-50"
               onClick={() => { openModal(); resetTripData(tripData, setTripData); }}
             >
-              Create New Trip
+              Create a New Trip
             </button>
           </div>
         </section>
