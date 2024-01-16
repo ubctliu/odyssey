@@ -19,10 +19,10 @@ const Banner = () => {
                 alt='A mountain background'/>
             </div>
 
-            <div className="absolute top-1/2 transform -translate-y-1/2 left-0 right-0 z-10">
+            <div className="absolute top-1/2 transform -translate-y-1/2 left-0 right-0 z-10 resize">
                 <img src={logo}
-                width={200}
-                height={200}
+                width={300}
+                height={300}
                 alt="Odyssey Logo"
                 className="mx-auto"
                 />
