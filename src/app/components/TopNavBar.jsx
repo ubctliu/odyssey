@@ -11,7 +11,7 @@ export default function TopNavBar() {
       <nav className="flex justify-between items-center p-6 bg-white shadow-md border-b-black border-solid w-screen">
         <div className="flex items-center">
           <PlaneIcon className="w-7 h-7 mr-2 hover:animate-spin" />
-          <a href="/" className="font-semibold text-xl">Odyssey</a>
+          <Link href="/" className="font-semibold text-xl">Odyssey</Link>
         </div>
         <div>
         <div className="flex justify-between space-x-4">

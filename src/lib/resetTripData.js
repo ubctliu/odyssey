@@ -17,8 +17,7 @@ export const resetTripData = (tripData, setTripData) => {
   };
 
   // reset the base variables
-  setTripData({defaultTripData});
-  const resetData = { ...tripData };
+  const resetData = { ...defaultTripData };
 
   // if keys don't exist in the default trip data, then delete it
   Object.keys(resetData).forEach((key) => {
@@ -26,6 +25,8 @@ export const resetTripData = (tripData, setTripData) => {
       delete resetData[key];
     }
   });
+
+  console.log(resetData);
 
   //set trip data to the reset object
   setTripData(resetData);
