@@ -6,13 +6,17 @@ import { FaRegCalendarPlus } from "react-icons/fa6";
 import { createEvent } from "@/lib/api";
 import Collapsible from '@/app/components/Collapsible';
 
-
+// TODO: add conditionals to things that may be empty like setVisibleEvents, google api photos, etc...
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
   try {
     setIsCreating(true);
-    const newEvent = await createEvent(day, {});
+    const newEvent = await createEvent(day, {timeStart: new Date(), timeEnd: new Date()});
     // add to visible events on create event
-    setVisibleEvents((prev) => [...prev, {...newEvent.data, isVisible: false}]);
+    setVisibleEvents((prev) => (
+      prev && prev.length > 0
+        ? [...prev, { ...newEvent.data, isVisible: false }]
+        : [{ ...newEvent.data, isVisible: false }]
+    ));
     console.log("Created event...", newEvent);
   } catch (error) {
     console.error("Error occurred while trying to create event:", error);
@@ -31,7 +35,7 @@ const [isCreating, setIsCreating] = useState(false);
     setEdit(!edit);
     // close all open details when switching between edit/normal
     setVisibleEvents(
-      visibleEvents.map((currEvent) => (
+      visibleEvents?.map((currEvent) => (
       { ...currEvent, isVisible: false }
     )));
   }
@@ -63,7 +67,7 @@ const [isCreating, setIsCreating] = useState(false);
               <div key={index} className="text-gray-600 py-2 hover:bg-gray-200 rounded">
                 <div className="flex justify-between items-center">
                   <span>
-                    {new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})} -  {new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'})}  {event.location}
+                    {event.timeStart ? new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'}) : "" - event.timeEnd ? new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'}) : ""}  {event.location ?? ""}
                   </span>
                   <span onClick={() => setVisibleEvents(
                       visibleEvents.map((currEvent) => (

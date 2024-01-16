@@ -8,7 +8,7 @@ import { useTripData } from "@/app/context/TripDataContext";
 import { populateTripData } from "@/lib/populateTripData";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import DatePicker from "@/app/components/DatePicker";
-import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDays, fetchUser } from "@/lib/api";
+import { createTrip, fetchTrip, fetchTripWithDaysAndEvents, updateTrip, createDays, fetchUser, generateAndUploadAIImage } from "@/lib/api";
 import Days from "@/app/components/Days";
 import CompleteDays from "@/app/components/CompleteDays";
 import Collapsible from "@/app/components/Collapsible";
@@ -19,6 +19,10 @@ import { CiShare2 } from "react-icons/ci";
 import { FaClipboard, FaSave } from "react-icons/fa";
 import Link from "next/link";
 import { set, setDay } from "date-fns";
+import { ImageToDB } from "@/lib/FirebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
+
 
 const checkUserDetails = async (url, clerkId, setOwnedByUser) => {
   const userExists = await fetchUser(clerkId);
@@ -31,7 +35,7 @@ const checkUserDetails = async (url, clerkId, setOwnedByUser) => {
     setOwnedByUser(false);
 }
 
-const saveTrip = async (trip, clerkId, setOwnedByUser) => {
+const saveTrip = async (trip, clerkId, setOwnedByUser, setTripData) => {
   console.log(trip);
   try {
     const userExists = await fetchUser(clerkId);
@@ -44,16 +48,19 @@ const saveTrip = async (trip, clerkId, setOwnedByUser) => {
     // }
     // setOwnedByUser(true);
     if (!tripExists.data) {
-      const newTrip = await createTrip(trip);
-      setTimeout(async () => {
-        const allDays = await createDays(trip);
-        // Rest of the code related to allDays
-      }, 3000);
+      (async () => {
+        try {
+          const newTrip = await createTrip(trip);
+          const allDays = await createDays(trip, setTripData);
+        } catch (error) {
+          console.error('An error occurred:', error);
+        }
+      })();
     } else {
       const updatedTrip = await updateTrip(trip);
       console.log("Trip details updated:", updatedTrip);
     }
-  } catch (error) {
+  } catch (error) { 
     console.error("An error occurred:", error);
   }
 };
@@ -112,6 +119,7 @@ try {
 }
 };
 
+// TODO: consider adding visibleDays or some state variable to hold the changable days?
 export default function () {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
@@ -122,6 +130,8 @@ export default function () {
   const [render, setRender] = useState(false);
   const [daysExist, setDaysExist] = useState(false);
   const [copyClicked, setCopyClicked] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
+  const [signedIn, setSignedIn] = useState(true);
 
   useEffect(() => {
     // Don't proceed until user data is loaded
@@ -130,7 +140,8 @@ export default function () {
     }
 
     if (!currentUser.isSignedIn) {
-      return redirect("/sign-in");
+      setSignedIn(false);
+      // return redirect("/sign-in");
     }
 
   }, []);
@@ -140,6 +151,9 @@ export default function () {
     loadTripDetails(url, setTripData, setDaysExist);
   }, []);
 
+  // useEffect(() => {
+  //   console.log(tripData.days);
+  // }, [tripData.days]);
 
   // editting safeguards against non-users/different users
   // useEffect(() => {
@@ -161,13 +175,66 @@ export default function () {
     }, 3000);
   }
 
+  const handleImageUpload = (file) => {
+    return new Promise((resolve, reject) => {
+      if (file) {
+        const storageRef = ref(ImageToDB, `upload/${v4()}`);
+        uploadBytes(storageRef, file[0])
+          .then(() => {
+              getDownloadURL(storageRef)
+                .then((url) => {
+                  setTripData((prev) => ({
+                    ...prev,
+                    imageUrl: url,
+                  }));
+                  console.log("File available at", url);
+                  resolve(url);
+                })
+                .catch((error) => {
+                  console.log("Error getting download URL:", error);
+                  reject(error);
+                });
+          })
+          .catch((error) => {
+            console.log("Error uploading image:", error);
+            reject(error);
+          });
+      } else {
+        reject(new Error("No file provided"));
+      }
+    });
+  };
+
+  const handleAiImg = async () => {
+    setImgLoading(true);
+    const aiImg = await generateAndUploadAIImage(tripData);
+    loadTripDetails(url, setTripData, setDaysExist);
+    setImgLoading(false);
+    
+  }
+
+  
+
 return (
+  <div className="max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
     <div className="h-5/6 flex justify-center text-black">
-      <main className="flex justify-between p-16 bg-gray-200 items-center border border-b-8 border-solid border-b-slate-700">
-        <div className="flex flex-col justify-center items-center">
-          <section className="top_title">
+      <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
+      <div className="flex flex-col justify-center items-center">
+        <div className="pt-4">
+      {tripData.imageUrl && imgLoading == false ? (
+                <Image className="border border-black" src={tripData.imageUrl} height={512} width={512} alt="image not here yet" />
+                ) : ( <AiOutlineLoading3Quarters className="animate-spin" /> )}
+                </div>
+          <section className="top_title p-16">
             {ownedByUser ? (
-              <form className="">
+              <div className="">
+                <div className="flex items-center">
+              <button className="text-black mx-auto bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
+              onClick={handleAiImg}> Generate AI Image</button>
+              </div>
+              <form className="px-16">
+                <h1 className="text-3xl font-semibold mx-auto pb-4"> Edit Trip Details</h1>
+                <hr className="h-2 pb-2"/>
                 <label>Title</label>
                 <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.title} placeholder="Title..." 
                 onChange={e => setTripData((prev) => ({
@@ -180,12 +247,36 @@ return (
                   ...prev,
                   description: e.target.value
                 }))}/>
-                <label>Image URL</label>
-                <input className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" value={tripData.imageUrl} placeholder="Banner Image URL..." 
-                onChange={e => setTripData((prev) => ({
-                  ...prev,
-                  imageUrl: e.target.value
-                }))}/>
+                  <label>Image</label>
+                  {/* <input
+                    className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
+                    type="file"
+                    accept=".pdf, .png, .jpg"
+                    onChange={e => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        // Handle the file upload logic here
+                        // You can access the file using `file` variable
+                        // Update the `imageUrl` in the `tripData` state accordingly
+                        setTripData(prev => ({
+                          ...prev,
+                          imageUrl: URL.createObjectURL(file)
+                        }));
+                      }
+                    }}
+                  /> */}
+                  <label for="dropzone-file" class="flex flex-col items-center justify-center h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                        </svg>
+                        <p class="mb-2 text-sm text-black"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-black ">JPG or PNG</p>
+                    </div>
+                    <input id="dropzone-file" type="file" class="hidden" accept=".png, .jpg"
+                    onChange={e => handleImageUpload(e.target.files)}
+                    />
+                </label>
                 <label>Start Date</label>
                 <DatePicker className="bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100" startOrEndDate="startDate"/>
                 <label>End Date</label>
@@ -212,10 +303,11 @@ return (
               {render && <SuggestionBox type={type}></SuggestionBox>}
               </APIProvider>
                   <Collapsible title="Days" className="">
-                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData}/>)}
+                    {tripData.days?.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} />)}
                   </Collapsible>
                 </section>
               </form>
+              </div>
             ) : (
               <form className="">
                 <label>Title</label>
@@ -239,13 +331,13 @@ return (
                 />
                 <section name="days" className="contents">
                   <Collapsible title="Days" className="">
-                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly />)}
+                    {tripData.days.map((day) => <CompleteDays key={day.id} day={day} setTripData={setTripData} readOnly={"readonly"}/>)}
                   </Collapsible>
                 </section>
               </form>
             )}
           </section>
-          <div className="flex mx-2">
+          <div className="flex mx-2 mb-4 space-x-2">
             <button
               className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
               onClick={handleShare}
@@ -260,17 +352,26 @@ return (
                 </span>
               )}
             </button>
-            <button
+            {signedIn ? <button
               className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
-              onClick={() => saveTrip(tripData, currentUser.user.id, setOwnedByUser)}
+              onClick={() => saveTrip(tripData, currentUser.user.id, setOwnedByUser, setTripData)}
             >
               <span className="flex items-center">
                 Save Trip Details <FaSave className="ml-1" />
               </span>
-            </button>
+            </button> : <button
+              className="text-black bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-red-100"
+              type={"button"}
+            >
+              <span className="flex items-center">
+                Must be signed in to save! <FaSave className="ml-1" />
+              </span>
+            </button>}
+           
           </div>
         </div>
       </main>
     </div>
+  </div>
   );
 }

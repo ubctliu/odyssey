@@ -226,21 +226,25 @@ export async function updateDayNotes(day) {
 }
 
 
-export async function createDays(trip) {
+export async function createDays(trip, setTripData) {
   try {
     const res = await fetch(`/api/days/new`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(trip)
+      body: JSON.stringify({trip})
     });
   
     if (!res.ok) {
       throw new Error("Failed to create days");
     }
   
-    const daysCreated = await res.json();
+    const data = await res.json();
+    setTripData((prev) => ({
+      ...prev, 
+      days: data.data
+    }));
 
     return daysCreated;
   } catch (error) {
@@ -293,6 +297,28 @@ export async function deleteEvent(event) {
   }
 }
 
+export async function generateAndUploadAIImage(trip) {
+  try {
+    const res = await fetch(`/api/trips/bannergpt`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(trip)
+    });
+    console.log(res);
+    if (!res.ok) {
+      throw new Error("Failed to create event");
+    }
+  
+    const newtrip = await res.json();
+    // add to visible events on create event
+    console.log(newtrip);
+    return newtrip;
+  } catch (error) {
+    console.error("Error creating AI Image:", error);
+  }
+}
 export async function fetchTripIdByUserId(userId) {
   try {
     const res = await fetch(`/api/users/${userId}/trips`, {
