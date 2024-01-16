@@ -22,6 +22,7 @@ export const populateTripData = (dbTrip, setTripData) => {
     ...prev,
     ...tripDataFromDB
   }));
+
   // console.log("Loaded trip details from database:", dbTrip);
 };
 

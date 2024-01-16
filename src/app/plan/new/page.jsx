@@ -104,27 +104,26 @@ export default function (Component) {
                   name="description"
                   placeholder="Description (optional)"
                   rows="4"
-                  onChange={(e) =>
-                    setTripData((prev) => ({
-                      ...prev,
-                      description: e.target.value,
-                    }))
-                  }
+                  onChange={(e) => (prev) => ({
+                    ...prev,
+
+                    description: e.target.value,
+                  })}
                 />
               </div>
 
               <div class="grid">
                 {tripData.isDateSet && tripData.isLocationSet && autoCompleted ? (
                 <Link
-                href={`/plan/${customUrl}`}
-                onClick={() =>
-                  setTripData((prev) => ({
-                    ...prev,
-                    url: customUrl,
-                    clerkId: currentUser.user.id,
-                  }))
-                }  
-                className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                  href={`/plan/${customUrl}`}
+                  onClick={() =>
+                    setTripData((prev) => ({
+                      ...prev,
+                      url: customUrl,
+                      clerkId: currentUser.user?.id ?? "",
+                    }))
+                  }
+                  className="bg-white text-black p-2 rounded-lg border border-black hover:bg-blue-500 hover:text-white"
                 >
                   Plan My Trip!
                   </Link>
