@@ -5,6 +5,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaRegCalendarPlus } from "react-icons/fa6";
 import { createEvent } from "@/lib/api";
 import Collapsible from '@/app/components/Collapsible';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Event from "@/app/components/Event";
 
 // TODO: add conditionals to things that may be empty like setVisibleEvents, google api photos, etc...
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
@@ -26,6 +28,20 @@ const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
 }
 
 
+const EventList = React.memo(function EventList({ events }) {
+  return events.map((event, index) => (
+    <Event event={event} index={index} key={event.id} />
+  ));
+});
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 // TODO: rename component to Day to fit convention
 // Props: day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents
 export default function Days({ day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents, readOnly}) {
@@ -39,6 +55,33 @@ const [isCreating, setIsCreating] = useState(false);
       { ...currEvent, isVisible: false }
     )));
   }
+
+  function onDragEnd(result, setVisibleEvents, visibleEvents) {
+    if (!result.destination) {
+      return;
+    }
+
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+
+    const events = reorder(
+      visibleEvents,
+      result.source.index,
+      result.destination.index
+    );
+
+    setVisibleEvents({ events });
+  }
+
+  
+  const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+  };
 
   return (
     <div className="flex h-auto bg-gray-100 p-4">
@@ -55,37 +98,55 @@ const [isCreating, setIsCreating] = useState(false);
 
         <div className="mt-4">
         <Collapsible className={"text-xl font-semibold text-gray-700"} title={"Events"}>
-          <div className='group'>
-          <div className="flex items-center">
-            <span>{isCreating ? <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/> : readOnly === "readonly" ? <div></div> : <FaRegCalendarPlus className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce hover:fill-cyan-700"} onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}/>}</span>
-          </div>      
-          </div>
-          {isLoading ? (
-            <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
-          ) : (
-            visibleEvents?.map((event, index) => (
-              <div key={index} className="text-gray-600 py-2 hover:bg-gray-200 rounded">
-                <div className="flex justify-between items-center">
-                  <span>
-                    {event.timeStart ? new Date(event.timeStart).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'}) : "" - event.timeEnd ? new Date(event.timeEnd).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit'}) : ""}  {event.location ?? ""}
-                  </span>
-                  <span onClick={() => setVisibleEvents(
-                      visibleEvents.map((currEvent) => (
-                      currEvent.id === event.id ? { ...currEvent, isVisible: !currEvent.isVisible } : currEvent
-                    )))} className="cursor-pointer text-blue-500">
-                    Details
-                  </span>
-                </div>
-                {event.isVisible && (
-                  <div className="mt-2 pl-4 border-l-2 border-gray-300">
-                    <p>Location: {event.location}</p>
-                    <p>Notes: {event.notes}</p>
+  <div className='group'>
+    <div className="flex items-center">
+      <span>
+        {isCreating ? (
+          <AiOutlineLoading3Quarters className='inline-block w-4 h-4 ml-2 animate-spin mx-auto'/>
+        ) : readOnly === "readonly" ? (
+          <div></div>
+        ) : (
+          <FaRegCalendarPlus
+            className={"inline-block w-4 h-4 ml-2 hover:cursor-pointer group-hover:animate-bounce hover:fill-cyan-700"}
+            onClick={() => handleCreateEvent(day, setVisibleEvents, setIsCreating)}
+          />
+        )}
+      </span>
+    </div>      
+  </div>
+  {isLoading ? (
+    <AiOutlineLoading3Quarters className=' animate-spin mx-auto'/>
+  ) : (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="event-list">
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {visibleEvents?.map((event, index) => (
+              <Draggable draggableId={String(event.id)} index={index}>
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Event
+                      key={event.id}
+                      event={event}
+                      index={index}
+                      visibleEvents={visibleEvents}
+                      setVisibleEvents={setVisibleEvents}
+                    />
                   </div>
                 )}
-              </div>
-            ))
-          )}
-          </Collapsible>
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  )}
+</Collapsible>
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@
     "openai-edge": "^1.2.2",
     "rc-time-picker": "^3.7.3",
     "react": "^18",
+    "react-beautiful-dnd": "^13.1.1",
     "react-date-range": "^1.4.0",
     "react-datepicker": "^4.25.0",
     "react-dom": "^18",
