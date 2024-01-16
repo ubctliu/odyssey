@@ -36,6 +36,7 @@ module.exports = {
         },
       },
       animation: {
+        blob: 'blob 7s infinite',
         zoomInOut: 'zoomInOut 12s infinite',
         "fade-in": "fadeIn 1s ease-in forwards",
         slideIn: "slideIn 2s ease-in-out",
