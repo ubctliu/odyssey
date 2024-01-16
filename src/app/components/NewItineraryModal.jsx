@@ -27,7 +27,7 @@ export default function NewItineraryModal({ onClose }) {
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-4/6">
         <div className="text-center">
-          <FaTimes className="cursor-pointer bg-black" onClick={onClose} />
+          <FaTimes className="cursor-pointer" onClick={onClose} />
           <h2 className="text-xl font-bold  text-black mb-4">New Itinerary</h2>
           <form className='text-black'>
             <div className="mb-4">

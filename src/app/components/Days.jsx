@@ -47,7 +47,7 @@ const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
       updatedEvents[index] = { ...event, order: index + 1 };
     });
 
-    console.log(updatedEvents);
+    // console.log(updatedEvents);
     const response = await updateDayEvents(updatedEvents);
     console.log("Updating events...", response);
     } catch (error) {
