@@ -294,7 +294,6 @@ export async function deleteEvent(event) {
 }
 
 export async function fetchTripIdByUserId(userId) {
-  console.log('api getting called!')
   try {
     const res = await fetch(`/api/users/${userId}/trips`, {
       method: 'GET',

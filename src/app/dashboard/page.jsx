@@ -83,10 +83,10 @@ export default function Component() {
                   alt="Trip banner image"
                   className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
                 />
-              <p className="mt-2 text-center text-black font-bold">
-                {trip.title ? trip.title : trip.location}
-              </p>
-          </div>
+                <p className="mt-2 text-center text-black font-bold">
+                  {trip.title ? trip.title : trip.location}
+                </p>
+        </div>
         );
   })}
 </Carousel>
