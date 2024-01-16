@@ -9,16 +9,20 @@ import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import { useState } from "react";
 // import { resetTripData } from "@/lib/resetTripData";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function (Component) {
   const currentUser = useUser();
   const { tripData, setTripData } = useTripData();
+  
   const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
 
   // Don't proceed until user data is loaded
   if (!currentUser.isLoaded) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen min-w-screen flex items-center align-middle">
+      <AiOutlineLoading3Quarters className="animate-spin h-40 w-40 mx-auto" />
+    </div>;
   }
 
   // if (!currentUser.isSignedIn){
