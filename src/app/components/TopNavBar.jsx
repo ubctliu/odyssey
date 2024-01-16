@@ -33,7 +33,7 @@ export default function TopNavBar() {
             </Link>
             <Link
               className="text-black text-base hover:text-stone-400 p-3"
-              href="/dashboard/test"
+              href="/dashboard"
             >
               Dashboard
             </Link>
