@@ -8,6 +8,7 @@ import Collapsible from '@/app/components/Collapsible';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Event from "@/app/components/Event";
 import { useTripData } from '../context/TripDataContext';
+import { updateDayEvents } from '@/lib/api';
 
 // TODO: add conditionals to things that may be empty like setVisibleEvents, google api photos, etc...
 const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
@@ -27,6 +28,33 @@ const handleCreateEvent = async (day, setVisibleEvents, setIsCreating) => {
     setIsCreating(false);
   }
 }
+
+  // save events with order
+  const handleSaveEvents = async (events) => {
+    try {
+    const updatedEvents = events
+    .sort((a, b) => {
+      // compare by order if available
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      }
+    
+      // otherwise compare by createdAt
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    })
+    
+    updatedEvents.forEach((event, index) => {
+      updatedEvents[index] = { ...event, order: index + 1 };
+    });
+
+    console.log(updatedEvents);
+    const response = await updateDayEvents(updatedEvents);
+    console.log("Updating events...", response);
+    } catch (error) {
+      console.error("Error occurred while trying to update events:", error);
+    }
+  };
+  
 
 // TODO: rename component to Day to fit convention
 // Props: day, title, setEdit, edit, isLoading, visibleEvents, setVisibleEvents
@@ -58,12 +86,18 @@ const [isCreating, setIsCreating] = useState(false);
       result.destination.index
     );
 
+    events.forEach((event, index) => {
+      event.order = index + 1;
+    });
+
     setTripData((prev) => ({
       ...prev,
       days: prev.days.map((currDay) =>
         day.id === currDay.id ? { ...currDay, events } : currDay
       ),
     }));
+    
+    handleSaveEvents(events);
     
     setVisibleEvents(events);
   }

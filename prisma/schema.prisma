@@ -57,6 +57,7 @@ model Event {
   timeEnd     DateTime? @db.Timestamp
   notes       String?  @db.Text
   description String?  @db.VarChar(255)
+  order       Int?      @db.Integer
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   day         Day      @relation(fields: [dayId], references: [id], onDelete: Cascade)

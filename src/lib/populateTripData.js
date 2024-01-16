@@ -20,7 +20,19 @@ export const populateTripData = (dbTrip, setTripData) => {
   // set the trip data pulled from DB into the tripData context
   setTripData((prev) => ({
     ...prev,
-    ...tripDataFromDB
+    ...tripDataFromDB,
+    days: tripDataFromDB.days.map((day) => ({
+      ...day,
+      events: day.events.sort((a, b) => {
+        // compare order if available
+        if (a.order !== undefined && b.order !== undefined) {
+          return a.order - b.order;
+        }
+      
+        // fallback to timeCreated if order is undefined
+        return new Date(a.timeCreated) - new Date(b.timeCreated);
+      })
+    }))
   }));
 
   // console.log("Loaded trip details from database:", dbTrip);

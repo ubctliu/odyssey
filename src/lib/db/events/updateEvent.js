@@ -12,7 +12,8 @@ export default async function updateEvent(events) {
           notes: event.notes,
           location: event.location,
           timeStart: event.timeStart,
-          timeEnd: event.timeEnd
+          timeEnd: event.timeEnd,
+          order: event.order
         }
       });
       // returnArray.push(updatedEvent);
