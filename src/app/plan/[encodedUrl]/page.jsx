@@ -205,10 +205,15 @@ export default function () {
   };
 
   const handleAiImg = async () => {
+    try {
     setImgLoading(true);
     const aiImg = await generateAndUploadAIImage(tripData);
     loadTripDetails(url, setTripData, setDaysExist);
-    setImgLoading(false);
+    } catch (error) {
+      console.error("Error occurred while handling image", error);
+    } finally {
+      setImgLoading(false);
+    }
   }
 
 return (
@@ -217,9 +222,10 @@ return (
       <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
       <div className="flex flex-col justify-center items-center">
         <div className="pt-4">
-      {tripData.imageUrl && imgLoading == false ? (
-                <Image className="border border-black" src={tripData.imageUrl} height={512} width={512} alt="image not here yet" />
-                ) : ( <AiOutlineLoading3Quarters className="animate-spin" /> )}
+      {tripData.imageUrl ? imgLoading ?
+      <AiOutlineLoading3Quarters className="animate-spin" /> :
+      <Image className="border border-black" src={tripData.imageUrl} height={512} width={512} alt="image not here yet" /> 
+      : <div/>}
                 </div>
           <section className="top_title p-16">
             {ownedByUser ? (
