@@ -15,10 +15,8 @@ const fetchTripInfo = async (clerkId, setUserTripData) => {
     const fetchedUserData = await fetchTripIdByUserId(clerkId);
     const fetchedTripData = fetchedUserData.data.trips;
     setUserTripData(fetchedTripData);
-    
   } catch (error) {
     console.error('Error:', error);
-    // return null;
   }
 };
 
@@ -30,31 +28,13 @@ export default function Component() {
   const currentUser = useUser();
   const takeoff = "/videos/planetakeoff.mp4";
 
-  // Don't proceed until user data is loaded
-  // if (!currentUser.isLoaded) {
-  //   return <div>Loading...</div>;
-  // }
-  if (!currentUser.isLoaded) {
-    return <div>Loading...</div>;
-  }
-
   useEffect(() => {
-    // Don't proceed until user data is loaded
     if (!currentUser.isLoaded) {
       return;
     }
 
-    if (!currentUser.isSignedIn) {
-      return redirect("/sign-in");
-    }
-
-  }, []);
-  
-
-  useEffect(() => {
-    // const clerkId = currentUser.user.id;
     fetchTripInfo(currentUser.user.id, setUserTripData);
-  }, [currentUser.isLoaded]); 
+  }, [currentUser.isLoaded]);
 
   const imageIds = Array.from(
     { length: 3 },
