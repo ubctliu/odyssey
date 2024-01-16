@@ -29,8 +29,9 @@ const DateRangeCalendar = ({ className }) => {
         onClick={handleClick}
         id="date"
         name="date"
+        placeholder='Date Range (Required)'
         value={
-          tripData.endDate.getDate() == new Date().getDate() ? 'Date Range (required)' :
+          tripData.endDate.getDate() == new Date().getDate() ? '' :
           `${tripData.startDate.toLocaleDateString('en-US')} - ${tripData.endDate.toLocaleDateString('en-US')}`
         }
       />
