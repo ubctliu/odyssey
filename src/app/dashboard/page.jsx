@@ -9,6 +9,7 @@ import NewItineraryModal from "@/app/components/NewItineraryModal"; // Assuming 
 import { useTripData } from "@/app/context/TripDataContext";
 import { resetTripData } from "@/lib/resetTripData";
 import { fetchTripIdByUserId } from "@/lib/api";
+import Link from 'next/link';
 
 const fetchTripInfo = async (clerkId, setUserTripData) => {
   try {
@@ -28,6 +29,7 @@ export default function Component() {
   const currentUser = useUser();
   const takeoff = "/videos/planetakeoff.mp4";
   const defaultDashboardImage = "/images/defaultDashboardImage.jpg";
+  const url = userTripData.url
 
   useEffect(() => {
     if (!currentUser.isLoaded) {
@@ -48,6 +50,7 @@ export default function Component() {
 
   const openModal = () => {
     setShowModal(true);
+    console.log('url', url)
   };
 
   const closeModal = () => {
@@ -77,6 +80,7 @@ export default function Component() {
         <div className="flex flex-wrap justify-center items-center space-x-6 space-y-6">
           <Carousel>
             {userTripData.map((trip) => {
+              <Link href={`/plan/${trip.url}`} className="font-semibold text-xl"></Link>
               return (
                 <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
                 <img
@@ -87,24 +91,24 @@ export default function Component() {
                 <p className="mt-2 text-center text-black font-bold">
                   {trip.title ? trip.title : trip.location}
                 </p>
-        </div>
-        );
-  })}
-</Carousel>
-  {showModal && <NewItineraryModal onClose={closeModal} />}
-        <section className="mb-10">
-          <span className=" font-semibold text-black mb-4 flex justify-center">
-            {/* <TitleTypeWriter /> */}
-          </span>
-          <div className="flex justify-center items-center">
-            <button
-              className="text-white bg-orange-400 p-4 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-50"
-              onClick={() => { openModal(); resetTripData(tripData, setTripData); }}
-            >
-              Create a New Trip
-            </button>
-          </div>
-        </section>
+                </div>
+              );
+            })}
+          </Carousel>
+          {showModal && <NewItineraryModal onClose={closeModal} />}
+            <section className="mb-10">
+              <span className=" font-semibold text-black mb-4 flex justify-center">
+                {/* <TitleTypeWriter /> */}
+              </span>
+              <div className="flex justify-center items-center">
+                <button
+                  className="text-white bg-orange-400 p-4 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:bg-orange-500 duration-50"
+                  onClick={() => { openModal(); resetTripData(tripData, setTripData); }}
+                >
+                Create a New Trip
+                </button>
+              </div>
+            </section>
         </div>
       </main>
     </div>
