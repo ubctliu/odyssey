@@ -1,4 +1,4 @@
-
+import Image from "next/image";
 
 const Banner = () => {
     const mountains = "/images/mountainsBanner.png";
@@ -7,7 +7,7 @@ const Banner = () => {
     return (
         <section className="relative w-screen h-full bg-banner bg-center mx-0">
             <div className="relative w-screen h-full overflow-hidden">
-                <img 
+                <img
                 className="animate-zoomInOut overflow-hidden" 
                 src={mountains} 
                 style={{ 
@@ -20,7 +20,7 @@ const Banner = () => {
             </div>
 
             <div className="absolute top-1/2 transform -translate-y-1/2 left-0 right-0 z-10 resize">
-                <img src={logo}
+                <Image src={logo}
                 width={300}
                 height={300}
                 alt="Odyssey Logo"

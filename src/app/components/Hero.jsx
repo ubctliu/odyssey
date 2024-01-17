@@ -56,7 +56,7 @@ const Hero = () => {
             onClick={() => resetTripData(tripData, setTripData)}>
             Create a New Itinerary
           </Link>
-            <div class="py-6 flex items-center text-sm text-neutral-900 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
+            <div className="py-6 flex items-center text-sm text-neutral-900 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
           {showModal && <NewItineraryModal onClose={closeModal} />}
           <button
             className="text-white bg-amber-400 hover:text-white hover:bg-amber-500 p-2 rounded-lg border"

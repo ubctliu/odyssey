@@ -7,8 +7,8 @@ import Link from "next/link";
 import { useTripData } from "@/app/context/TripDataContext";
 import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
-import { useState } from "react";
-// import { resetTripData } from "@/lib/resetTripData";
+import { useState, useEffect } from "react";
+import { resetTripData } from "@/lib/resetTripData";
 
 export default function (Component) {
   const currentUser = useUser();
@@ -17,17 +17,21 @@ export default function (Component) {
   const guestId = "womdon231j2mklmksA";
 
   // Don't proceed until user data is loaded
-  if (!currentUser.isLoaded) {
-    return <div>Loading...</div>;
-  }
+  // if (!currentUser.isLoaded) {
+  //   return <div>Loading...</div>;
+  // }
 
   // if (!currentUser.isSignedIn){
   //   return redirect("/sign-in")
   // }
 
-  // useEffect(() => {
-  //   resetTripData(tripData, setTripData);
-  // }, [])
+  useEffect(() => {
+    if (!currentUser.isLoaded) {
+      return;
+    }
+
+    resetTripData(tripData, setTripData);
+  }, [currentUser.isLoaded]);
 
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
@@ -55,15 +59,15 @@ export default function (Component) {
                 ? `Hello, ${currentUser.user.firstName}.`
                 : "Hello, Guest"}{" "}
               Where are you{" "}
-              <span class="text-blue-600 dark:text-blue-500">going?</span>
+              <span className="text-blue-600 dark:text-blue-500">going?</span>
             </h1>
-            <p class="mt-3 text-base text-gray-500">
+            <p className="mt-3 text-base text-gray-500">
               Enter your dream destination and dates below.
             </p>
 
-            <div class="py-6 flex items-center text-sm text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600"></div>
+            <div className="py-6 flex items-center text-sm text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600"></div>
             <form>
-              <div class="mb-4">
+              <div className="mb-4">
                 <input
                   type="text"
                   className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
@@ -78,7 +82,7 @@ export default function (Component) {
                 ></input>
               </div>
 
-              <div class="mb-4">
+              <div className="mb-4">
                 <SearchBar
                   setLocationData={setTripData}
                   className={
@@ -89,7 +93,7 @@ export default function (Component) {
                 />
               </div>
 
-              <div class="mb-4">
+              <div className="mb-4">
                 <DateRangeCalendar
                   className={
                     "py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
@@ -112,7 +116,7 @@ export default function (Component) {
                 />
               </div>
 
-              <div class="grid">
+              <div className="grid">
                 {tripData.isDateSet && tripData.isLocationSet && autoCompleted ? (
                 <Link
                   href={`/plan/${customUrl}`}
@@ -141,7 +145,7 @@ export default function (Component) {
         </APIProvider>
       </div>
       <div
-        class="hidden md:block md:absolute md:top-0 md:start-1/2 md:end-0 h-full bg-no-repeat bg-center bg-cover"
+        className="hidden md:block md:absolute md:top-0 md:start-1/2 md:end-0 h-full bg-no-repeat bg-center bg-cover"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1607410509306-e840436e4b63?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
