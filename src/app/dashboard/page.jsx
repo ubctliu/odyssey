@@ -78,23 +78,47 @@ export default function Component() {
           Here are your planned trips.
         </h1>
         <div className="flex flex-wrap justify-center items-center space-x-6 space-y-6">
+          {/* below version of Carousel does not wrap the image or p tags with Link, 
+          only the text "See Trip Details" will redirect to the trip page.*/}
           <Carousel>
             {userTripData.map((trip) => {
-              <Link href={`/plan/${trip.url}`} className="font-semibold text-xl"></Link>
               return (
                 <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
+                <Link key={trip.id} href={`/plan/${trip.url}`} className="text-xl">See Trip Details</Link>
                 <img
                   src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
                   alt="Trip banner image"
                   className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
-                />
+                  />
                 <p className="mt-2 text-center text-black font-bold">
                   {trip.title ? trip.title : trip.location}
                 </p>
                 </div>
               );
             })}
-          </Carousel>
+          </Carousel> 
+
+          {/* below version of Carousel redirects to the trip url properly upon clicking the image/p tag, 
+          but does not display the row of all trips anymore */}
+          {/* <Carousel>
+          {userTripData.map((trip) => {
+              return (
+                <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
+                  <Link key={trip.id} href={`/plan/${trip.url}`} className="font-semibold text-xl">
+                    <img
+                      src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
+                      alt="Trip banner image"
+                      className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
+                    />
+                    <p className="mt-2 text-center text-black font-bold">
+                      {trip.title ? trip.title : trip.location}
+                    </p>
+                  </Link>
+                </div>
+              );
+            })}
+          </Carousel>  */}
+
           {showModal && <NewItineraryModal onClose={closeModal} />}
             <section className="mb-10">
               <span className=" font-semibold text-black mb-4 flex justify-center">
