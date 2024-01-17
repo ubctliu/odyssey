@@ -18,13 +18,12 @@ const fetchSearchResults = async (placesService, locationData, type) => {
   const request = {
     location: {lat: locationData.latValue, lng: locationData.lngValue },
     radius: 50000,
-    // keyword: keyword || "popular tourist location",
+    keyword: type === "restaurant" ? "michelin" : "",
     // ['museum', 'park', 'restaurant']
     type: type || "tourist_attraction", // default tourist attraction
-    rankby: google.maps.places.RankBy.PROMINENCE, // default prominence
+    rankby: "prominence", // default prominence
   };
-
-  console.log(request);
+  
   try {
     //TODO: add more results + make results more relevant
     const response = await new Promise((resolve) => {
@@ -146,7 +145,7 @@ export default function SuggestionBox({type}) {
     <>
       <Collapsible className={""} title={"Suggestions"}>
       <div className="mb-3">
-        <Carousel>
+        <Carousel className="mx-px">
         {Array.isArray(suggestions) &&
           suggestions.map((result) => (
             <Suggestion key={result.place_id} suggestion={result} />
