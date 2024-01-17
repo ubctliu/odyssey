@@ -15,7 +15,7 @@ const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={}, ne
         setTripData((prev) => ({
           ...prev,
           days: prev.days.map((curr) => 
-          curr.id === dayEvent.day.id ? { ...curr, events: dayEvent.day.events.map((currEvent) => 
+          curr.id === dayEvent.day.id ? { ...curr, events: dayEvent.day.events?.map((currEvent) => 
             currEvent.id === dayEvent.event.id ? 
               {...currEvent,
               location: dayEvent
@@ -44,7 +44,7 @@ const SearchBar = ({ className, setVisibleEvents, visibleEvents, dayEvent={}, ne
   useEffect(() => {
     setInputValue(dayEvent && Object.keys(dayEvent).length > 0 ? tripData.days
       .find((dayItem) => dayItem.id === dayEvent.day.id)
-      .events.find((eventItem) => eventItem.id === dayEvent.event.id).location: "");
+      .events?.find((eventItem) => eventItem.id === dayEvent.event.id).location: "");
   }, []);
 
   const onPlaceChanged = place => {
