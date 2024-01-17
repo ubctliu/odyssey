@@ -28,6 +28,7 @@ export default function (Component) {
 
   const openModal = () => {
     setShowModal(true);
+    resetTripData(tripData, setTripData);
   };
 
   const closeModal = () => {
