@@ -4,6 +4,8 @@ import Collapsible from "@/app/components/Collapsible";
 import Suggestion from "@/app/components/Suggestion";
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 /* fetch google places nearby search results 
   params: placesService (PlacesService(div)), 
@@ -143,11 +145,14 @@ export default function SuggestionBox({type}) {
   return (
     <>
       <Collapsible className={""} title={"Suggestions"}>
+      <div className="mb-3">
+        <Carousel>
         {Array.isArray(suggestions) &&
           suggestions.map((result) => (
-            <Suggestion key={result.place_id} suggestion={result}>
-            </Suggestion>
+            <Suggestion key={result.place_id} suggestion={result} />
           ))}
+          </Carousel>
+          </div>
           <div id={"testId"}>
           </div>
       </Collapsible>
