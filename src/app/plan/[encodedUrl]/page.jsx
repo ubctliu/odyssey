@@ -145,10 +145,20 @@ export default function () {
 
   }, []);
 
+  // if user is loaded & not signed in, don't save
+  useEffect(() => {
+    if (!currentUser.isLoaded || !currentUser.isSignedIn) {
+      return;
+    }
+
+    saveTrip(tripData, currentUser.user.id, setOwnedByUser, setTripData);
+  }, [currentUser.isLoaded])
+
+  // on page load attempt to load trip details (no sign in requirement so it can be viewed by non-users)
   useEffect(() => {
     //createInitialEmptyDays(tripData, setTripData);
     loadTripDetails(url, setTripData, setDaysExist);
-  }, []);
+  }, [currentUser.isLoaded]);
 
   // useEffect(() => {
   //   console.log(tripData.days);
@@ -225,14 +235,13 @@ return (
       {tripData.imageUrl ? imgLoading ?
       <AiOutlineLoading3Quarters className="animate-spin" /> :
       <Image className="border border-black" src={tripData.imageUrl} height={512} width={512} alt="image not here yet" /> 
-      : <div/>}
+      :  <button className="text-black mx-auto bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
+      onClick={handleAiImg}> Generate AI Image</button>}
                 </div>
           <section className="top_title p-16">
             {ownedByUser ? (
               <div className="">
                 <div className="flex items-center">
-              <button className="text-black mx-auto bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
-              onClick={handleAiImg}> Generate AI Image</button>
               </div>
               <form className="px-16">
                 <h1 className="text-3xl font-semibold mx-auto pb-4"> Edit Trip Details</h1>
