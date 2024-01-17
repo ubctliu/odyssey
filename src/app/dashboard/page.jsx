@@ -10,6 +10,7 @@ import { useTripData } from "@/app/context/TripDataContext";
 import { resetTripData } from "@/lib/resetTripData";
 import { fetchTripIdByUserId } from "@/lib/api";
 import Link from 'next/link';
+import { redirect } from 'next/navigation'
 
 const fetchTripInfo = async (clerkId, setUserTripData) => {
   try {
@@ -70,33 +71,37 @@ export default function Component() {
         >
         </video>
       </div>
-      <main className="mt-2 absolute h-1/2 w-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
-        <h1 className=" text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-5">
-          {currentUser.isSignedIn
-            ? `Hello, ${currentUser.user.firstName}.`
-            : "Hello, Guest"}{" "}
-          Here are your planned trips.
-        </h1>
-        <div className="flex flex-wrap justify-center items-center space-x-6 space-y-6">
-          {/* below version of Carousel does not wrap the image or p tags with Link, 
-          only the text "See Trip Details" will redirect to the trip page.*/}
-          <Carousel>
-            {userTripData.map((trip) => {
-              return (
-                <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
-                <Link key={trip.id} href={`/plan/${trip.url}`} className="text-xl">See Trip Details</Link>
+      <main className="mt-2 absolute h-3/4 w-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
+  <h1 className="flex items-center justify-center text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-5">
+    {currentUser.isSignedIn
+      ? `Hello, ${currentUser.user.firstName}.`
+      : "Hello, Guest"}{" "}
+    Here are your planned trips.
+  </h1>
+  <div className="flex flex-col space-x-6 space-y-6 items-center">
+    {/* Center the Carousel and its contents */}
+    <div className="flex items-center justify-center">
+      <Carousel>
+        {userTripData.map((trip) => {
+          return (
+            <div key={trip.id} className="mx-auto flex align-center items-center w-1/2 h-1/2">
+              <Link key={trip.id} href={`/plan/${trip.url}`} className="text-xl">
                 <img
                   src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
                   alt="Trip banner image"
                   className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
-                  />
-                <p className="mt-2 text-center text-black font-bold">
+                />
+                <p className="mt-2 text-center text-black font-semibold">
                   {trip.title ? trip.title : trip.location}
+                  <br />
+                  <div className="hover:text-slate-200">See Trip Details</div>
                 </p>
-                </div>
-              );
-            })}
-          </Carousel> 
+              </Link>
+            </div>
+          );
+        })}
+      </Carousel>
+    </div>
 
           {/* below version of Carousel redirects to the trip url properly upon clicking the image/p tag, 
           but does not display the row of all trips anymore */}
