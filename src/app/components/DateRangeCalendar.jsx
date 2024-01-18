@@ -9,13 +9,17 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 const DateRangeCalendar = ({ className }) => {
   const { tripData, setTripData } = useTripData();
   const [openCalendar, setOpenCalendar] = useState(false);
+  const [dateRange, setDateRange] = useState("");
 
   const handleChange = (ranges) => {
+
     setTripData(prev => ({
       ...prev,
       ...ranges.selection,
       isDateSet: true
     }))
+    
+    setDateRange(`${ranges.selection.startDate.toLocaleDateString('en-US')} - ${ranges.selection.endDate.toLocaleDateString('en-US')}`)
   }
 
   const handleClick = () => {
@@ -29,11 +33,16 @@ const DateRangeCalendar = ({ className }) => {
         onClick={handleClick}
         id="date"
         name="date"
+<<<<<<< HEAD
         placeholder='Date Range (Required)'
         value={
           tripData.endDate.getDate() == new Date().getDate() ? '' :
           `${tripData.startDate.toLocaleDateString('en-US')} - ${tripData.endDate.toLocaleDateString('en-US')}`
         }
+=======
+        placeholder='Date Range (required)'
+        value={dateRange}
+>>>>>>> ace26bec75b5829a419ff1f6bdfcdb84399f74be
       />
       {openCalendar && <DateRange
         ranges={[tripData]}
