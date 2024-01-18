@@ -71,61 +71,40 @@ export default function Component() {
         >
         </video>
       </div>
-      <main className="mt-2 absolute h-3/4 w-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
-  <h1 className="flex items-center justify-center text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-5">
-    {currentUser.isSignedIn
-      ? `Hello, ${currentUser.user.firstName}.`
-      : "Hello, Guest"}{" "}
-    Here are your planned trips.
-  </h1>
-  <div className="flex flex-col space-x-6 space-y-6 items-center">
-    {/* Center the Carousel and its contents */}
-    <div className="flex items-center justify-center">
-      <Carousel>
-        {userTripData.map((trip) => {
-          return (
-            <div key={trip.id} className="mx-auto flex align-center items-center w-1/2 h-1/2">
-              <Link key={trip.id} href={`/plan/${trip.url}`} className="text-xl">
-                <img
-                  src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
-                  alt="Trip banner image"
-                  className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
-                />
-                <p className="mt-2 text-center text-black font-semibold">
-                  {trip.title ? trip.title : trip.location}
-                  <br />
-                  <div className="hover:text-slate-200">See Trip Details</div>
-                </p>
-              </Link>
-            </div>
-          );
-        })}
-      </Carousel>
-    </div>
-
-          {/* below version of Carousel redirects to the trip url properly upon clicking the image/p tag, 
-          but does not display the row of all trips anymore */}
-          {/* <Carousel>
-          {userTripData.map((trip) => {
-              return (
-                <div key={trip.id} className="flex flex-col justify-center items-center w-1/4">
-                  <Link key={trip.id} href={`/plan/${trip.url}`} className="font-semibold text-xl">
-                    <img
-                      src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
-                      alt="Trip banner image"
-                      className="border rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
-                    />
-                    <p className="mt-2 text-center text-black font-bold">
-                      {trip.title ? trip.title : trip.location}
-                    </p>
-                  </Link>
-                </div>
-              );
-            })}
-          </Carousel>  */}
+      <main className="mt-2 absolute h-1/2 w-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
+        <h1 className="flex items-center justify-center text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-5">
+          {currentUser.isSignedIn
+            ? `Hello, ${currentUser.user.firstName}.`
+            : "Hello, Guest"}{" "}
+          Here are your planned trips.
+        </h1>
+        <div className="flex flex-col space-x-6 space-y-6 items-center">
+          {/* Center the Carousel and its contents */}
+          <div className="flex items-center justify-center w-1/2 h-3/4">
+            <Carousel>
+              {userTripData.map((trip) => {
+                return (
+                  <div key={trip.id} className="mx-auto flex align-center items-center w-1/2 h-4/5">
+                    <Link key={trip.id} href={`/plan/${trip.url}`} className="text-xl">
+                      <img
+                        src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
+                        alt="Trip banner image"
+                        className="border mt-7 w-1/2 h-3/4 relative rounded-lg transition-transform duration-300 ease-in-out hover:scale-110 animate-fade-in"
+                      />
+                      <p className="mt-2 mb-2 text-center text-black font-semibold">
+                        {trip.title ? trip.title : trip.location}
+                        <br />
+                        <div className="hover:text-slate-200 mb-4 text-sm">See Trip Details</div>
+                      </p>
+                    </Link>
+                  </div>
+                );
+              })}
+            </Carousel>
+          </div>
 
           {showModal && <NewItineraryModal onClose={closeModal} />}
-            <section className="mb-10">
+            <section className="mb-8">
               <span className=" font-semibold text-black mb-4 flex justify-center">
                 {/* <TitleTypeWriter /> */}
               </span>
