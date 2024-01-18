@@ -6,10 +6,12 @@ import { stringToBase64 } from '@/lib/base64Utils';
 import Link from 'next/link';
 import DateRangeCalendar from './DateRangeCalendar';
 import { useTripData } from '../context/TripDataContext';
+import { useState } from 'react';
 
 export default function NewItineraryModal({ onClose }) {
   const currentUser = useUser();
  const { tripData, setTripData } = useTripData();
+ const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA"; // just random characters for now - should add logic to randomize later
 
   // Add any other form fields or functions as needed
@@ -43,7 +45,7 @@ export default function NewItineraryModal({ onClose }) {
                 }))}/>
             </div>
             <div className="mb-4">
-              <SearchBar setLocationData={setTripData} className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}/>
+              <SearchBar setLocationData={setTripData} newTripCreation={true} setAutoCompleted={setAutoCompleted} className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"}/>
             </div>
             <div className="mb-4">
               <DateRangeCalendar className={"bg-white text-black p-3 rounded-lg border border-black tracking-wide container px-6 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"} />
@@ -64,35 +66,28 @@ export default function NewItineraryModal({ onClose }) {
                 }))}
               />
             </div>
-            {
-              (tripData.isDateSet && tripData.isLocationSet) ?
-              currentUser.isSignedIn ?
-              <Link 
-            href={`/plan/${customUrl}`}
-            onClick={() => setTripData((prev) => ({
-              ...prev,
-              url: customUrl,
-              clerkId: currentUser.user.id
-            }))}
-            className="bg-blue-500 text-white px-4 py-2 rounded">
-              Save
-            </Link> : 
-            <Link 
-            href={`/plan/${customUrl}`}
-            onClick={() => setTripData((prev) => ({
-              ...prev,
-              url: customUrl,
-              clerkId: currentUser.user.id
-            }))}
-            className="bg-orange-400 text-white px-4 py-2 rounded">
-              Continue as Guest
-            </Link>:
-            <Link 
-            href={""}
-            className="bg-gray-400 text-white px-4 py-2 rounded">
-              Missing required fields!
-            </Link>
-            }
+            {tripData.isDateSet && tripData.isLocationSet && autoCompleted ? (
+                <Link
+                  href={`/plan/${customUrl}`}
+                  onClick={() =>
+                    setTripData((prev) => ({
+                      ...prev,
+                      url: customUrl,
+                      clerkId: currentUser.user?.id ?? "",
+                    }))
+                  }
+                  className="bg-white text-black p-2 rounded-lg border border-black hover:bg-blue-500 hover:text-white"
+                >
+                  Plan My Trip!
+                  </Link>
+                ) : (
+                  <Link
+                  href={""}
+                  className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-400 text-white hover:bg-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                  >
+                    Missing required fields!
+                  </Link>
+                )}
             
           </form>
         </div>
