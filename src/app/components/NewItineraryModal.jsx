@@ -58,10 +58,10 @@ export default function NewItineraryModal({ onClose }) {
                 name="description"
                 placeholder="Description (optional)"
                 rows="4"
-                onChange={e => (prev) => ({
+                onChange={e => setTripData((prev) => ({
                   ...prev,
                   description: e.target.value
-                })}
+                }))}
               />
             </div>
             {
