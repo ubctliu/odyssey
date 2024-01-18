@@ -18,7 +18,7 @@ const DateRangeCalendar = ({ className }) => {
       ...ranges.selection,
       isDateSet: true
     }))
-    
+    console.log(ranges.selection);
     setDateRange(`${ranges.selection.startDate.toLocaleDateString('en-US')} - ${ranges.selection.endDate.toLocaleDateString('en-US')}`)
   }
 

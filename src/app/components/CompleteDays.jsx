@@ -10,6 +10,7 @@ const CompleteDays = ({ day, setTripData, readOnly }) => {
 
     const dayid = day.id;
     const currentDateTime = new Date(day.date);
+    currentDateTime.setDate(currentDateTime.getDate() + 1);
     const dayOfWeek = currentDateTime.getDay();
     const month = currentDateTime.getMonth();
     const dayNumber = currentDateTime.getDate();

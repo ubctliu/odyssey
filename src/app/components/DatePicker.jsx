@@ -14,12 +14,12 @@ const DatePicker = ({ className, startOrEndDate, readOnly }) => {
     <div>
       {readOnly === "readonly" ?  <input required
         className={className}
-        defaultValue={`${tripData[startOrEndDate].toLocaleDateString('en-US')}`}
+        defaultValue={`${tripData[startOrEndDate].toUTCString()}`}
         readOnly={readOnly}
       />: <input required
         className={className}
         onClick={handleClick}
-        defaultValue={`${tripData[startOrEndDate].toLocaleDateString('en-US')}`}
+        defaultValue={`${tripData[startOrEndDate].toUTCString()}`}
         readOnly={readOnly}
       />}
       {openCalendar && <Calendar className={className}

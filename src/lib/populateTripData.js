@@ -11,7 +11,11 @@ export const populateTripData = (dbTrip, setTripData) => {
     // isDateSet: false,
     // key: 'selection',
     // clerkId: "",
-    days: dbTrip.days,
+    days: dbTrip.days.sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateA - dateB;
+    }),
     // days: [], needs logic to pull related days into array
     url: dbTrip.url,
     notes: dbTrip.notes ?? "",
@@ -20,19 +24,7 @@ export const populateTripData = (dbTrip, setTripData) => {
   // set the trip data pulled from DB into the tripData context
   setTripData((prev) => ({
     ...prev,
-    ...tripDataFromDB,
-    days: tripDataFromDB.days.map((day) => ({
-      ...day,
-      events: day.events.sort((a, b) => {
-        // compare order if available
-        if (a.order !== undefined && b.order !== undefined) {
-          return a.order - b.order;
-        }
-      
-        // fallback to timeCreated if order is undefined
-        return new Date(a.timeCreated) - new Date(b.timeCreated);
-      })
-    }))
+    ...tripDataFromDB
   }));
 
   // console.log("Loaded trip details from database:", dbTrip);
