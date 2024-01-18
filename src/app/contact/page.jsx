@@ -33,10 +33,8 @@ export default function Contact() {
             src={ 'https://firebasestorage.googleapis.com/v0/b/odyssey-file-storage.appspot.com/o/upload%2F0247680c-4456-445d-b25c-2eb39369ea59?alt=media&token=24913d4b-c837-408c-90a9-d01100a3c139' }
           />
           <p className="text-sm">
-          <h3 className=" text-lg font-semibold">John Doe <FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
-            John Doe got started with web development by making sites with WordPress, and eventually tricked himself into
-            doing JavaScript. His favorite pastime is karaoke. John is either a Disney villain or a Disney princess,
-            depending on the day.
+          <h3 className=" text-lg font-semibold">Abdul<FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
+          Hello! I'm Abdul, a full-stack developer with expertise in Reactjs, Nextjs, TailwindCSS, and SQL databases. A proud alumnus of Lighthouse Labs, I am deeply engaged in the tech community, constantly exploring new technologies and approaches in web development. My journey in tech is marked by collaborative projects where I've leveraged my skills in both front-end and back-end development to create dynamic, user-focused solutions. I'm keen on continuous learning and sharing my knowledge with peers. Let's connect on LinkedIn and GitHub to discuss innovative ideas and opportunities in the tech world!
           </p>
         </div>
     </div>
