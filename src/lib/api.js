@@ -103,6 +103,27 @@ export async function updateTrip(trip) {
   }
 }
 
+export async function deleteTrip(trip) {
+  try {
+    const res = await fetch(`/api/trips/delete`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ trip })
+    });
+  
+    if (!res.ok) {
+      throw new Error("Failed to update trip");
+    }
+  
+    const deletedTrip = await res.json();
+    return deletedTrip;
+  } catch (error) {
+    console.error("Error deleting trip:", error);
+  }
+}
+
 
 export async function fetchTrip(url) {
   try {
