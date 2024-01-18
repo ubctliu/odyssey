@@ -18,8 +18,8 @@ export default function Contact() {
           />
           <p className="text-sm">
           <h3 className=" text-lg font-semibold">Terrence Liu <a href={"https://github.com/ubctliu"}><FaGithub className=" inline-block hover:animate-bounce"/> </a> <a href={"https://www.linkedin.com/in/terrence-liu/"}><FaLinkedin className="inline-block hover:animate-bounce"/></a></h3>
-            Terrence's interest in programming started in high school, where he spent time learning Java to make modifications to his favorite games. While initially working towards towards a minor in Computer Science, he ended up at Lighthouse Labs where he learned about all things web-development related.
-            Now seeking new opportunities as a Full Stack Developer, he is proficient in working with React, JavaScript/TypeScript, SQL, HTML, and CSS. He enjoys learning about new things and expanding his knowledge about all things tech-related. Reach out to him out LinkedIn if you want to work on a project together!
+            Terrence is a full-stack developer proficient in working with React, JavaScript/TypeScript, SQL, HTML, and CSS. His interest in programming started in high school, where he spent time learning Java to make modifications to his favorite games. While initially working towards towards a minor in Computer Science, he ended up at Lighthouse Labs where he learned about all things web-development related.
+            He enjoys learning about new things and expanding his knowledge about all things tech-related. Reach out to him out LinkedIn if you want to work on a project together!
           </p>
         </div>
     </div>
