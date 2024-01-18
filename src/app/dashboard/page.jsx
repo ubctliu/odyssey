@@ -8,7 +8,7 @@ import TitleTypeWriter from "@/app/components/TitleTypeWriter";
 import NewItineraryModal from "@/app/components/NewItineraryModal"; // Assuming NewItineraryModal is a separate component
 import { useTripData } from "@/app/context/TripDataContext";
 import { resetTripData } from "@/lib/resetTripData";
-import { fetchTripIdByUserId } from "@/lib/api";
+import { fetchTripIdByUserId, deleteTrip } from "@/lib/api";
 import Link from 'next/link';
 import { redirect } from 'next/navigation'
 
@@ -22,6 +22,18 @@ const fetchTripInfo = async (clerkId, setUserTripData) => {
   }
 };
 
+const handleDeleteTrip = async (trip, setUserTripData) => {
+  try {
+    const deletedTrip = await deleteTrip(trip);
+    setUserTripData((prev) => {
+      return prev.filter((currTrip) => currTrip.id !== trip.id);
+    });
+    // console.log("Deleted trip:", deletedTrip);
+  } catch (error) {
+    console.error('Error occurred while deleting trip:', error);
+  }
+};
+
 export default function Component() {
   const [showModal, setShowModal] = useState(false);
   // const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,7 +42,7 @@ export default function Component() {
   const currentUser = useUser();
   const takeoff = "/videos/planetakeoff.mp4";
   const defaultDashboardImage = "/images/defaultDashboardImage.jpg";
-  const url = userTripData.url
+  // const url = userTripData.url
 
   useEffect(() => {
     if (!currentUser.isLoaded) {
@@ -51,7 +63,6 @@ export default function Component() {
 
   const openModal = () => {
     setShowModal(true);
-    console.log('url', url)
   };
 
   const closeModal = () => {
@@ -95,6 +106,7 @@ export default function Component() {
                         {trip.title ? trip.title : trip.location}
                         <br />
                         <div className="hover:text-slate-200 mb-4 text-sm">See Trip Details</div>
+                        <button onClick={(e) => {e.preventDefault(); handleDeleteTrip(trip, setUserTripData);}} className="hover:text-slate-200 mb-4 text-sm">Delete Trip</button>
                       </p>
                     </Link>
                   </div>

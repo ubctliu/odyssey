@@ -1,14 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
 // Rough version of delete - requires url
-export default async function deleteTrip(url) {
+export default async function deleteTrip(trip) {
   const prisma = new PrismaClient();
 
   try {
 
     const deletedTrip = await prisma.trip.delete({
       where: {
-        url: url
+        url: trip.url
       }
     });
 
