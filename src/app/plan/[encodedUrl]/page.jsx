@@ -234,37 +234,19 @@ export default function () {
       console.error("Error occurred while handling image", error);
     } finally {
     }
-    setImgLoading(false);
-  };
-
-  // TODO: make the button disappear after image is created
-  return (
-    <div className="max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-      <div className="h-5/6 flex justify-center text-black">
-        <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
-          <div className="flex flex-col justify-center items-center">
-            <div className="pt-4">
-              {tripData.imageUrl ? (
-                imgLoading ? (
-                  <AiOutlineLoading3Quarters className="animate-spin" />
-                ) : (
-                  <Image
-                    className="border border-black"
-                    src={tripData.imageUrl}
-                    height={512}
-                    width={512}
-                    alt="image not here yet"
-                  />
-                )
-              ) : (
-                <button
-                  className="text-black mx-auto bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
-                  onClick={handleAiImg}
-                >
-                  {" "}
-                  Generate AI Image
-                </button>
-              )}
+  }
+  
+return (
+  <div className="max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+  <div className="h-5/6 flex justify-center text-black">
+    <main className="flex justify-between bg-white items-center border border-black rounded-xl border-b-slate-700">
+    <div className="flex flex-col justify-center items-center">
+      <div className="pt-4">
+    {tripData.imageUrl ? imgLoading ?
+    <AiOutlineLoading3Quarters className="animate-spin" /> :
+    <Image className="border border-black" src={tripData.imageUrl} height={512} width={512} alt="image not here yet" /> 
+    :  <button className="text-black mx-auto bg-white p-2 rounded-lg border transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-100 hover:bg-gray-100"
+    onClick={handleAiImg}> Generate AI Image</button>}
             </div>
             <section className="top_title p-16">
               {ownedByUser ? (
