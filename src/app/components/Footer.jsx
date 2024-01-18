@@ -11,7 +11,7 @@ return (
           <Link href="/about" className="hover:underline me-4 md:me-6">About</Link>
         </li>
         <li>
-            <Link href="#" className="hover:underline me-4 md:me-6">Privacy Policy</Link>
+            <Link href="/policy" className="hover:underline me-4 md:me-6">Privacy Policy</Link>
         </li>
         <li>
             <Link href="#" className="hover:underline me-4 md:me-6">Licensing</Link>
