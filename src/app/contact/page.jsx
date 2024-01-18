@@ -58,17 +58,15 @@ export default function Contact() {
     <div className="grid gap-8 grid-cols-1 p-2">
         <div className="p-10 space-y-4 flex items-center align-middle mx-auto border border-black rounded-md">
           <Image
-            alt="John Doe"
+            alt="Mark Mendoza"
             height={150}
             width={150}
             className="rounded-full px-2 py-2"
-            src={ 'https://firebasestorage.googleapis.com/v0/b/odyssey-file-storage.appspot.com/o/upload%2F0247680c-4456-445d-b25c-2eb39369ea59?alt=media&token=24913d4b-c837-408c-90a9-d01100a3c139' }
+            src={ '/images/markmendoza150.JPG' }
           />
           <p className="text-sm">
-          <h3 className=" text-lg font-semibold">John Doe <FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
-            John Doe got started with web development by making sites with WordPress, and eventually tricked himself into
-            doing JavaScript. His favorite pastime is karaoke. John is either a Disney villain or a Disney princess,
-            depending on the day.
+          <h3 className=" text-lg font-semibold">Mark Mendoza <FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
+            Mark seamlessly blended a background in music and fitness with a transition into tech, becoming a full-stack web developer. Despite initial challenges, they persevered, drawing parallels between coding and their experiences in music and fitness. This fusion of discipline and creativity proved invaluable in learning and applying coding principles, shaping a unique journey at the intersection of diverse passions.
           </p>
         </div>
     </div>
