@@ -9,6 +9,8 @@ import { stringToBase64 } from "@/lib/base64Utils";
 import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import { useState, useEffect } from "react";
 import { resetTripData } from "@/lib/resetTripData";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 export default function (Component) {
   const currentUser = useUser();
@@ -16,15 +18,7 @@ export default function (Component) {
   const [autoCompleted, setAutoCompleted] = useState(false);
   const guestId = "womdon231j2mklmksA";
 
-  // Don't proceed until user data is loaded
-  // if (!currentUser.isLoaded) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (!currentUser.isSignedIn){
-  //   return redirect("/sign-in")
-  // }
-
+  
   useEffect(() => {
     if (!currentUser.isLoaded) {
       return;
@@ -32,6 +26,17 @@ export default function (Component) {
 
     resetTripData(tripData, setTripData);
   }, [currentUser.isLoaded]);
+
+ // Don't proceed until user data is loaded
+  if (!currentUser.isLoaded) {
+    return <div className="w-screen h-screen flex items-center">
+         <AiOutlineLoading3Quarters className="animate-spin h-32 w-32 mx-auto" />  
+        </div>;
+  }
+
+  if (!currentUser.isSignedIn){
+    return redirect("/sign-in")
+  }
 
   // TODO: rework custom url to be shorter & include it in tripData context (in /plan/new & /components/NewItineraryModel)
   const customUrl = currentUser.isSignedIn
