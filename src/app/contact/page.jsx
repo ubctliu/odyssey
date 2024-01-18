@@ -1,7 +1,7 @@
 import React from "react"
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Image from 'next/image';
-
+const angelaPhoto = "/images/angela.jpg";
 
 export default function Contact() {
   return (
@@ -45,7 +45,7 @@ export default function Contact() {
             height={150}
             width={150}
             className="rounded-full px-2 py-2"
-            src={ 'https://firebasestorage.googleapis.com/v0/b/odyssey-file-storage.appspot.com/o/upload%2F0247680c-4456-445d-b25c-2eb39369ea59?alt=media&token=24913d4b-c837-408c-90a9-d01100a3c139' }
+            src={ angelaPhoto }
           />
           <p className="text-sm">
           <h3 className=" text-lg font-semibold">Angela Zhou <FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
