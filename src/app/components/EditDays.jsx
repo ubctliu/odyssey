@@ -188,7 +188,7 @@ export default function EditDays({ day, title, edit, setEdit, isLoading, visible
                           className="text-gray-600 border border-gray-300 rounded p-2 w-full"
                           value={tripData.days
                             .find((dayItem) => dayItem.id === day.id)
-                            .events.find((eventItem) => eventItem.id === event.id).notes}
+                            .events?.find((eventItem) => eventItem.id === event.id).notes}
                           onChange={e => {
                             setTripData((prev) => ({
                               ...prev,

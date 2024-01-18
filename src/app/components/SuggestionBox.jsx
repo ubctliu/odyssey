@@ -4,6 +4,8 @@ import Collapsible from "@/app/components/Collapsible";
 import Suggestion from "@/app/components/Suggestion";
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import { useEffect, useState } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 /* fetch google places nearby search results 
   params: placesService (PlacesService(div)), 
@@ -16,13 +18,12 @@ const fetchSearchResults = async (placesService, locationData, type) => {
   const request = {
     location: {lat: locationData.latValue, lng: locationData.lngValue },
     radius: 50000,
-    // keyword: keyword || "popular tourist location",
+    keyword: type === "restaurant" ? "michelin" : "",
     // ['museum', 'park', 'restaurant']
     type: type || "tourist_attraction", // default tourist attraction
-    rankby: google.maps.places.RankBy.PROMINENCE, // default prominence
+    rankby: "prominence", // default prominence
   };
-
-  console.log(request);
+  
   try {
     //TODO: add more results + make results more relevant
     const response = await new Promise((resolve) => {
@@ -143,11 +144,14 @@ export default function SuggestionBox({type}) {
   return (
     <>
       <Collapsible className={""} title={"Suggestions"}>
+      <div className="mb-3">
+        <Carousel className="max-w-3xl mt-2">
         {Array.isArray(suggestions) &&
           suggestions.map((result) => (
-            <Suggestion key={result.place_id} suggestion={result}>
-            </Suggestion>
+            <Suggestion key={result.place_id} suggestion={result} />
           ))}
+          </Carousel>
+          </div>
           <div id={"testId"}>
           </div>
       </Collapsible>
