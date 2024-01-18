@@ -145,7 +145,7 @@ export default function SuggestionBox({type}) {
     <>
       <Collapsible className={""} title={"Suggestions"}>
       <div className="mb-3">
-        <Carousel className="max-w-2xl">
+        <Carousel className="max-w-3xl mt-2">
         {Array.isArray(suggestions) &&
           suggestions.map((result) => (
             <Suggestion key={result.place_id} suggestion={result} />
