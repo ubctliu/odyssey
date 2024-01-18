@@ -233,6 +233,7 @@ export default function () {
     } catch (error) {
       console.error("Error occurred while handling image", error);
     } finally {
+      setImgLoading(false);
     }
   }
   
