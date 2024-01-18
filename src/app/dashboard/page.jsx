@@ -71,7 +71,7 @@ export default function Component() {
         >
         </video>
       </div>
-      <main className="mt-2 absolute h-1/2 w-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
+      <main className="mt-2 absolute h-1/2 w-3/4 lg:h-3/4 mx-auto flex flex-col p-4 items-center border border-b-6 border-solid rounded-2xl border-b-slate-100 shadow-2xl backdrop-blur-md bg-white/30">
         <h1 className="flex items-center justify-center text-4xl font-bold text-slate-900 mb-4 animate-fade-in-down pt-5">
           {currentUser.isSignedIn
             ? `Hello, ${currentUser.user.firstName}.`
@@ -80,11 +80,11 @@ export default function Component() {
         </h1>
         <div className="flex flex-col space-x-6 space-y-6 items-center">
           {/* Center the Carousel and its contents */}
-          <div className="flex items-center justify-center w-1/2 h-3/4">
+          <div className="flex items-center justify-center w-1/2 h-3/4 lg:w-full lg:h-full lg:space-x-6 lg:space-y-6">
             <Carousel>
               {userTripData.map((trip) => {
                 return (
-                  <div key={trip.id} className="mx-auto flex align-center items-center w-1/2 h-4/5">
+                  <div key={trip.id} className="mx-auto flex align-center items-center w-1/2 h-4/5 lg:w-1/2 lg:h-3/5">
                     <Link key={trip.id} href={`/plan/${trip.url}`} className="text-xl">
                       <img
                         src={trip.imageUrl ? trip.imageUrl : defaultDashboardImage}
