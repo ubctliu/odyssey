@@ -48,10 +48,9 @@ export default function Contact() {
             src={ 'https://firebasestorage.googleapis.com/v0/b/odyssey-file-storage.appspot.com/o/upload%2F0247680c-4456-445d-b25c-2eb39369ea59?alt=media&token=24913d4b-c837-408c-90a9-d01100a3c139' }
           />
           <p className="text-sm">
-          <h3 className=" text-lg font-semibold">John Doe <FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
-            John Doe got started with web development by making sites with WordPress, and eventually tricked himself into
-            doing JavaScript. His favorite pastime is karaoke. John is either a Disney villain or a Disney princess,
-            depending on the day.
+          <h3 className=" text-lg font-semibold">Angela Zhou <FaGithub className=" inline-block hover:animate-bounce"/> <FaLinkedin className="inline-block hover:animate-bounce"/></h3>
+            Angela Zhou is a full-stack developer with a background in environmental consulting. Angela began her transition to tech through the Lighthouse Labs Web Development program where
+            she learnt front-end fundamentals like JavaScript, CSS, and HTML, software architecture, databases and data modelling, component-based design, and much more. 
           </p>
         </div>
     </div>
