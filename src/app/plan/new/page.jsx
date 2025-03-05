@@ -10,6 +10,7 @@ import DateRangeCalendar from "@/app/components/DateRangeCalendar";
 import { useState, useEffect } from "react";
 import { resetTripData } from "@/lib/resetTripData";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { redirect } from "next/navigation";
 
 
 export default function (Component) {
